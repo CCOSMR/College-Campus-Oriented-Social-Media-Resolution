@@ -1,0 +1,84 @@
+FORMAT: 1A
+HOST: http://123.206.79.106/
+
+# College Campus Oriented Social Media Resolution
+
+This is for our Software Engineering class.<br><br>
+All by<br>
+SymPy @SymphonyPy<br>
+Peter Santos @PTSTS<br>
+bing yan song @Sporot
+
+## Sign Up [/signup]
+
+### Sign Up [POST]
++ Request (application/json)
+
+        {
+            "id":"david180313",
+            "nickname":"David",
+            "password":"123456",
+            "confirm":"123456",
+            "verifiedcode":"F341"
+        }
+
++ Response 200 (application/json)
+
+        # 200 successed
+        # 101 id is taken
+        # 102 password and confirmed password are not the same
+        # 103 verified code was wrong
+        
+        {
+            "status":[200,101,102,103]
+        }
+        
+## Sign In [/signin]
+### Sign In [POST]
+
++ Request (application/json)
+
+        {
+            "id":"david180313",
+            "password":"123456",
+            "verifiedcode":"IH42"
+        }
+
++ Response 200 (application/json)
+
+        # 200 successed
+        # 101 id or password was wrong
+        # 102 verified code was wrong
+
+        {
+            "status":[200,101,102]
+        }
+
+## Messages [/messages]
+### Request Messages [GET]
+
++ Response 200 (application/json)
+
+        {
+            "timestamp":1520926923,
+            "id":"david180313",
+            "nickname":"David",
+            "message":"Wow, the one who wrote this must be a genius!"
+        }
+### Send Messages [POST]
+
++ Request (application/json)
+
+        {
+            "timestamp":1520926923,
+            "message":"Wow, the one who wrote this must be a genius!"
+        }
+
++ Response 200 (application/json)
+
+        # 200 successed
+        # 101 failed
+
+        {
+            "status":[200,101]
+        }
