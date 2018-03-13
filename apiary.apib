@@ -82,3 +82,79 @@ bing yan song @Sporot
         {
             "status":[200,101]
         }
+
+## Check Friends [/myfriends]
+### Get Friends list [GET]
+
++ Response 200 (application/json)
+
+        [
+            {
+                "id":"emily1328",
+                "nickname":"Emily",
+                "laststatus":"WHat a nice day!"
+            },
+            {
+                "id":"john234",
+                "nickname":"John",
+                "laststatus":"I love programming!"
+            },
+            {
+                "id":"dave874",
+                "nickname":"Dave",
+                "laststatus":"I've got a great idea! Need only one to code!"
+            }
+        ]
+        
+## Add Friends [/addfriend]
+### Send request [POST]
+
++ Request (application/json)
+
+        {
+            "id":"david180313",
+            "message":"Hi David! Nice to meet you!"
+        }
+
++ Response 200 (application/json)
+
+        # 200 successed
+        # 101 failed
+
+        {
+            "status":[200,101]
+        }
+
+## Search [/search]
+### Send request [POST]
+
++ Request(application/json)
+
+        {
+            "content":"Software Engineering"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "Courses":[
+                {
+                    "id":123,
+                    "name":"Software Engineering",
+                    "teacher":"Lihua Fu",
+                    "location":"204"
+                },
+                {
+                    "id":124,
+                    "name":"Software Engineering",
+                    "teacher":"Yifei Wu",
+                    "location":"603"
+                }
+            ],
+            "Teachers":[
+                {
+                    "id":234123,
+                    "name":"Soft",
+                }
+            ]
+        }
