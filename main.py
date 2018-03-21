@@ -13,13 +13,16 @@ db = database.Database("CCOSMR")
 def default():
     if 'id' in flask.session:
         return 'Logged in as %s' % flask.escape(flask.session['id'])
-    return 'You are not logged in'
+    return flask.redirect("https://github.com/CCOSMR/College-Campus-Oriented-Social-Media-Resolution")
 
 
 @app.route("/test", methods=["GET", "POST"])
 def test():
-    content = str(flask.request.get_data(), encoding="utf-8")
-    return content
+    if flask.request.method == "GET":
+        return flask.request.remote_addr
+    elif flask.request.method == "POST":
+        data = flask.request.get_json()
+        return str(data)
 
 
 @app.route("/signup", methods=["GET", "POST"])
@@ -66,5 +69,5 @@ def search():
 
 
 if __name__ == "__main__":
-    # app.run(host='0.0.0.0', port=80)
-    app.run()
+    app.run(host='0.0.0.0', port=80)
+    # app.run()
