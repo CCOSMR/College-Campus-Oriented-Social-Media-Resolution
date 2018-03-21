@@ -13,7 +13,7 @@ create table University (
   foreign key(city_id) references City(id)
 );
  
-create table User (
+create table Users (
   id varchar(64) not null primary key,
   password varchar(64),
   email varchar(255) unique, -- constraint user_email_format check (prefix REGEXP '^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$'),
@@ -29,8 +29,8 @@ create table Follow (
   time_followed datetime,
   seen bool,
   primary key (following_id, follower_id),
-  foreign key (following_id) references User(id),
-  foreign key (follower_id) references User(id),
+  foreign key (following_id) references Users(id),
+  foreign key (follower_id) references Users(id),
   constraint avoid_self_following check (following_id != follower_id)
 );
 
@@ -38,7 +38,7 @@ create table Sub ( -- submission
   id integer not null primary key,
   poster_id integer,
   time_posted datetime,
-  foreign key (poster_id) references User(id)
+  foreign key (poster_id) references Users(id)
 );
 
 create table Post (
@@ -47,7 +47,7 @@ create table Post (
   foreign key (id) references Sub(id)
 );
 
-create table Comment (
+create table Comments (
   id integer primary key,
   original_id integer,
   content varchar(4096),
@@ -64,7 +64,7 @@ create table Likes (
   seen bool,
   primary key (sub_id, user_id),
   foreign key (sub_id) references Sub(id),
-  foreign key (user_id) references User(id)
+  foreign key (user_id) references Users(id)
 );
 
 create table College (
@@ -96,12 +96,12 @@ create table Course (
   foreign key (teacher_id) references Teacher(id)
 );
 
-create table User_Student (
+create table Users_Student (
   user_id integer primary key,
   college_id INTEGER,
   date_enrolled date,
   status varchar(255),
-  foreign key (user_id) references User(id),
+  foreign key (user_id) references Users(id),
   foreign key (college_id) references College(id)
 );
 
@@ -111,7 +111,7 @@ create table Attend (
   date_begin date,
   date_end date check (date_end >= date_begin),
   primary key (student_id, course_id),
-  foreign key (student_id) references User_Sutdent(user_id),
+  foreign key (student_id) references Users_Sutdent(user_id),
   foreign key (course_id) references Course(id)
 );
 
@@ -124,14 +124,14 @@ create table Review (
   anonymous bool not null,
   seen bool,
   foreign key (id) references Sub(id),
-  foreign key (user_id) references User(id)
+  foreign key (user_id) references Users(id)
 );
 
-create table User_Teacher (
+create table Users_Teacher (
   user_id integer unique,
   teacher_id INTEGER unique,
   date_registered date,
-  foreign key (user_id) references User(id),
+  foreign key (user_id) references Users(id),
   foreign key (teacher_id) references Teacher(id)
 );
 
@@ -146,7 +146,7 @@ create table At (
   position integer Not null check (position >= 0),
   seen bool,
   Primary key (user_id, sub_id, position),
-  foreign key (user_id) references User(id),
+  foreign key (user_id) references Users(id),
   foreign key (sub_id) references Sub(id)
 );
 
