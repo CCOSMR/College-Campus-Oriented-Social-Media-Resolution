@@ -6,7 +6,7 @@ from func import verified_code
 
 
 def signup(database, data: dict):
-    if database.simple_search("user_table", "id = \"{}\"".format(data["id"])):
+    if database.simple_search("Users", "id = \"{}\"".format(data["id"])):
         return 101
     if data["password"] != data["confirm"]:
         return 102
@@ -19,15 +19,15 @@ def signup(database, data: dict):
         "id": data["id"],
         "password": data["password"],
         "email": data["email"],
-        "nickname": data["nickname"],
+        "nickname": data["name"],
     }
     database.add_new_user(data)
 
 
 def signin(database, data: dict):
-    search_re = database.simple_search("user_table", "id=\"{}\"".format(data["id"]))
+    search_re = database.simple_search("Users", "id=\"{}\"".format(data["id"]))
     if search_re:
-        id, password, email, time_joined, _, nickname, _ = search_re[0]
+        id, password, email, time_joined, _, name, _ = search_re[0]
     else:
         return 101
     if password == data["password"]:

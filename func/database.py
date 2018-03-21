@@ -18,7 +18,7 @@ class Database:
     def add_new_user(self, data):
         conn = sqlite3.connect(self.name)
         c = conn.cursor()
-        table_name = "user_table"
+        table_name = "Users"
         headers = "id, password, email, name, time_joined"
         judge = lambda x: False if isinstance(x, str) else True
         quotation = lambda x: "\"" + x + "\""
