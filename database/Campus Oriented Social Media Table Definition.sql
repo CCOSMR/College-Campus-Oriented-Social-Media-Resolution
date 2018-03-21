@@ -140,7 +140,7 @@ create table Tag (
   statistics integer
 );
 
-create table At (
+create table Mention (
   user_id integer not null,
   sub_id integer not null,
   position integer Not null check (position >= 0),
