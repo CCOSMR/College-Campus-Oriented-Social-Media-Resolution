@@ -20,7 +20,7 @@ create table Users (
   time_joined datetime,
   type integer,
   name varchar(255),
-  dscr varchar(4096),
+  dscr varchar(4096)
 );
  
 create table Follow (
