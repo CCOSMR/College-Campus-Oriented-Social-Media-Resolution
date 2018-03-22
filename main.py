@@ -22,7 +22,7 @@ def test():
         return flask.request.remote_addr
     elif flask.request.method == "POST":
         data = server.get_json()
-        return data
+        return str(data)
 
 
 @app.route("/signup", methods=["GET", "POST"])
@@ -47,6 +47,7 @@ def signin():
         if status == 200:
             flask.session["id"] = data["id"]
             flask.session["time_signed"] = int(time.time())
+            return flask.redirect("/")
         return str(status)
 
 
@@ -71,5 +72,5 @@ def search():
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=80)
-    # app.run()
+    # app.run(host='0.0.0.0', port=80)
+    app.run()
