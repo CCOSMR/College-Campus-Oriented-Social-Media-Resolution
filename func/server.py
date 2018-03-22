@@ -5,6 +5,12 @@ import json
 from func import verified_code
 
 
+def get_json():
+    data = str(flask.request.get_data(), encoding="UTF-8")
+    dict = json.loads(data)
+    return dict
+
+
 def signup(database, data: dict):
     if database.simple_search("Users", "id = \"{}\"".format(data["id"])):
         return 101
