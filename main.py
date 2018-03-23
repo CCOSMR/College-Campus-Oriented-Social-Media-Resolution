@@ -41,7 +41,7 @@ def login():
         return flask.render_template('login.html')
     elif flask.request.method == "POST":
         data = server.get_json()
-        status = server.signin(db, data)
+        status = server.login(db, data)
         if status == 200:
             flask.session["id"] = data["id"]
             flask.session["time_signed"] = int(time.time())
@@ -75,5 +75,5 @@ def send_js(path):
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=80)
-    # app.run()
+    # app.run(host='0.0.0.0', port=80)
+    app.run()
