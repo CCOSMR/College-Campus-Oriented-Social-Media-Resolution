@@ -3,7 +3,7 @@ import time
 from func import server
 from func import database
 
-app = flask.Flask(__name__)
+app = flask.Flask(__name__, static_url_path='/static')
 app.secret_key = '\xddIHij\x90\xc3\x89\xc9\xae\t0\xe0 \xbbz\xc5\xe7\x14o\xd1\ra\x0e'
 
 db = database.Database("CCOSMR.db")
@@ -13,7 +13,7 @@ db = database.Database("CCOSMR.db")
 def default():
     if 'id' in flask.session:
         return 'Logged in as %s' % flask.escape(flask.session['id'])
-    return flask.redirect("https://github.com/CCOSMR/College-Campus-Oriented-Social-Media-Resolution")
+    return flask.redirect("/login")
 
 
 @app.route("/test", methods=["GET", "POST"])
@@ -25,23 +25,21 @@ def test():
         return str(data)
 
 
-@app.route("/signup", methods=["GET", "POST"])
+@app.route("/register", methods=["GET", "POST"])
 def signup():
     if flask.request.method == "GET":
-        return "Under development"
+        return flask.render_template('register.html')
     elif flask.request.method == "POST":
-        # data = flask.request.get_json()
         data = server.get_json()
         status = server.signup(db, data)
         return str(status)
 
 
-@app.route("/signin", methods=["GET", "POST"])
-def signin():
+@app.route("/login", methods=["GET", "POST"])
+def login():
     if flask.request.method == "GET":
-        return "Under development"
+        return flask.render_template('login.html')
     elif flask.request.method == "POST":
-        # data = flask.request.get_json()
         data = server.get_json()
         status = server.signin(db, data)
         if status == 200:
@@ -71,6 +69,11 @@ def search():
     pass
 
 
+@app.route('/<path:path>')
+def send_js(path):
+    return app.send_static_file(path)
+
+
 if __name__ == "__main__":
-    # app.run(host='0.0.0.0', port=80)
-    app.run()
+    app.run(host='0.0.0.0', port=80)
+    # app.run()
