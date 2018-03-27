@@ -30,7 +30,7 @@ def signup(database, data: dict):
     database.add_new_user(data)
 
 
-def signin(database, data: dict):
+def login(database, data: dict):
     search_re = database.simple_search("Users", "id=\"{}\"".format(data["id"]))
     if search_re:
         id, password, email, time_joined, _, name, _ = search_re[0]
