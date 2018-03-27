@@ -10,6 +10,7 @@ create table University (
   city_id integer,
   name varchar(255) not null unique,
   dscr Varchar(4096),
+  website varchar(1024),
   foreign key(city_id) references City(id)
 );
  
@@ -19,6 +20,7 @@ create table Users (
   email varchar(255) unique, -- constraint user_email_format check (prefix REGEXP '^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$'),
   time_joined datetime,
   type integer,
+  activity real,
   name varchar(255),
   dscr varchar(4096)
 );
@@ -38,6 +40,10 @@ create table Sub ( -- submission
   id integer not null primary key,
   poster_id integer,
   time_posted datetime,
+  publicity integer not none default 0,
+  likes integer default 0,
+  dislikes integer default 0,
+  comments integer default 0,
   foreign key (poster_id) references Users(id)
 );
 
@@ -62,6 +68,15 @@ create table Likes (
   user_id integer,
   time_liked datetime,
   seen bool,
+  primary key (sub_id, user_id),
+  foreign key (sub_id) references Sub(id),
+  foreign key (user_id) references Users(id)
+);
+
+create table Dislikes (
+  sub_id integer,
+  user_id integer,
+  time_liked datetime,
   primary key (sub_id, user_id),
   foreign key (sub_id) references Sub(id),
   foreign key (user_id) references Users(id)
@@ -100,7 +115,11 @@ create table Users_Student (
   user_id integer primary key,
   college_id INTEGER,
   date_enrolled date,
+  student_id integer,
+  student_username varchar(255),
+  student_password varchar(255),
   status varchar(255),
+  review_quality real,
   foreign key (user_id) references Users(id),
   foreign key (college_id) references College(id)
 );
@@ -123,6 +142,7 @@ create table Review (
   rating integer,
   anonymous bool not null,
   seen bool,
+  quality real,
   foreign key (id) references Sub(id),
   foreign key (user_id) references Users(id)
 );
