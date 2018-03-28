@@ -5,7 +5,9 @@
 	<title>CCOSMR</title>
 	<link rel="stylesheet" type="text/css" href="style/register-login.css">
 	<link rel="stylesheet" href="css/style.css">
+	
 	<script>
+	
 	function request_signup() {
 		var id = document.getElementById("id").value;
 		var password = document.getElementById("password").value;
@@ -13,18 +15,29 @@
 		var email = document.getElementById("email").value;
 		var captcha = document.getElementById("captcha").value;
 		var data = JSON.stringify({"id":id,"password":password,"email":email,"name":name,"captcha":captcha});
-		<!-- $.ajaxSetup({ -->
-		  <!-- contentType: "application/json; charset=utf-8", -->
-		<!-- }); -->
-		
-		$.post("/signup",
+		$.post("/register",
 			data,
 			function(){
 				//alert("success");
 			});
-			
-		
 	}
+	
+	function enter_password() {
+		document.getElementById('confirm_message').innerHTML = "";
+		document.getElementById('submit').disabled = true;
+	}
+	
+	function check_password() {
+		if (document.getElementById('password').value ==
+			document.getElementById('confirm_password').value) {
+				document.getElementById('confirm_message').innerHTML = "Correct";
+				document.getElementById('submit').disabled = false;
+		} else {
+			document.getElementById('confirm_message').innerHTML = "<div class='alert alert-danger' role='alert'>Your passwords don't match</div>";
+			document.getElementById('submit').disabled = true;
+		}
+	}
+		
 	</script>
 </head>
 <body>
@@ -52,20 +65,21 @@
                                     <legend>Sign up</legend>
                                     <div class="form-group">
                                         <label for="exampleInputName">Choose your ID:</label>
-										<input type="text" class="form-control" name="id" id="id" class="ipt" placeholder="User ID" required>
+										<input type="text" class="form-control" name="id" id="id" class="ipt" placeholder="User ID" required />
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputName">Display name:</label>
-										<input type="text" class="form-control" name="name" id="name" class="ipt" placeholder="Display name" required>
+										<input type="text" class="form-control" name="name" id="name" class="ipt" placeholder="Display name" required />
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail">Set a password:</label>
-										<input type="password" class="form-control" name="password" id="password" class="ipt" placeholder="Password" required>
+										<input type="password" class="form-control" name="password" id="password" class="ipt" placeholder="Password" required onchange='enter_password();' / >
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail">Confirm password:</label>
-										<input type="password" class="form-control" name="confirm_password" id="confirm_password" class="ipt" placeholder=" Confirm Password" required>
+										<input type="password" class="form-control" name="confirm_password" id="confirm_password" class="ipt" placeholder=" Confirm Password" required  onchange='check_password();' />
                                     </div>
+									<p id='confirm_message'></p>
                                     <div class="form-group">
                                         <label for="exampleInputName">Email:</label>
 										<input type="email" class="form-control" name="email" id="email" class="ipt" placeholder="Email" required>
@@ -74,7 +88,7 @@
                                         <label for="exampleInputName">Captcha:</label>
 										<input type="text" class="form-control" name="captcha" id="captcha" class="ipt" placeholder="Captcha" required>
                                     </div>
-									<button class="btn btn-secondary btn-lg" onclick="request_signup();" role="button">Sign up</button>
+									<button class="btn btn-secondary btn-lg" id="submit" onclick="request_signup();" role="button" disabled=true>Sign up</button>
                                 </fieldset>
                         </div>
                         <!-- Sidebar -->
