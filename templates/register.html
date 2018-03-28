@@ -14,6 +14,13 @@
 	var warning_password_regex = /@|#|\$|\^|&|\(|\)\+|=|!|`|~|\{|\}|\[|\]|\\|\:|\;|\'|\"|\<|\>|\,|\.|\?|\/|%|\*|\s/g
 	var email_regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 	
+	var captcha_regex = /^[a-zA-Z0-9]{3,24}$/i
+	
+	function fetch_captcha() {
+		var d=new Date();
+		document.getElementById("captcha_image").innerHTML = "<image style='vertical-align:middle' src='/captcha?height=220&width=100&time="+d.getTime()+"'>";		
+	}
+	
 	function request_signup() {
 		var id = document.getElementById("id").value;
 		var password = document.getElementById("password").value;
@@ -125,8 +132,23 @@
 		}
 	}
 	
+	function enter_captcha() {
+		if (document.getElementById('captcha').value.length != 4) {
+			document.getElementById('captcha_message').innerHTML = "<div class='alert alert-danger' role='alert'>Captcha is 4-digits long</div>";
+			return false;
+		}
+		else if (captcha_regex.test(document.getElementById('captcha').value)==false) {
+			document.getElementById('captcha_message').innerHTML = "<div class='alert alert-danger' role='alert'>Captcha only contains letters and numbers</div>";
+			return false;
+		}
+		else {
+			document.getElementById('captcha_message').innerHTML = "";
+			return true;
+		}
+	}
+	
 	function check_form() {
-		if (enter_id() == true && enter_name()== true && enter_password() == true && check_password () == true && enter_email() == true) {
+		if (enter_id() == true && enter_name()== true && enter_password() == true && check_password () == true && enter_email() == true && enter_captcha() == true) {
 			request_signup();
 		}
 		else {
@@ -135,7 +157,7 @@
 	}
 	</script>
 </head>
-<body>
+<body onload='fetch_captcha();'>
 		
             <div id="content-wrapper">
                 
@@ -185,9 +207,15 @@
 									<p id='email_message'></p>
                                     <div class="form-group">
                                         <label for="exampleInputName">Captcha:</label>
-										<input type="text" class="form-control" name="captcha" id="captcha" class="ipt" placeholder="Captcha" required>
+										<div id="captcha_image" style='display: flex; align-items: center; justify-content: center'>
+										</div>
+										<a href="" onclick="fetch_captcha();" class="fa fa-info">Refresh Captcha</a>
+										<input type="text" class="form-control" name="captcha" id="captcha" class="ipt" placeholder="Captcha" required  onchange='enter_captcha();'>
                                     </div>
+										<p id='captcha_message'></p>
+                                    <div class="form-group">
 									<button class="btn btn-secondary btn-lg" id="submit" onclick="check_form();" role="button">Sign up</button>
+									</div>
                                 </fieldset>
                         </div>
                         <!-- Sidebar -->
