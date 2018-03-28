@@ -22,7 +22,10 @@ class Database:
         headers = "id, password, email, name, time_joined"
         judge = lambda x: False if isinstance(x, str) else True
         quotation = lambda x: "\"" + x + "\""
-        values = ", ".join([str(i) if judge(i) else quotation(i) for i in data.values()]) + ", DATETIME(\"now\")"
+        values = str()
+        for i in ["id", "password", "email", "name"]:
+            values += quotation(data[i]) + ", "
+        values += "DATETIME(\"now\")"
         operation = "INSERT INTO {} ({}) VALUES ({})".format(table_name, headers, values)
         print(operation)
         c.execute(operation)

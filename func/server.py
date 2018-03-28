@@ -14,7 +14,7 @@ def get_json():
 def register(database, data: dict):
     if database.simple_search("Users", "id = \"{}\"".format(data["id"])):
         return 101
-    if data["password"] != data["confirm"]:
+    if database.simple_search("Users", "email = \"{}\"".format(data["email"])):
         return 102
     if len(data["email"]) > 7:
         pattern = "^.+\\@(\\[?)[a-zA-Z0-9\\-\\.]+\\.([a-zA-Z]{2,3}|[0-9]{1,3})(\\]?)$"
@@ -25,7 +25,7 @@ def register(database, data: dict):
         "id": data["id"],
         "password": data["password"],
         "email": data["email"],
-        "nickname": data["name"],
+        "name": data["name"],
     }
     database.add_new_user(data)
 
