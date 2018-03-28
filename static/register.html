@@ -3,105 +3,100 @@
 <head>
 	<meta charset="utf-8">
 	<title>CCOSMR</title>
-	<meta author="zrong.me 曾荣">
 	<link rel="stylesheet" type="text/css" href="style/register-login.css">
+	<link rel="stylesheet" href="css/style.css">
+	<script>
+	function request_signup() {
+		var id = document.getElementById("id").value;
+		var password = document.getElementById("password").value;
+		var name = document.getElementById("name").value;
+		var email = document.getElementById("email").value;
+		var captcha = document.getElementById("captcha").value;
+		var data = JSON.stringify({"id":id,"password":password,"email":email,"name":name,"captcha":captcha});
+		<!-- $.ajaxSetup({ -->
+		  <!-- contentType: "application/json; charset=utf-8", -->
+		<!-- }); -->
+		
+		$.post("/signup",
+			data,
+			function(){
+				//alert("success");
+			});
+			
+		
+	}
+	</script>
 </head>
 <body>
-<div id="box"></div>
-<div class="cent-box register-box">
-	<div class="cent-box-header">
-		<h1 class="main-title hide">CCOSMR</h1>
-		<h2 class="sub-title">Enjoy school, enjoy life</h2>
+		
+            <div id="content-wrapper">
+                
+                <!-- Jumbtron / Slider -->
+				<header>
+                <div>
+                            <h1 class="text-center">CCOSMR</h1>
+                </div>
+				</header>
+
+                <!-- Main content area -->
+                <main class="container-fluid">
+                    <div class="row">
+                        <!-- Main content -->
+						<aside class="col-md-4">
+                            <div class="sidebar-box">
+							Stuff
+							</div>
+						</aside>
+                        <div class="col-md-4">
+                            <fieldset>
+                                    <legend>Sign up</legend>
+                                    <div class="form-group">
+                                        <label for="exampleInputName">Choose your ID:</label>
+										<input type="text" class="form-control" name="id" id="id" class="ipt" placeholder="User ID" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputName">Display name:</label>
+										<input type="text" class="form-control" name="name" id="name" class="ipt" placeholder="User ID" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail">Set a password:</label>
+										<input type="password" class="form-control" name="password" id="password" class="ipt" placeholder="Password" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail">Confirm password:</label>
+										<input type="password" class="form-control" name="confirm_password" id="confirm_password" class="ipt" placeholder="Password" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputName">Email:</label>
+										<input type="email" class="form-control" name="email" id="email" class="ipt" placeholder="User ID" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputName">Captcha:</label>
+										<input type="text" class="form-control" name="captcha" id="captcha" class="ipt" placeholder="User ID" required>
+                                    </div>
+									<button class="btn btn-secondary btn-lg" onclick="request_signup();" role="button">Sign up</button>
+                                </fieldset>
+                        </div>
+                        <!-- Sidebar -->
+                        <aside class="col-md-4">
+                            <div class="sidebar-box">
+								Also stuff here
+                                
+                            </div>
+
+                            <div class="sidebar-box sidebar-box-bg">
+							More stuff
+                            </div>
+                        </aside> 
+                    </div> 
+                </main>
+
 	</div>
+	
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"/>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-	<div class="cont-main clearfix">
-		<div class="index-tab">
-			<div class="index-slide-nav">
-				<a href="login.html">登录</a>
-				<a href="register.html" class="active">注册</a>
-				<div class="slide-bar slide-bar1"></div>				
-			</div>
-		</div>
-
-		<div class="login form">
-			<div class="group">
-				<div class="group-ipt email">
-					<input type="email" name="email" id="email" class="ipt" placeholder="邮箱地址" required>
-				</div>
-				<div class="group-ipt user">
-					<input type="text" name="user" id="user" class="ipt" placeholder="选择一个用户名" required>
-				</div>
-				<div class="group-ipt password">
-					<input type="password" name="password" id="password" class="ipt" placeholder="设置登录密码" required>
-				</div>
-				<div class="group-ipt password1">
-					<input type="password" name="password1" id="password1" class="ipt" placeholder="重复密码" required>
-				</div>
-				<div class="group-ipt verify">
-					<input type="text" name="verify" id="verify" class="ipt" placeholder="输入验证码" required>
-					<img src="http://zrong.me/home/index/imgcode?id=" class="imgcode">
-				</div>
-			</div>
-		</div>
-
-		<div class="button">
-			<button type="submit" class="login-btn register-btn" id="button"  onclick="javascript:window.location.href='homepage.html';">注册</button>
-		</div>
-	</div>
-</div>
-
-<div class="footer">
-	<p>CCOSRM- Collge-Campus-Oriented-Social-Media-Resolution</p>
-	<p>Designed By 2018</p>
-</div>
-
-<script src='js/particles.js' type="text/javascript"></script>
-<script src='js/background.js' type="text/javascript"></script>
-<script src='js/jquery.min.js' type="text/javascript"></script>
-<script src='js/layer/layer.js' type="text/javascript"></script>
-<script src='js/index.js' type="text/javascript"></script>
-<script>
-	$('.imgcode').hover(function(){
-		layer.tips("看不清？点击更换", '.verify', {
-        		time: 6000,
-        		tips: [2, "#3c3c3c"]
-    		})
-	},function(){
-		layer.closeAll('tips');
-	}).click(function(){
-		$(this).attr('src','http://zrong.me/home/index/imgcode?id=' + Math.random());
-	})
-
-	$(".login-btn").click(function(){
-		var email = $("#email").val();
-		var password = $("#password").val();
-		var verify = $("#verify").val();
-		// $.ajax({
-		// url: 'http://www.zrong.me/home/index/userLogin',
-		// type: 'post',
-		// jsonp: 'jsonpcallback',
-  //       jsonpCallback: "flightHandler",
-		// async: false,
-		// data: {
-		// 	'email':email,
-		// 	'password':password,
-		// 	'verify':verify
-		// },
-		// success: function(data){
-		// 	info = data.status;
-		// 	layer.msg(info);
-		// }
-		// })
-
-	})
-	$("#remember-me").click(function(){
-		var n = document.getElementById("remember-me").checked;
-		if(n){
-			$(".zt").show();
-		}else{
-			$(".zt").hide();
-		}
-	})
-</script>
 </body>
 </html>
