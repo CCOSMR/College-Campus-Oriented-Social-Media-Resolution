@@ -11,7 +11,7 @@ def get_json():
     return dict
 
 
-def signup(database, data: dict):
+def register(database, data: dict):
     if database.simple_search("Users", "id = \"{}\"".format(data["id"])):
         return 101
     if data["password"] != data["confirm"]:

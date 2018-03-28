@@ -26,12 +26,12 @@ def test():
 
 
 @app.route("/register", methods=["GET", "POST"])
-def signup():
+def register():
     if flask.request.method == "GET":
         return flask.render_template('register.html')
     elif flask.request.method == "POST":
         data = server.get_json()
-        status = server.signup(db, data)
+        status = server.register(db, data)
         return str(status)
 
 
@@ -75,5 +75,5 @@ def send_js(path):
 
 
 if __name__ == "__main__":
-    # app.run(host='0.0.0.0', port=80)
-    app.run()
+    app.run(host='0.0.0.0', port=80)
+    # app.run()
