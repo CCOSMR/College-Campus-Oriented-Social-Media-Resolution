@@ -10,7 +10,7 @@ from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
 # 字体的位置，不同版本的系统会有不同
 
-font_path = 'arial.ttf'
+font_path = 'func/arial.ttf'
 
 # 背景颜色，默认为白色
 
