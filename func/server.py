@@ -1,8 +1,6 @@
 import re
 import flask
-import time
 import json
-from func import verified_code
 
 
 def get_json():

@@ -1,7 +1,9 @@
 import flask
 import time
+import io
 from func import server
 from func import database
+from func import captcha
 
 app = flask.Flask(__name__, static_url_path='/static')
 app.secret_key = '\xddIHij\x90\xc3\x89\xc9\xae\t0\xe0 \xbbz\xc5\xe7\x14o\xd1\ra\x0e'
@@ -67,6 +69,26 @@ def addfriend():
 @app.route("/search", methods=["GET", "POST"])
 def search():
     pass
+
+
+@app.route("/captcha", methods=["GET"])
+def gen_captcha():
+    params = flask.request.args.items()
+    dic = {
+        "bits": 4,
+        "height": 100,
+        "width": 60,
+        "minlines": 3,
+        "maxlines": 4
+    }
+    for item in params:
+        key, value = item
+        dic[key] = int(value)
+    text, image = captcha.gene_code(dic["bits"], (dic["height"], dic["width"]), (dic["minlines"], dic["maxlines"]))
+    img_io = io.BytesIO()
+    image.save(img_io, 'PNG')
+    img_io.seek(0)
+    return flask.send_file(img_io, mimetype='image/png', cache_timeout=0)
 
 
 @app.route('/<path:path>')
