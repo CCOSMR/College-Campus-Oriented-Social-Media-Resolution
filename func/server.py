@@ -18,7 +18,8 @@ def register(database, data: dict):
         pattern = "^.+\\@(\\[?)[a-zA-Z0-9\\-\\.]+\\.([a-zA-Z]{2,3}|[0-9]{1,3})(\\]?)$"
         if not re.match(pattern, data["email"]):
             return 104
-    # if data["verifiedcode"]:
+    if data["catpcha"] != flask.session["captcha"]:
+        return 105
     data = {
         "id": data["id"],
         "password": data["password"],

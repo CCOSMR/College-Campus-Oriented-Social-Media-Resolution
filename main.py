@@ -1,9 +1,15 @@
 import flask
 import time
 import io
+import logging
 from func import server
 from func import database
 from func import captcha
+
+LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"
+DATE_FORMAT = "%m/%d/%Y %H:%M:%S %p"
+
+logging.basicConfig(level=logging.INFO, format=LOG_FORMAT, datefmt=DATE_FORMAT)
 
 app = flask.Flask(__name__, static_url_path='/static')
 app.secret_key = '\xddIHij\x90\xc3\x89\xc9\xae\t0\xe0 \xbbz\xc5\xe7\x14o\xd1\ra\x0e'
@@ -88,6 +94,7 @@ def gen_captcha():
     img_io = io.BytesIO()
     image.save(img_io, 'PNG')
     img_io.seek(0)
+    flask.session["captcha"] = text
     return flask.send_file(img_io, mimetype='image/png', cache_timeout=0)
 
 
