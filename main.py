@@ -35,26 +35,51 @@ def test():
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
+    response = {
+        "status": 200
+    }
     if flask.request.method == "GET":
         return flask.render_template('register.html')
     elif flask.request.method == "POST":
         data = server.get_json()
-        status = server.register(db, data)
-        return str(status)
+        response["status"] = server.register(db, data)
+        return flask.jsonify(response)
 
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    response = {
+        "status": 200
+    }
     if flask.request.method == "GET":
         return flask.render_template('login.html')
     elif flask.request.method == "POST":
         data = server.get_json()
-        status = server.login(db, data)
-        if status == 200:
+        response["status"] = server.login(db, data)
+        if response["status"] == 200:
             flask.session["id"] = data["id"]
             flask.session["time_signed"] = int(time.time())
             return flask.redirect("/")
-        return str(status)
+        return flask.jsonify(response)
+
+
+@app.route("/isnametaken", methods=["GET"])
+def isnametaken():
+    response = {
+        "status": 200
+    }
+    params = flask.request.args.items()
+    dic = dict()
+    for item in params:
+        key, value = item
+        dic[key] = value
+    if "id " in dic.keys():
+        if database.simple_search("Users", "id = \"{}\"".format(dic["id"])):
+            response["status"] = 101
+    elif "email" in dic.keys():
+        if database.simple_search("Users", "emails = \"{}\"".format(dic["email"])):
+            response["status"] = 102
+    return flask.jsonify(response)
 
 
 @app.route("/messages", methods=["GET", "POST"])
