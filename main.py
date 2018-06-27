@@ -1,9 +1,11 @@
 import flask
 import time
 import io
+import os
 from func import server
 from func import database
 from func import captcha
+from flask import send_from_directory
 
 app = flask.Flask(__name__, static_url_path='/static')
 app.secret_key = '\xddIHij\x90\xc3\x89\xc9\xae\t0\xe0 \xbbz\xc5\xe7\x14o\xd1\ra\x0e'
@@ -42,14 +44,26 @@ def login():
     if flask.request.method == "GET":
         return flask.render_template('login.html')
     elif flask.request.method == "POST":
+
+        return flask.redirect("/home")
+
+        ################################
+        # add codes for home page here #
+        ################################
+        
         data = server.get_json()
         status = server.login(db, data)
         if status == 200:
             flask.session["id"] = data["id"]
             flask.session["time_signed"] = int(time.time())
-            return flask.redirect("/")
+            return flask.redirect("/home")
         return str(status)
 
+
+@app.route("/home", methods=["GET", "POST"])
+def home():
+    if flask.request.method == "GET":
+        return flask.render_template('home.html')
 
 @app.route("/messages", methods=["GET", "POST"])
 def messages():
@@ -92,10 +106,14 @@ def gen_captcha():
 
 
 @app.route('/<path:path>')
-def send_js(path):
+def send_static(path):
     return app.send_static_file(path)
 
 
+@app.route('/javascript/<path:filename>')
+def serve_static(filename):
+    return send_from_directory('javascript', filename)
+
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=80)
-    # app.run()
+    #app.run(host='0.0.0.0', port=80)
+     app.run()

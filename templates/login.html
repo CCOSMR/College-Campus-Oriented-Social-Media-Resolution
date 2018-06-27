@@ -22,7 +22,6 @@
 		$.post("/login",
 			data,
 			function(){
-				//alert("success");
 			});
 	}
 	
@@ -67,10 +66,6 @@
 			document.getElementById('message').innerHTML = "<div class='alert alert-danger' role='alert'>Invalid user ID or password format</div>";
 			return false;
 		}
-		else if (warning_password_regex.test(document.getElementById('password').value)) {
-			document.getElementById('message').innerHTML = "<div class='alert alert-warning' role='alert'>Invalid user ID or password format</div>";
-			return true;
-		}
 		else {
 			document.getElementById('message').innerHTML = "";
 			return true;
@@ -79,7 +74,7 @@
 	
 	function check_form() {
 		if (enter_id() && enter_password()) {
-			request_login()
+			request_login();
 		}
 	}
 	</script>
