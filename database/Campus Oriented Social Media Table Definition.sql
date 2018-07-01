@@ -40,7 +40,7 @@ create table Sub ( -- submission
   id integer not null primary key,
   poster_id integer,
   time_posted datetime,
-  publicity integer not none default 0,
+  publicity integer not null default 0,
   likes integer default 0,
   dislikes integer default 0,
   comments integer default 0,
