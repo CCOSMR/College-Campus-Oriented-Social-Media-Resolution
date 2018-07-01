@@ -6,12 +6,22 @@ var email_regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))
 
 var captcha_regex = /^[a-zA-Z0-9]{3,24}$/i
 
+
+	
 function fetch_captcha() {
 	var scroll = $(window).scrollTop();
 	var d=new Date();
-	document.getElementById("captcha_image").innerHTML = "<image style='vertical-align:middle' src='/captcha?height=220&width=100&time="+d.getTime()+"'>";	
+	document.getElementById("captcha_image").innerHTML = "<image class='captcha_image' style='vertical-align:middle' src='/captcha?height=220&width=100&time="+d.getTime()+"'>";	
 	$("html").scrollTop(scroll);
+	document.querySelector('.captcha_image').addEventListener('click', function() {
+	  var d=new Date();
+	  var ran = d.getTime();
+	  this.setAttribute('src', '/captcha?height=220&width=100&time='+ran);
+	});
+	return false;
 }
+
+
 
 function request_signup() {
 	var id = document.getElementById("id").value;
