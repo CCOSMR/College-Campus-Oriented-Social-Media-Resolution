@@ -1241,6 +1241,7 @@ pre {
 
 .table-sm th,
 .table-sm td {
+  border: 0px solid;
   padding: 0.3rem; }
 
 .table-bordered {

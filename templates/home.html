@@ -8,156 +8,9 @@
 	
 	<script>
 	
-	var id_regex = /^\w{3,24}$/i
-	var name_regex = /^[\u0000-\uD7AF\uF900-\uFAFF]{1,24}$/u
-	var password_regex = /^(\w|@|#|\$|\^|&|\(|\)|-|\+|=|!|`|~|\{|\}|\[|\]|\\|\:|\;|\'|\"|\<|\>|\,|\.|\?|\/|%|\*|\s){6,24}$/i
-	var warning_password_regex = /@|#|\$|\^|&|\(|\)\+|=|!|`|~|\{|\}|\[|\]|\\|\:|\;|\'|\"|\<|\>|\,|\.|\?|\/|%|\*|\s/g
-	var email_regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-	
-	var captcha_regex = /^[a-zA-Z0-9]{3,24}$/i
-	
-	function fetch_captcha() {
-		var d=new Date();
-		document.getElementById("captcha_image").innerHTML = "<image style='vertical-align:middle' src='/captcha?height=220&width=100&time="+d.getTime()+"'>";		
-	}
-	
-	function request_signup() {
-		var id = document.getElementById("id").value;
-		var password = document.getElementById("password").value;
-		var name = document.getElementById("name").value;
-		var email = document.getElementById("email").value;
-		var captcha = document.getElementById("captcha").value;
-		var data = JSON.stringify({"id":id,"password":password,"email":email,"name":name,"captcha":captcha});
-		$.post("/register",
-			data,
-			function(){
-				//alert("success");
-			});
-	}
-	
-	function enter_id() {
-	
-		if (document.getElementById('id').value.length < 1) {
-			document.getElementById('id_message').innerHTML = "<div class='alert alert-danger' role='alert'>You need to set an ID</div>";
-			return false;
-		}
-		else if (document.getElementById('id').value.length < 3) {
-			document.getElementById('id_message').innerHTML = "<div class='alert alert-danger' role='alert'>Your ID needs to be at lease 3 digits long</div>";
-			return false;
-		}
-		else if (document.getElementById('id').value.length > 24) {
-			document.getElementById('id_message').innerHTML = "<div class='alert alert-danger' role='alert'>Your ID needs to be no more than 24 digits long</div>";
-			return false;
-		}
-		else if (id_regex.test(document.getElementById('id').value)==false) {
-			document.getElementById('id_message').innerHTML = "<div class='alert alert-danger' role='alert'>ID can only contain letters, numbers or underscores</div>";
-			return false;
-		}
-		else {
-			document.getElementById('id_message').innerHTML = "";
-			return true;
-		}
-	}
-	
-	function enter_name() {
-		if (document.getElementById('name').value.length < 1) {
-			document.getElementById('name_message').innerHTML = "<div class='alert alert-danger' role='alert'>Your have to enter a display name</div>";
-			return false;
-		}
-		else if (document.getElementById('name').value.length > 24) {
-			document.getElementById('name_message').innerHTML = "<div class='alert alert-danger' role='alert'>Your display name needs to be no more than 24 digits long</div>";
-			return false;
-		}
-		else if (name_regex.test(document.getElementById('name').value)==false) {
-			document.getElementById('name_message').innerHTML = "<div class='alert alert-danger' role='alert'>Unsupported charactors, must be Unicode 0000 - D7AF</div>";
-			return false;
-		}
-		else {
-			document.getElementById('name_message').innerHTML = "";
-			return true;
-		}
-	}
-	
-	function enter_password() {
-		check_password();
-		if (document.getElementById('password').value.length < 1) {
-			document.getElementById('password_message').innerHTML = "<div class='alert alert-danger' role='alert'>You need to set a password</div>";
-			return false;
-		}
-		else if (document.getElementById('password').value.length < 6) {
-			document.getElementById('password_message').innerHTML = "<div class='alert alert-danger' role='alert'>Password needs to be at lease 6 digits long</div>";
-			return false;
-		}
-		else if (document.getElementById('password').value.length > 24) {
-			document.getElementById('password_message').innerHTML = "<div class='alert alert-danger' role='alert'>Password needs to be no more than 24 digits long</div>";
-			return false;
-		}
-		else if (password_regex.test(document.getElementById('password').value)==false) {
-			document.getElementById('password_message').innerHTML = "<div class='alert alert-danger' role='alert'>Password can only contain letters, numbers, spaces or charactors on a standard keyboard</div>";
-			return false;
-		}
-		else if (warning_password_regex.test(document.getElementById('password').value)) {
-			document.getElementById('password_message').innerHTML = "<div class='alert alert-warning' role='alert'>Unusual charactors detected. Please make sure you can remember this password.</div>";
-			return true;
-		}
-		else {
-			document.getElementById('password_message').innerHTML = "";
-			return true;
-		}
-	}
-	
-	function check_password() {
-		if (document.getElementById('password').value ==
-			document.getElementById('confirm_password').value) {
-				document.getElementById('confirm_message').innerHTML = "<div class='alert alert-success' role='alert'>Your passwords matched</div>";
-				return true;
-		} else {
-			document.getElementById('confirm_message').innerHTML = "<div class='alert alert-danger' role='alert'>Your passwords don't match</div>";
-			return false;
-		}
-	}
-	
-	function enter_email() {
-		if (document.getElementById('email').value.length < 1) {
-			document.getElementById('email_message').innerHTML = "<div class='alert alert-danger' role='alert'>You need to enter an email</div>";
-			return false;
-		}
-		else if (email_regex.test(document.getElementById('email').value)==false) {
-			document.getElementById('email_message').innerHTML = "<div class='alert alert-danger' role='alert'>You have to enter a valid email</div>";
-			return false;
-		}
-		else {
-			document.getElementById('email_message').innerHTML = "";
-			return true;
-		}
-	}
-	
-	function enter_captcha() {
-		if (document.getElementById('captcha').value.length != 4) {
-			document.getElementById('captcha_message').innerHTML = "<div class='alert alert-danger' role='alert'>Captcha is 4-digits long</div>";
-			return false;
-		}
-		else if (captcha_regex.test(document.getElementById('captcha').value)==false) {
-			document.getElementById('captcha_message').innerHTML = "<div class='alert alert-danger' role='alert'>Captcha only contains letters and numbers</div>";
-			return false;
-		}
-		else {
-			document.getElementById('captcha_message').innerHTML = "";
-			return true;
-		}
-	}
-	
-	function check_form() {
-		if (enter_id() == true && enter_name()== true && enter_password() == true && check_password () == true && enter_email() == true && enter_captcha() == true) {
-			request_signup();
-		}
-		else {
-			alert("Please complete the form.");
-		}
-	}
 	</script>
 </head>
-<body onload='fetch_captcha();'>
+<body>
 	<div id="sidebar">
                       
             <div class="navbar-expand-md navbar-dark"> 
@@ -187,33 +40,15 @@
                     <nav class="navbar navbar-dark">
                         <div id="mainNavbar">
                             <ul class="flex-column mr-auto">
-                                <li class="nav-item">
-                                        <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                                <li class="nav-item active dropdown"  style="background-color: #cbecf1;">
+									<a class="nav-link dropdown-toggle" href="#MenuDropdown" data-toggle="collapse" aria-controls="MenuDropdown" aria-expanded="false">Follwing</a>
+									<ul id="MenuDropdown" class="sub-navbar collapse flex-column" style="background-color: #cbecf1;">
+										<li class="nav-item"><a class="nav-link" style="background-color: #cbecf1;">John Smith</a></li>
+										<li class="nav-item"><a class="nav-link" style="background-color: #cbecf1;">Fred James</a></li>
+										<li class="nav-item"><a class="nav-link" style="background-color: #cbecf1;">Rachel Johnson</a></li>
+									</ul>
                                 </li>
 
-                                <li class="nav-item active dropdown">
-                                            <a class="nav-link dropdown-toggle" href="#MenuDropdown" data-toggle="collapse" aria-controls="MenuDropdown" aria-expanded="false">Examples &amp; Pages</a>
-                                            <ul id="MenuDropdown" class="sub-navbar collapse flex-column">
-                                                <li class="nav-item"><a class="nav-link" href="examples.html">Style Examples</a></li>
-                                                <li class="nav-item"><a class="nav-link" href="three-column.html">Three Column</a></li>
-                                                <li class="nav-item"><a class="nav-link" href="one-column.html">One column / no sidebar</a></li>
-                                                <li class="nav-item"><a class="nav-link"  href="text.html">Text / left sidebar</a></li>
-                                                <li class="nav-item"><a class="nav-link"  href="index-right.html">Right navigation</a></li>
-                                            </ul>
-                                </li>
-
-
-                                <li class="nav-item">
-                                        <a class="nav-link" href="#">Services</a>
-                                </li>
-
-                                <li class="nav-item">
-                                        <a class="nav-link" href="#">Products</a>
-                                </li>
-
-                                <li class="nav-item">
-                                        <a class="nav-link" href="#">Contact</a>
-                                </li>
                             </ul>
                         </div>   
                     </nav>
@@ -240,9 +75,42 @@
                     <div class="row">
                         <!-- Main content -->
                         <div class="col-md-8">
-                            <div class="jumbotron" style="background-color: #F8F8F8;">
-								Post 1
-                            </div>
+                            <table width="100%" cellpadding="1000" style="border: 0px solid; background-color: #f8f8f8;"><tr>
+								<td width="3%"></td><td>
+								<table class="table-sm" width="100%">
+									<tr>
+										<td width="10%">image</td>
+										<td>
+											<table class="table-sm">
+												<tr>
+													<td>User display name</td>
+												</tr>
+												<tr>
+													<td>userid</td>
+													<td>time</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+								</table>
+								<table class="table-sm" width="100%">
+									<tr><td>post</td></tr>
+								</table>
+								<table class="table-sm" width="100%">
+									<tr>
+										<table class="table-sm" width="100%">
+											<tr>
+												<td>like</td>
+												<td>dislike</td>
+												<td>comment</td>
+												<td>reply</td>
+												<td>share</td>
+												<td>more</td>
+											</tr>
+										</table>
+									</tr>
+								</table>
+							</td></tr></table>
                         </div>
                         <aside class="col-md-3">
                             <div class="sidebar-box">
