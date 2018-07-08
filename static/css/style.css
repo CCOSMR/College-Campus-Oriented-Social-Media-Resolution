@@ -6874,3 +6874,20 @@ html {
 @media (min-width: 992px) {
   html {
     font-size: 16px; } }
+
+	
+/** new classes here **/
+.excerpt{display:block; width:100%; position:relative; padding-top:20px; padding-bottom:20px; background-color: #f8f8f8;}
+.excerpt img{}
+.excerpt .excerpttxt{display:block; position:relative; max-width:90%; margin:-40px auto; padding:20px;}
+.excerpt .heading{margin:0 0 5px 0;}
+.excerpt p:last-of-type{margin:0; padding:0;}
+.nospace{margin:0; padding:0; list-style:none;}
+.inline *{display:inline-block;}
+.inline *:last-child{margin-right:0;}
+.pushright li{margin-right:20px;}
+.pushright li:last-child{margin-right:0;}
+.font-xs{font-size:.8rem;}
+.font-x1{font-size:1.2rem;}
+.font-x2{font-size:1.8rem;}
+.font-x3{font-size:2.8rem;}
