@@ -89,9 +89,24 @@ def searchcourse():
         return flask.jsonify(result)
 
 
-@app.route("/messages", methods=["GET", "POST"])
-def messages():
-    pass
+@app.route("/request_posts", methods=["POST"])
+def request_posts():
+    data = server.get_json()
+    # result = server.request_posts(id=flask.session["id"], dir=data["type"], time=data["time_stamp"], num=5)
+    result = []
+    temp = {
+        "post_id": 653254,
+        "poster_id": 123,
+        "poster_name": "John",
+        "time": 1531043208,
+        "content": "very good",
+        "likes": 1,
+        "dislikes": 1,
+        "comments": 1
+    }
+    for i in range(5):
+        result.append(temp)
+    return flask.jsonify(result)
 
 
 @app.route("/myfriends", methods=["GET", "POST"])
