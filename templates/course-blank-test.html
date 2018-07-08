@@ -21,6 +21,11 @@
 			});
 	}
 	
+    var b=document.getElementById("searchbutton");
+    b.onclick=function(){
+        request_searchcourse();
+    }
+
     </script>    
 </head>
 <body>
@@ -36,7 +41,8 @@
         <div align="left" style="background-color:white ; width:400px ; height: 800px;border:1px solid #000;float:left">
             <form>
                 <input type="search" name="coursename" id="mysearch"/ >
-                <input type="submit" value="Submit"/><br/>
+                <button id="searchbutton">Search</button>
+                <!--<input type="submit" value="Submit"/><br/>-->
                 <h2>筛选条件：</h2><br/>
                 <h3>年级：</h3>
                 <input type="radio" name="garde" value="1"/>大一<br/>
