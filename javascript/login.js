@@ -12,12 +12,12 @@ var id_regex = /^\w{3,24}$/i
 			data,
 			function(response){
 				
-				if(reponse["status"]==false) {
+				if(response.status==false) {
 					document.getElementById('message').innerHTML = 
 						"<div class='alert alert-danger' role='alert'>Username and password does not match.</div>";
 				}
 				else {
-				 $.get("/home");
+					window.location.href = '/home';
 				}
 			});
 	}

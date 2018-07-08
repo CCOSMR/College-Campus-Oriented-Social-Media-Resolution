@@ -1,31 +1,39 @@
-var last_refresh_time = Date.now();
+var time_stamp = Date.now();
 var earliest_post_id = -1;
 var post_count = 0;
 var post_ids = [];
+const monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
 
 jQuery(function($) {
 	jQuery(window).scroll(function(){
 	 var ScrollTop = jQuery(window).scrollTop();
 	 var data;
-	 var data = JSON.stringify({"last_refresh_time":last_refresh_time,"earliest_post_id":earliest_post_id});
+	 var data = JSON.stringify({"time_stamp":time_stamp,"type":"backward"});
 	 
 	 if ($(this).scrollTop() + $(window).innerHeight() + 1 >= $("#content-wrapper").innerHeight()) { 
-	  alert("Load data");
-	  alert(Date.now());
-	  insert_post(1, 1, 1, 1, 1, 1, 1);
+		
 	  $.post("/request_posts",
 			data,
-			function(){
-				
+			function(response){
+				for (var i = 0; i < response.length; i++) {
+					insert_post(response[i].poster_id, response[i].poster_name, response[i].time, 
+						response[i].content, response[i].likes, response[i].dislikes, response[i].comments);
+				}
 			});
 	 }
 	 });
 	 
-	 last_refresh_time = Date.now();
+	 time_stamp = Date.now();
 });
 
 
-function insert_post(poster_id, poster_display_name, time, content, likes, dislikes, comments) {
+function insert_post(poster_id, poster_name, time, content, likes, dislikes, comments) {
+	var date = new Date(time);
+	var time_string = date.getDay() + ', ' 
+                  + monthNames[date.getMonth()] + ', '
+                  + date.getFullYear();
 	new_post = `<article class="excerpt">
 								<div class="excerpttxt">
 									
@@ -33,20 +41,20 @@ function insert_post(poster_id, poster_display_name, time, content, likes, disli
 									<ul class="nospace inline pushright font-xs">
 										<li>
 											<ul class="nospace inline pushright font-xs">
-												<li><h6 class="heading">Posuere lorem placerat</h6></li>
+												<li><h6 class="heading">`+ poster_name + `</h6></li>
 												<ul class="nospace inline pushright font-xs">
-													<li><i class="fa fa-comments"></i> <a href="#">@user_id</a></li>
-													<li><i class="fa fa-calendar-o"></i> 02/01/45</li>
+													<li><i class="fa fa-comments"></i> <a href="#">` + poster_id + `</a></li>
+													<li><i class="fa fa-calendar-o"></i>` + time_string + `</li>
 												</ul>
 											</ul>
 										</li>
 									</ul>
-									<p>Nunc non erat molestie faucibus duis aliquam rutrum sapien non pretium tortor lacinia auctor donec et ullamcorper lacus&hellip;</p>
+									<p>` + content + `</p>
 									
 									<ul class="nospace inline pushright font-xs">
-									  <li><i class="fa fa-calendar-o"></i> 02/01/45</li>
-									  <li><i class="fa fa-comments"></i> <a href="#">4</a></li>
-									  <li><i class="fa fa-eye"></i> 10</li>
+									  <li><i class="fa fa-calendar-o"></i>` + likes + `</li>
+									  <li><i class="fa fa-comments"></i>` + dislikes + `</li>
+									  <li><i class="fa fa-eye"></i>` + comments + `</li>
 									</ul>
 								</div>
 							</article>  `

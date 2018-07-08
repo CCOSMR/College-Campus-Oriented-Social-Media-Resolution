@@ -33,7 +33,7 @@ function request_signup() {
 	$.post("/register",
 		data,
 		function(datar){
-			if(datar.status== 200)
+			if(datar.status== true)
 				{window.location = datar.url;}
 			else
             {
