@@ -37,9 +37,11 @@ def register():
     elif flask.request.method == "POST":
         data = server.get_json()
         status = server.register(db, data)
-        if status == 200:
-            return json.dumps({"status": status, "url": flask.url_for('login')})  # 注册完毕跳转到登录
-        return json.dumps({"status": status, "url": flask.url_for('register')})
+        if status == True:
+            result = {"status": status, "url": flask.url_for('login')}
+            return flask.jsonify(result)
+        result = {"status": status, "url": None}
+        return flask.jsonify(result)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -47,12 +49,6 @@ def login():
     if flask.request.method == "GET":
         return flask.render_template('login.html')
     elif flask.request.method == "POST":
-        # return flask.redirect("/home",302)
-
-        ################################
-        # add codes for home page here #
-        ################################
-
         data = server.get_json()
         status = server.login(db, data)
         print(flask.session, status)
@@ -70,9 +66,6 @@ def login():
                 "url": None
             }
             return flask.jsonify(result)
-        # return flask.url_for('home')
-        # flask.session.clear()
-        # return json.dumps({"status": status, "url": flask.url_for('login')})
 
 
 @app.route("/home", methods=["GET", "POST"])
