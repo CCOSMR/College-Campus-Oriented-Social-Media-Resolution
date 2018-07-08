@@ -15,9 +15,6 @@ db = database.Database("CCOSMR.db")
 
 @app.route("/")
 def default():
-    # return flask.render_template('home.html')
-    # if 'id' in flask.session:
-    #    return 'Logged in as %s' % flask.escape(flask.session['id'])
     return flask.redirect("/login")
 
 
@@ -74,10 +71,28 @@ def home():
         return flask.render_template('home.html')
 
 
-@app.route("/searchcourse", methods=["GET", "POST"])
+@app.route("/course", methods=["GET", "POST"])
 def searchcourse():
     if flask.request.method == "GET":
-        return flask.render_template('course-blank-test.html')
+        id = flask.request.args.get('courseid')
+        if not id:
+            return flask.render_template('course.html')
+        else:
+            # data = server.course_detail(db, id)
+            data = {
+                "id": 1231231,
+                "teacher": "SSS",
+                "name": "Dajiba",
+                "dscr": "chui niu bi",
+                "ave_rating": 10,
+                "location": "sushe",
+                "schedule": "wan"
+            }
+            if data:
+                return flask.render_template('courseinformation.html', name=data["name"], location=data["location"],
+                                             teachername=data["teacher"], desc=data["dscr"], avg=data["ave_rating"])
+            else:
+                pass
     elif flask.request.method == "POST":
         data = server.get_json()
         # result = server.searchcourse(db, data["search"]

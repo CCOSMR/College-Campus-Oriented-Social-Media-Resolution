@@ -57,3 +57,24 @@ def searchcourse(database, name: str):
             }
             result.append(temp)
     return result
+
+
+def course_detail(database, id):
+    search_re = database.simple_search("Course", "id={}".format(id))[0]
+    if search_re:
+        teacher = database.simple_search("Teacher", "id={}".format(search_re[1]))[0]
+        result = {
+            "id": search_re[0],
+            "teacher": teacher[3],
+            "name": search_re[2],
+            "dscr": search_re[3],
+            "ave_rating": search_re[4],
+            "location": search_re[5],
+            "schedule": search_re[6]
+        }
+        return result
+    return False
+
+
+def request_posts(id, dir, time, num=5):
+    pass
