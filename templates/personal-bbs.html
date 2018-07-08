@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+	<title>CCOSMR-bbs</title>
+    	
+    	<link rel="stylesheet" type="text/css" href="css/bbs.css">
+</head>
+<body>
+   
+    <!-- 下面实现留言板功能 -->
+    <div class="mainframe">
+    	<div class="title">留言板</div>
+    	<div class="message">主人寄语</div>
+    	<div class="info">
+    	给主人留言~
+    	</div>
+    	<div class="content" contenteditable="true"></div>
+    	<input type="button" name="submit" value="发表" class="subbtn">
+    	<div class="numofmessage">留言(0)</div>
+    	<!-- 下面是留言区 -->
+    	<div class="msgFrame">
+    	  
+
+    	    </div>
+         </div>
+    </div>
+</body>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript">
+   $(".zoneName").hover(function(){
+   	   $(".edit").show();
+   },function(){
+   	   $(".edit").delay(500).hide(0);//延时执行
+   })
+   //鼠标响应事件
+   $(".support").mouseover(function(e){
+   	   var left=e.pageX;
+   	   var top=e.pageY;
+   	   top=top-41;
+   	   top=top+25;
+   	   console.log(left+"px"+"   top:"+top)
+   	   $(".tips").css({"left":left+"px","top":top+"px"});
+   	 
+   	   $(".tips").fadeIn();
+   })
+   
+   $(".support").mouseleave(function(){
+   	   console.log("leave");
+   
+   	    $(".tips").fadeOut();
+   })
+
+   //修改头像
+  /*$(".photo").hover(function(){
+   	   $(".uploadphoto").delay(800).show(0);
+   },function(){
+   	   $(".uploadphoto").hide();
+   }) 
+   $(".uploadphoto").hover(function(){
+   	   if ($(this).is(":visible")) {
+          console.log("visible")
+   	   }
+   	   else
+   	   $(".uploadphoto").show();
+   })*/
+   //创建一个div
+    function creatDiv(className,closeName,left,top){
+          var div =$('<div style="left:' + left + 'px; top:' + top + 'px;"></div>');     
+          div.addClass(className);
+          $('body').append(div);
+          left+=360;
+          var close=$('<div style="left:' + left + 'px; top:' + top + 'px;"></div>'); 
+          close.addClass(closeName);
+          $('body').append(close);
+      }     
+   $(".uploadphoto").click(function(){
+   	   var className='dialog';
+   	   var closeName="close";
+   	   console.log("点击上传");
+   	   creatDiv(className,closeName,500,200);   
+   	   $(".close").bind("click",function(){
+   	   	      	  $(".dialog").remove();
+   	              $(".close").remove();
+   	              console.log("关闭成功");
+   	              $(".uploadphoto").hide();
+   	   });
+   })
+   
+   var count=0;
+   $(".subbtn").click(function(){
+   	 var text= $(".content").text();
+   	 var time=getCurrentTime();
+   	 if(text==""){
+   	 	alert("您还没有输入任何内容！");
+   	 }
+   	 else{
+   	 	loadmessage(text,'Username',time);
+   	 	count++;
+   	 	console.log('success!');
+   	 	$(".content").text("");
+   	 	$(".numofmessage").text("留言("+count+")");
+   	 }
+   })
+   function loadmessage(message,id,time){
+      	//创建content_index
+      	//包含img.name + mainInfo
+      	//.userId .conInfo .time
+      	var contentDiv='<div class="content_1">';
+      	   contentDiv+='<img class="name" src="images/image1.png" alt="photo">';
+      	   contentDiv+='<div class="mainInfo">'
+      	   contentDiv+=' <div class="userId"><a href="#">';
+      	   contentDiv+=id;
+      	   contentDiv+='</a></div> <div class="conInfo">';
+      	   contentDiv+=message;
+      	   contentDiv+='</div> <div class="time">';
+      	   contentDiv+=time;
+      	   contentDiv+='</div> </div> </div>'
+           $(".msgFrame").prepend(contentDiv);
+   }
+
+   //获取当前时间
+   function getCurrentTime(){
+   	   var today=new Date();
+   	   var y=today.getFullYear();
+   	   var mh=today.getMonth();
+   	   mh++;
+   	   var d=today.getDate();
+   	   var h=today.getHours();
+   	   var m=today.getMinutes();
+   	   var s=today.getSeconds();
+   	   m=checkTime(m)
+       s=checkTime(s)
+       var time=y+"-"+mh+"-"+d+"  "+h+":"+m+":"+s;
+       return time;
+   }
+   function checkTime(i){
+       if(i<10)
+         i="0"+i
+       return i
+    }
+
+</script>
+</html>
