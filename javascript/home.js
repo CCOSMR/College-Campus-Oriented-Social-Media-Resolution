@@ -1,6 +1,7 @@
 var last_refresh_time = Date.now();
 var earliest_post_id = -1;
 var post_count = 0;
+var post_ids = [];
 
 jQuery(function($) {
 	jQuery(window).scroll(function(){
@@ -12,11 +13,11 @@ jQuery(function($) {
 	  alert("Load data");
 	  alert(Date.now());
 	  insert_post(1, 1, 1, 1, 1, 1, 1);
-	  // $.post("/home",
-			// data,
-			// function(){
+	  $.post("/request_posts",
+			data,
+			function(){
 				
-			// });
+			});
 	 }
 	 });
 	 
