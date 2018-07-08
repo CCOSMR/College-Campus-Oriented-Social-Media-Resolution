@@ -31,10 +31,28 @@ def register(database, data: dict):
 def login(database, data: dict):
     search_re = database.simple_search("Users", "id=\"{}\"".format(data["id"]))
     if search_re:
-        id, password, email, time_joined, _, name, _ = search_re[0]
+        id, password, email, time_joined, _, _, name, _ = search_re[0]
     else:
-        return 101
+        return False
     if password == data["password"]:
-        return 200
+        return True
     else:
-        return 101
+        return False
+
+
+def searchcourse(database, name: str):
+    result = []
+    search_re = database.simple_search("Course", "name like \"%{}%\"".format(name))
+    if search_re:
+        for course in search_re:
+            temp = {
+                "id": course[0],
+                # "teacher_id": course[1],
+                "name": course[2],
+                # "_": course[3],
+                "ave_rating": course[4],
+                # "location": course[5],
+                # "schedule": course[6]
+            }
+            result.append(temp)
+    return result

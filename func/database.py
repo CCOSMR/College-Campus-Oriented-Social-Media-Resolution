@@ -45,6 +45,7 @@ class Database:
         conn.commit()
         conn.close()
 
+
 if __name__ == '__main__':
     conn = sqlite3.connect(self.name)
     c = conn.cursor()
