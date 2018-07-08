@@ -6,27 +6,7 @@
     
     <!-- Main CSS --> 
     <link rel="stylesheet" href="css/style.css">
-    <script>
-	
-    var searchname="test"
-    
-	function request_searchcourse() {
-		/*var searchname = document.getElementById("mysearch").value;*/
-        
-		var data = JSON.stringify({"search":searchname});
-		
-		$.post("/searchcourse",
-			data,
-			function(){
-			});
-	}
-	
-    var b=document.getElementById("searchbutton");
-    b.onclick=function(){
-        request_searchcourse();
-    }
-
-    </script>    
+  
 </head>
 <body>
     <div id="content-wrapper">
@@ -104,7 +84,30 @@
             </table>        
         </div>
     </div> 
-    <script src="https://code.jquery.com/jquery-3.1.0.min.js"/>
+
+    <script>
+	
+            var searchname="test"
+            
+            function request_searchcourse() {
+                /*var searchname = document.getElementById("mysearch").value;*/
+                
+                var data = JSON.stringify({"search":searchname});
+                
+                $.post("/searchcourse",
+                    data,
+                    function(){
+                    });
+            }
+            
+            var b=document.getElementById("searchbutton");
+            b.onclick=function(){
+                alert(searchname);
+                request_searchcourse();
+            }
+        
+    </script>    
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"/>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
