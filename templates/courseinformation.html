@@ -25,25 +25,24 @@
         <table border="1"  style="background-color:white;">
             <tr>
                 <td align="center" width="450px" height="400px">
-                    <img src="classphoto.jpg" alt="图片" /><br>
-                    <b> name <b>
+                    <img src="classphoto.jpg" alt="图片" /><br/>
+                    <b>{{name}}<b><br/>
+                    <b>{{location}}<b><br/>
+                    <b>{{teachername}}<b><br/>
                 </td>
                 <td align="left" width="1000px" height="400px">
                     <p>
                         简介：
                     </p> <br/>
                     <p>
-                            一、	课程审核
-                            目的和意义：针对管理员用户，对已经存在的课程板块进行审核，更改课程的可见范围，校验课程信息，可以对目标课程的任意信息进行更改，对于违规的课程内容可以进行删除、编辑等，也可以编辑发布新的课程板块。
-                            特点：该功能只对管理员用户开放，用来维护社区环境。
-                            
+                        {{desc}}
                     </p>       
                 </td>
                 <td align="center" width="450px" height="400px">
                         <h2>综合评价</h2>
-                        <progress min="0" max="100" id="score" >
+                        <progress min="0" max="10" id="score" >
                         </progress>
-                        <p>课程当前综合评分(百分制)：</p><p id="send"><p></p>
+                        <p>课程当前综合评分(十分制)：</p>{{avg}}</p>
                     </td>       
             </tr>        
         </table>
