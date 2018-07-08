@@ -31,13 +31,13 @@ def register(database, data: dict):
 def login(database, data: dict):
     search_re = database.simple_search("Users", "id=\"{}\"".format(data["id"]))
     if search_re:
-        id, password, email, time_joined, _, name, _ = search_re[0]
+        id, password, email, time_joined, _, _, name, _ = search_re[0]
     else:
-        return 101
+        return False
     if password == data["password"]:
-        return 200
+        return True
     else:
-        return 101
+        return False
 
 
 def searchcourse(database, name: str):

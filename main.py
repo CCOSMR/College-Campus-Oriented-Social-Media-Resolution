@@ -56,13 +56,23 @@ def login():
         data = server.get_json()
         status = server.login(db, data)
         print(flask.session, status)
-        if status == 200:
+        if status:
             flask.session["id"] = data["id"]
             flask.session["time_signed"] = int(time.time())
-            return json.dumps({"status": status, "url": flask.url_for('home')})
+            result = {
+                "status": status,
+                "url": flask.url_for("home")
+            }
+            return flask.jsonify(result)
+        else:
+            result = {
+                "status": status,
+                "url": None
+            }
+            return flask.jsonify(result)
         # return flask.url_for('home')
-        flask.session.clear()
-        return json.dumps({"status": status, "url": flask.url_for('login')})
+        # flask.session.clear()
+        # return json.dumps({"status": status, "url": flask.url_for('login')})
 
 
 @app.route("/home", methods=["GET", "POST"])
@@ -77,7 +87,12 @@ def searchcourse():
         return flask.render_template('course-blank-test.html')
     elif flask.request.method == "POST":
         data = server.get_json()
-        result = server.searchcourse(db, data["search"])
+        # result = server.searchcourse(db, data["search"]
+        result = [
+            {"id": 1, "name": "1", "avg": 7.5},
+            {"id": 2, "name": "2", "avg": 2.8},
+            {"id": 3, "name": "3", "avg": 1.9}
+        ]
         return flask.jsonify(result)
 
 
