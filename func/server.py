@@ -11,13 +11,13 @@ def get_json():
 
 def register(database, data: dict):
     if database.simple_search("Users", "id = \"{}\"".format(data["id"])):
-        return 101
+        return "Invalid id"
     if database.simple_search("Users", "email = \"{}\"".format(data["email"])):
-        return 102
+        return "Invalid email"
     if len(data["email"]) > 7:
         pattern = "^.+\\@(\\[?)[a-zA-Z0-9\\-\\.]+\\.([a-zA-Z]{2,3}|[0-9]{1,3})(\\]?)$"
         if not re.match(pattern, data["email"]):
-            return 104
+            return "Invalid email"
     # if data["verifiedcode"]:
     data = {
         "id": data["id"],
@@ -26,6 +26,7 @@ def register(database, data: dict):
         "name": data["name"],
     }
     database.add_new_user(data)
+    return True
 
 
 def login(database, data: dict):

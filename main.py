@@ -37,9 +37,11 @@ def register():
     elif flask.request.method == "POST":
         data = server.get_json()
         status = server.register(db, data)
-        if status == 200:
-            return json.dumps({"status": status, "url": flask.url_for('login')})  # 注册完毕跳转到登录
-        return json.dumps({"status": status, "url": flask.url_for('register')})
+        if status == True:
+            result = {"status": status, "url": flask.url_for('login')}
+            return flask.jsonify(result)
+        result = {"status": status, "url": None}
+        return flask.jsonify(result)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -47,12 +49,6 @@ def login():
     if flask.request.method == "GET":
         return flask.render_template('login.html')
     elif flask.request.method == "POST":
-        # return flask.redirect("/home",302)
-
-        ################################
-        # add codes for home page here #
-        ################################
-
         data = server.get_json()
         status = server.login(db, data)
         print(flask.session, status)
@@ -70,9 +66,6 @@ def login():
                 "url": None
             }
             return flask.jsonify(result)
-        # return flask.url_for('home')
-        # flask.session.clear()
-        # return json.dumps({"status": status, "url": flask.url_for('login')})
 
 
 @app.route("/home", methods=["GET", "POST"])
@@ -96,9 +89,24 @@ def searchcourse():
         return flask.jsonify(result)
 
 
-@app.route("/messages", methods=["GET", "POST"])
-def messages():
-    pass
+@app.route("/request_posts", methods=["POST"])
+def request_posts():
+    data = server.get_json()
+    # result = server.request_posts(id=flask.session["id"], dir=data["type"], time=data["time_stamp"], num=5)
+    result = []
+    temp = {
+        "post_id": 653254,
+        "poster_id": 123,
+        "poster_name": "John",
+        "time": 1531043208,
+        "content": "very good",
+        "likes": 1,
+        "dislikes": 1,
+        "comments": 1
+    }
+    for i in range(5):
+        result.append(temp)
+    return flask.jsonify(result)
 
 
 @app.route("/myfriends", methods=["GET", "POST"])
