@@ -15,8 +15,8 @@ db = database.Database("CCOSMR.db")
 
 @app.route("/")
 def default():
-    #return flask.render_template('home.html')
-    #if 'id' in flask.session:
+    # return flask.render_template('home.html')
+    # if 'id' in flask.session:
     #    return 'Logged in as %s' % flask.escape(flask.session['id'])
     return flask.redirect("/login")
 
@@ -32,14 +32,14 @@ def test():
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
-    if flask.request.method == "GET": 
+    if flask.request.method == "GET":
         return flask.render_template('register.html')
     elif flask.request.method == "POST":
         data = server.get_json()
         status = server.register(db, data)
         if status == 200:
-            return json.dumps({"status":status,"url":flask.url_for('login')})  #注册完毕跳转到登录
-        return  json.dumps({"status":status,"url":flask.url_for('register')})
+            return json.dumps({"status": status, "url": flask.url_for('login')})  # 注册完毕跳转到登录
+        return json.dumps({"status": status, "url": flask.url_for('register')})
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -47,27 +47,39 @@ def login():
     if flask.request.method == "GET":
         return flask.render_template('login.html')
     elif flask.request.method == "POST":
-        #return flask.redirect("/home",302)
-        
+        # return flask.redirect("/home",302)
+
         ################################
         # add codes for home page here #
         ################################
-        
+
         data = server.get_json()
         status = server.login(db, data)
-        print (flask.session,status)
+        print(flask.session, status)
         if status == 200:
             flask.session["id"] = data["id"]
             flask.session["time_signed"] = int(time.time())
-            return json.dumps({"status":status,"url":flask.url_for('home')})
-           # return flask.url_for('home')
+            return json.dumps({"status": status, "url": flask.url_for('home')})
+        # return flask.url_for('home')
         flask.session.clear()
-        return json.dumps({"status":status,"url":flask.url_for('login')})
+        return json.dumps({"status": status, "url": flask.url_for('login')})
+
 
 @app.route("/home", methods=["GET", "POST"])
 def home():
     if flask.request.method == "GET":
         return flask.render_template('home.html')
+
+
+@app.route("/searchcourse", methods=["GET", "POST"])
+def searchcourse():
+    if flask.request.method == "GET":
+        return flask.render_template('course-blank-test.html')
+    elif flask.request.method == "POST":
+        data = server.get_json()
+        result = server.searchcourse(db, data["search"])
+        return flask.jsonify(result)
+
 
 @app.route("/messages", methods=["GET", "POST"])
 def messages():
@@ -118,6 +130,7 @@ def send_static(path):
 def serve_static(filename):
     return send_from_directory('javascript', filename)
 
+
 if __name__ == "__main__":
-    #app.run(host='0.0.0.0', port=80)
-     app.run(debug=True)
+    # app.run(host='0.0.0.0', port=80)
+    app.run(debug=True)

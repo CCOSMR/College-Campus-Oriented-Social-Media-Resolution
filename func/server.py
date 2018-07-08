@@ -38,3 +38,21 @@ def login(database, data: dict):
         return 200
     else:
         return 101
+
+
+def searchcourse(database, name: str):
+    result = []
+    search_re = database.simple_search("Course", "name like \"%{}%\"".format(name))
+    if search_re:
+        for course in search_re:
+            temp = {
+                "id": course[0],
+                # "teacher_id": course[1],
+                "name": course[2],
+                # "_": course[3],
+                "ave_rating": course[4],
+                # "location": course[5],
+                # "schedule": course[6]
+            }
+            result.append(temp)
+    return result
