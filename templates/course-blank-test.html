@@ -1,12 +1,37 @@
 <!DOCTYPE html>
-<html >
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <title>CCOSMR--Course</title>
     
     <!-- Main CSS --> 
     <link rel="stylesheet" href="css/style.css">
-  
+    <script>
+	
+            var searchname="test"
+            
+            function request_searchcourse() {
+                /*var searchname = document.getElementById("mysearch").value;*/
+                
+                var data = JSON.stringify({"search":searchname});
+                
+                $.post("/searchcourse",
+                    data,
+                    function(){
+                    });
+            }
+            
+            function show(){
+                request_searchcourse();
+                alert("shigejiba");
+            }
+            /*var b=document.getElementById("searchbutton");
+            b.onclick=function(){
+                alert("shigejiba");
+                request_searchcourse();
+            }*/
+            
+    </script>  
 </head>
 <body>
     <div id="content-wrapper">
@@ -19,17 +44,17 @@
         </header>
 
         <div align="left" style="background-color:white ; width:400px ; height: 800px;border:1px solid #000;float:left">
-            <form>
+            <form align="center">
                 <input type="search" name="coursename" id="mysearch"/ >
-                <button id="searchbutton">Search</button>
+                <button onclick="show()" id="searchbutton" >Search</button>
                 <!--<input type="submit" value="Submit"/><br/>-->
-                <h2>筛选条件：</h2><br/>
-                <h3>年级：</h3>
+                <h2 align="left">筛选条件：</h2><br/>
+                <h3 align="left">年级：</h3>
                 <input type="radio" name="garde" value="1"/>大一<br/>
                 <input type="radio" name="garde" value="2"/>大二<br/>
                 <input type="radio" name="garde" value="3"/>大三<br/>
                 <input type="radio" name="garde" value="4"/>大四<br/>
-                <h3>课程性质：</h3>
+                <h3 align="left">课程性质：</h3>
                 <input type="radio" name="classtype" value="GGJC"/>公共基础必修课<br/>
                 <input type="radio" name="classtype" value="ZYXX"/>专业限选课<br/>
                 <input type="radio" name="classtype" value="ZYRX"/>专业任选课<br/>
@@ -83,30 +108,8 @@
                         </tr>                                    
             </table>        
         </div>
-    </div> 
-
-    <script>
-	
-            var searchname="test"
-            
-            function request_searchcourse() {
-                /*var searchname = document.getElementById("mysearch").value;*/
-                
-                var data = JSON.stringify({"search":searchname});
-                
-                $.post("/searchcourse",
-                    data,
-                    function(){
-                    });
-            }
-            
-            var b=document.getElementById("searchbutton");
-            b.onclick=function(){
-                alert(searchname);
-                request_searchcourse();
-            }
-        
-    </script>    
+    </div>   
+   
 <script src="https://code.jquery.com/jquery-3.1.0.min.js"/>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
