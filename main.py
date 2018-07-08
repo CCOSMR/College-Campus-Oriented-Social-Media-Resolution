@@ -15,7 +15,10 @@ db = database.Database("CCOSMR.db")
 
 @app.route("/")
 def default():
-    return flask.redirect("/login")
+    if "id" in flask.session.keys():
+        return flask.redirect("/home")
+    else:
+        return flask.redirect("/login")
 
 
 @app.route("/test", methods=["GET", "POST"])
@@ -68,7 +71,10 @@ def login():
 @app.route("/home", methods=["GET", "POST"])
 def home():
     if flask.request.method == "GET":
-        return flask.render_template('home.html')
+        if "id" in flask.session.keys():
+            return flask.render_template('home.html')
+        else:
+            return flask.redirect("/login")
 
 
 @app.route("/course", methods=["GET", "POST"])
@@ -81,11 +87,11 @@ def searchcourse():
             # data = server.course_detail(db, id)
             data = {
                 "id": 1231231,
-                "teacher": "SSS",
-                "name": "Dajiba",
-                "dscr": "chui niu bi",
-                "ave_rating": 10,
-                "location": "sushe",
+                "teacher": "David",
+                "name": "Test",
+                "dscr": "This is not a course but a counterfeit for test.",
+                "ave_rating": 9.8,
+                "location": "classroom",
                 "schedule": "wan"
             }
             if data:

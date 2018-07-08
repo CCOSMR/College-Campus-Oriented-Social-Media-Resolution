@@ -9,7 +9,7 @@
             function request_searchcourse() {
                 var searchname = document.getElementById("mysearch").value;
                 var data = JSON.stringify({"search":searchname});
-                $.post("/searchcourse",
+                $.post("/course",
                     data,
                     function(n){
                         alert(n[0].name);
