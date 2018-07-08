@@ -91,18 +91,19 @@ def searchcourse():
 
 @app.route("/request_posts", methods=["POST"])
 def request_posts():
+    import random
     data = server.get_json()
     # result = server.request_posts(id=flask.session["id"], dir=data["type"], time=data["time_stamp"], num=5)
     result = []
     temp = {
-        "post_id": 653254,
-        "poster_id": 123,
+        "post_id": random.randint(1, 999999),
+        "poster_id": random.randint(1, 999999),
         "poster_name": "John",
-        "time": 1531043208,
+        "time": random.randint(1531043208, 1541043208),
         "content": "very good",
-        "likes": 1,
-        "dislikes": 1,
-        "comments": 1
+        "likes": random.randint(0, 99),
+        "dislikes": random.randint(0, 50),
+        "comments": random.randint(0, 25),
     }
     for i in range(5):
         result.append(temp)

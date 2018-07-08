@@ -116,10 +116,13 @@ function insert_post(poster_id, poster_name, time, content, likes, dislikes, com
 			var index = parseInt($(this).attr('id').slice(12));
 			if(disliked[index - 1]) {
 				$('#dislike_button_' + index.toString()).toggleClass("disliked");
-				
+				$('#dislike_button_' + index.toString()).innerHTML = 
+					parseInt($('#dislike_button_' + index.toString()).innerHTML)--;
 				disliked[index - 1] = false;
 			}
 			liked[index - 1] = !liked[index - 1];
+			$('#like_button_' + index.toString()).innerHTML = 
+				parseInt($('#dislike_button_' + index.toString()).innerHTML) + liked[index - 1];
 			$(this).toggleClass("liked");
 			
 		});
