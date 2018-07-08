@@ -6897,3 +6897,192 @@ html {
 .font-x1{font-size:1.2rem;}
 .font-x2{font-size:1.8rem;}
 .font-x3{font-size:2.8rem;}
+
+/** like button **/
+
+.button-like {
+  border: 2px solid #8a8a8a;
+  background-color: transparent;
+  text-decoration: none;
+  padding: 0.5rem;
+  position: relative;
+  vertical-align: middle;
+  text-align: center;
+  display: inline-block;
+  border-radius: 3rem;
+  color: #8a8a8a;
+  transition: all ease 0.4s;
+}
+
+.button-like span {
+  margin-left: 0.5rem;
+}
+
+.button-like .fa,
+.button-like span {
+  transition: all ease 0.4s;
+}
+
+.button-like:focus {
+  background-color: transparent;
+}
+
+.button-like:focus .fa,
+.button-like:focus span {
+  color: #8a8a8a;
+}
+
+.button-like:hover {
+  border-color: #cc4b37;
+  background-color: transparent;
+}
+
+.button-like:hover .fa,
+.button-like:hover span {
+  color: #cc4b37;
+}
+
+.liked {
+  background-color: #cc4b37;
+  border-color: #cc4b37;
+}
+
+.liked .fa,
+.liked span {
+  color: #fefefe;
+}
+
+.liked:focus {
+  background-color: #cc4b37;
+}
+
+.liked:focus .fa,
+.liked:focus span {
+  color: #fefefe;
+}
+
+.liked:hover {
+  background-color: #cc4b37;
+  border-color: #cc4b37;
+}
+
+.liked:hover .fa,
+.liked:hover span {
+  color: #fefefe;
+}
+
+
+
+.button-dislike {
+  border: 2px solid #8a8a8a;
+  background-color: transparent;
+  text-decoration: none;
+  padding: 0.5rem;
+  position: relative;
+  vertical-align: middle;
+  text-align: center;
+  display: inline-block;
+  border-radius: 3rem;
+  color: #8a8a8a;
+  transition: all ease 0.4s;
+}
+
+.button-dislike span {
+  margin-left: 0.5rem;
+}
+
+.button-dislike .fa,
+.button-dislike span {
+  transition: all ease 0.4s;
+}
+
+.button-dislike:focus {
+  background-color: transparent;
+}
+
+.button-dislike:focus .fa,
+.button-dislike:focus span {
+  color: #8a8a8a;
+}
+
+.button-dislike:hover {
+  border-color: #616161;
+  background-color: transparent;
+}
+
+.button-dislike:hover .fa,
+.button-dislike:hover span {
+  color: #616161;
+}
+
+.disliked {
+  background-color: #616161;
+  border-color: #616161;
+}
+
+.disliked .fa,
+.disliked span {
+  color: #fefefe;
+}
+
+.disliked:focus {
+  background-color: #616161;
+}
+
+.disliked:focus .fa,
+.disliked:focus span {
+  color: #fefefe;
+}
+
+.disliked:hover {
+  background-color: #616161;
+  border-color: #616161;
+}
+
+.disliked:hover .fa,
+.disliked:hover span {
+  color: #fefefe;
+}
+
+
+.button-normal {
+  border: 2px solid #8a8a8a;
+  background-color: transparent;
+  text-decoration: none;
+  padding: 0.5rem;
+  position: relative;
+  vertical-align: middle;
+  text-align: center;
+  display: inline-block;
+  border-radius: 3rem;
+  color: #8a8a8a;
+  transition: all ease 0.4s;
+}
+
+.button-normal span {
+  margin-left: 0.5rem;
+}
+
+.button-normal .fa,
+.button-normal span {
+  transition: all ease 0.4s;
+}
+
+.button-normal:focus {
+  background-color: transparent;
+}
+
+.button-normal:focus .fa,
+.button-normal:focus span {
+  color: #8a8a8a;
+}
+
+.button-normal:hover {
+  border-color: #528cb8;
+  background-color: transparent;
+}
+
+.button-normal:hover .fa,
+.button-normal:hover span {
+  color: #528cb8;
+}
