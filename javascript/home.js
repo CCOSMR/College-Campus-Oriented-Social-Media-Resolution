@@ -50,6 +50,6 @@ function insert_post(poster_id, poster_display_name, time, content, likes, disli
 									</ul>
 								</div>
 							</article>  `
-												
+	
 	document.getElementById('posts_list').innerHTML += new_post;
 }
