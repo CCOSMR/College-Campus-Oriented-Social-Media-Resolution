@@ -5,12 +5,13 @@
 	<title>CCOSMR</title>
 	<link rel="stylesheet" type="text/css" href="style/register-login.css">
 	<link rel="stylesheet" href="css/style.css">
+	<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 	
 	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	<script src="/javascript/home.js"></script>
 </head>
-<body>
+<body onload="check_post();">
 	<div id="sidebar">
                       
             <div class="navbar-expand-md navbar-dark"> 
@@ -105,132 +106,25 @@
                     <div class="row">
                         <!-- Main content -->
                         <div class="col-md-8" id="posts_list">
-							<article class="excerpt">
-								<div class="excerpttxt">
-									
-							
-									<ul class="nospace inline pushright font-xs">
-										<li>
-											<ul class="nospace inline pushright font-xs">
-												<li><h6 class="heading">Posuere lorem placerat</h6></li>
-												<ul class="nospace inline pushright font-xs">
-													<li><i class="fa fa-comments"></i> <a href="#">@user_id</a></li>
-													<li><i class="fa fa-calendar-o"></i> 02/01/45</li>
-												</ul>
-											</ul>
-										</li>
-									</ul>
-									<p>Nunc non erat molestie faucibus duis aliquam rutrum sapien non pretium tortor lacinia auctor donec et ullamcorper lacus&hellip;</p>
-									
-									<ul class="nospace inline pushright font-xs">
-									  <li><i class="fa fa-calendar-o"></i> 02/01/45</li>
-									  <li><i class="fa fa-comments"></i> <a href="#">4</a></li>
-									  <li><i class="fa fa-eye"></i> 10</li>
-									</ul>
-								</div>
-							</article>  
-							
-							<article class="excerpt">
-								<div class="excerpttxt">
-									
-							
-									<ul class="nospace inline pushright font-xs">
-										<li>
-											<ul class="nospace inline pushright font-xs">
-												<li><h6 class="heading">Posuere lorem placerat</h6></li>
-												<ul class="nospace inline pushright font-xs">
-													<li><i class="fa fa-comments"></i> <a href="#">@user_id</a></li>
-													<li><i class="fa fa-calendar-o"></i> 02/01/45</li>
-												</ul>
-											</ul>
-										</li>
-									</ul>
-									<p>Nunc non erat molestie faucibus duis aliquam rutrum sapien non pretium tortor lacinia auctor donec et ullamcorper lacus&hellip;</p>
-									
-									<ul class="nospace inline pushright font-xs">
-									  <li><i class="fa fa-calendar-o"></i> 02/01/45</li>
-									  <li><i class="fa fa-comments"></i> <a href="#">4</a></li>
-									  <li><i class="fa fa-eye"></i> 10</li>
-									</ul>
-								</div>
-							</article>  <article class="excerpt">
-								<div class="excerpttxt">
-									
-							
-									<ul class="nospace inline pushright font-xs">
-										<li>
-											<ul class="nospace inline pushright font-xs">
-												<li><h6 class="heading">Posuere lorem placerat</h6></li>
-												<ul class="nospace inline pushright font-xs">
-													<li><i class="fa fa-comments"></i> <a href="#">@user_id</a></li>
-													<li><i class="fa fa-calendar-o"></i> 02/01/45</li>
-												</ul>
-											</ul>
-										</li>
-									</ul>
-									<p>Nunc non erat molestie faucibus duis aliquam rutrum sapien non pretium tortor lacinia auctor donec et ullamcorper lacus&hellip;</p>
-									
-									<ul class="nospace inline pushright font-xs">
-									  <li><i class="fa fa-calendar-o"></i> 02/01/45</li>
-									  <li><i class="fa fa-comments"></i> <a href="#">4</a></li>
-									  <li><i class="fa fa-eye"></i> 10</li>
-									</ul>
-								</div>
-							</article>  <article class="excerpt">
-								<div class="excerpttxt">
-									
-							
-									<ul class="nospace inline pushright font-xs">
-										<li>
-											<ul class="nospace inline pushright font-xs">
-												<li><h6 class="heading">Posuere lorem placerat</h6></li>
-												<ul class="nospace inline pushright font-xs">
-													<li><i class="fa fa-comments"></i> <a href="#">@user_id</a></li>
-													<li><i class="fa fa-calendar-o"></i> 02/01/45</li>
-												</ul>
-											</ul>
-										</li>
-									</ul>
-									<p>Nunc non erat molestie faucibus duis aliquam rutrum sapien non pretium tortor lacinia auctor donec et ullamcorper lacus&hellip;</p>
-									
-									<ul class="nospace inline pushright font-xs">
-									  <li><i class="fa fa-calendar-o"></i> 02/01/45</li>
-									  <li><i class="fa fa-comments"></i> <a href="#">4</a></li>
-									  <li><i class="fa fa-eye"></i> 10</li>
-									</ul>
-								</div>
-							</article>  <article class="excerpt">
-								<div class="excerpttxt">
-									
-							
-									<ul class="nospace inline pushright font-xs">
-										<li>
-											<ul class="nospace inline pushright font-xs">
-												<li><h6 class="heading">Posuere lorem placerat</h6></li>
-												<ul class="nospace inline pushright font-xs">
-													<li><i class="fa fa-comments"></i> <a href="#">@user_id</a></li>
-													<li><i class="fa fa-calendar-o"></i> 02/01/45</li>
-												</ul>
-											</ul>
-										</li>
-									</ul>
-									<p>Nunc non erat molestie faucibus duis aliquam rutrum sapien non pretium tortor lacinia auctor donec et ullamcorper lacus&hellip;</p>
-									
-									<ul class="nospace inline pushright font-xs">
-									  <li><i class="fa fa-calendar-o"></i> 02/01/45</li>
-									  <li><i class="fa fa-comments"></i> <a href="#">4</a></li>
-									  <li><i class="fa fa-eye"></i> 10</li>
-									</ul>
-								</div>
-							</article>  
+							<ul>
+								<!-- Posts go here as <li>s -->
+							</ul>
                         </div>
                         <aside class="col-md-3">
-                            <div class="sidebar-box">
+							<div class="sidebar-box">
+									<h4>Links</h4>
+									<div class="list-group list-group-root">
+										<a class="list-group-item active" href="/home">Home Page</a>
+										<a class="list-group-item" href="/course">Courses</a>
+										
+									</div>
+								</div>
+								<div class="sidebar-box">
+									1
+								</div>
+								<div class="sidebar-box sidebar-box-bg">
 								1
-                            </div>
-                            <div class="sidebar-box sidebar-box-bg">
-							1
-                            </div>
+							</div>
                         </aside> 
                     </div> 
                 </main>
