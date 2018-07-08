@@ -32,9 +32,17 @@ function request_signup() {
 	var data = JSON.stringify({"id":id,"password":password,"email":email,"name":name,"captcha":captcha});
 	$.post("/register",
 		data,
-		function(){
-			//alert("success");
-		});
+		function(datar){
+			if(datar.status== 200)
+				{window.location = datar.url;}
+			else
+            {
+                alert("register failed");
+                window.location = datar.url;
+            }	
+		},
+		dataType = "json"
+		);
 }
 
 function enter_id() {
