@@ -14,7 +14,10 @@
                 $.post("/searchcourse",
                     data,
                     function(n){
-                        alert("Data Loaded: " + n);
+                        alert(n[0].name);
+                        var box = document.getElementById("row1");
+                        var str1="<td align=\"center\" width=\"450\" height=\"250\"><img src=\"coursephoto.jpg\" alt=\"课程1\"/><br/><a href=\"/info\"><b>"+"123"+"</b></a></td>";
+                        box.innerHTML =str1;                       
                     });
             }
             
@@ -45,13 +48,12 @@
                     });
             }
 
-            /*function efg(){
+            function efg(){
                 var box = document.getElementById("row1");
-                box.innerHTML = "                    <td align="center" width="450" height="250">
-                        <img src="coursephoto.jpg" alt="课程1"/><br/>
-                        <a href="/info"><b>课程1名字</b></a>
-                    </td>";
-            }*/
+                var str1="<td align=\"center\" width=\"450\" height=\"250\"><img src=\"coursephoto.jpg\" alt=\"课程1\"/><br/><a href=\"/info\"><b>测试</b></a></td>";
+                box.innerHTML =str1;
+                /*box.innerHTML = "<td align=\"center\" width=\"450\" height=\"250\"><img src=\"coursephoto.jpg\" alt=\"课程1\"/><br/><a href=\"/info\"><b></b></a></td>";*/
+            }
 
     </script>  
 </head>
@@ -89,15 +91,6 @@
         <div align="left" style="background-color:white ; width:1400px ;  height: 800px;border:1px solid #000;float:left">
             <table border="0">
                 <tr id="row1">
-                    <td align="center" width="450" height="250">
-                        <img src="coursephoto.jpg" alt="课程1"/><br/>
-                        <a href="/info"><b>课程1名字</b></a>
-                    </td>
-                    <td align="center" width="450" height="250">
-                        <img src="coursephoto.jpg" alt="课程1"/><br/>
-                        <b>课程1名字</b>
-                    </td>
-  
                 </tr>
                 <tr>
                     <td align="center" width="450" height="250">
