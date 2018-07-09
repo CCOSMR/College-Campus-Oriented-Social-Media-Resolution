@@ -94,10 +94,10 @@ def personalinfo(database, id):
 
 
 def friends_of(database, id):
-
+    pass
 
 def courses_of(database, id):
-
+    pass
 
 def request_posts(id, dir, time, num=5):
     pass
