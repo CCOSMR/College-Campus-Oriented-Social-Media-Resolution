@@ -197,15 +197,33 @@ Sixty-Four comes asking for bread.'''.splitlines()
         temp = {
             "post_id": random.randint(1, 999999),
             "poster_id": random.randint(1, 999999),
-            "poster_name": names.split()[random.randint(0,19)],
+            "poster_name": names.split()[random.randint(0, 19)],
             "time": random.randint(1521043208, 1531043208),
-            "content": sentences[random.randint(0,49)],
+            "content": sentences[random.randint(0, 49)],
             "likes": random.randint(0, 99),
             "dislikes": random.randint(0, 25),
             "comments": random.randint(0, 25),
         }
         result.append(temp)
     return flask.jsonify(result)
+
+
+@app.route("/personalinfo", methods=["GET"])
+def personalinfo():
+    id = flask.request.args.get('id')
+    if not id:
+        return flask.render_template("", id=id)
+    else:
+        person = server.personalinfo(db, id)
+        friends = server.friends_of(db, id)
+        courses = server.courses_of(db, id)
+        result = {
+            "user_name": person["name"],
+            "user_email": person["email"],
+            "friends number": friends,
+            "course number": courses
+        }
+        return flask.jsonify(result)
 
 
 @app.route("/myfriends", methods=["GET", "POST"])

@@ -60,8 +60,9 @@ def searchcourse(database, name: str):
 
 
 def course_detail(database, id):
-    search_re = database.simple_search("Course", "id={}".format(id))[0]
+    search_re = database.simple_search("Course", "id={}".format(id))
     if search_re:
+        search_re = search_re[0]
         teacher = database.simple_search("Teacher", "id={}".format(search_re[1]))[0]
         result = {
             "id": search_re[0],
@@ -74,6 +75,28 @@ def course_detail(database, id):
         }
         return result
     return False
+
+
+def personalinfo(database, id):
+    search_re = database.simple_search("Users", "id=\"{}\"".format(id))
+    if search_re:
+        info = {
+            "id": search_re[0][0],
+            "email": search_re[0][2],
+            "time_joined": search_re[0][3],
+            "type": search_re[0][4],
+            "activity": search_re[0][5],
+            "name": search_re[0][6],
+            "dscr": search_re[0][7]
+        }
+        return info
+    return False
+
+
+def friends_of(database, id):
+
+
+def courses_of(database, id):
 
 
 def request_posts(id, dir, time, num=5):
