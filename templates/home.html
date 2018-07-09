@@ -11,7 +11,7 @@
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	<script src="/javascript/home.js"></script>
 </head>
-<body onload="check_post();">
+<body class='three-sidebar' onload="check_post();">
 	<div id="sidebar">
                       
             <div class="navbar-expand-md navbar-dark"> 
@@ -35,7 +35,8 @@
                         <input class="form-control mr-sm-2" type="text" size="10"  placeholder="Search" aria-label="Search">
                         <button class="btn my-2 my-sm-0" type="submit">Search</button>
                     </form></br>
-                        
+                    
+							
                     
                     <!-- Main navigation items -->
                     <nav class="navbar navbar-dark">
@@ -105,39 +106,59 @@
                 <main class="container-fluid">
                     <div class="row">
                         <!-- Main content -->
-                        <div class="col-md-8" id="posts_list">
+                        <div class="col-md-12" id="posts_list">
 							<ul>
 								<!-- Posts go here as <li>s -->
 							</ul>
                         </div>
-                        <aside class="col-md-3">
-							<ul class="nav nav-tabs">
-								<li class="nav-item">
-                                    <a class="nav-link active" href="#">Active</a>
-                                </li>
-								<li class="nav-item">
-                                    <a class="nav-link" href="#">Active</a>
-                                </li>
-								<li class="nav-item">
-                                    <a class="nav-link" href="#">Active</a>
-                                </li>
-							</ul>
-							
-							<div class="sidebar-box">
-                                <h4>Links</h4>
-                                <div class="list-group list-group-root">
-                                    <a class="list-group-item" href="/home">Home Page</a>
-                                    <a class="list-group-item active" href="/courses">Courses</a>
-                                    
-                                </div>
-                            </div>
-                        </aside> 
+                       
                     </div> 
+					
                 </main>
+				
 		</div>
+		
 	</div>
-	
-	
+	<div id="rightbar">
+                      
+           <aside class='col-md-12' style="background-color:#f8f8f8; padding-top: 10%;">
+			<div >
+								<ul class="nav nav-tabs">
+									<li class="nav-item">
+										<a class="nav-link active" name="tab" onclick="select_tag(0);" style="font-size:0.8rem;">Write a post</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link" name="tab" onclick="select_tag(1);" style="font-size:0.8rem;">Write a review</a>
+									</li>
+								</ul>
+								<div class='tab_selection' style="background-color:#ffffff;">
+									<div style="padding:15px;">
+								  <h4>Post</h4>
+									<textarea class="form-control" id="exampleInputMessage" rows="3"></textarea>
+									<button type="button" class="btn btn-primary">Submit post</button>
+									</div>
+								</div>
+								<div class='tab_selection' style="display:none; background-color:#ffffff;">
+									<div  style="padding:15px;">
+								  <h4>Review</h4>
+								  <textarea class="form-control" id="exampleInputMessage" rows="3"></textarea>
+									<button type="button" class="btn btn-primary">Submit review</button>
+									</div>
+								</div>
+								
+								<p>&nbsp;</p>
+								<div class="sidebar-box">
+									<h4>Links</h4>
+									<div class="list-group list-group-root">
+										<a class="list-group-item" href="/home">Home Page</a>
+										<a class="list-group-item active" href="/course">Courses</a>
+										
+									</div>
+								</div>
+							</div>
+			</aside>
+                    </div> 
+        </div>	
 	
 <script src="https://code.jquery.com/jquery-3.1.0.min.js"/>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

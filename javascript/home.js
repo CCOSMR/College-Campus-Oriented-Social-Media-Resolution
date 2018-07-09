@@ -61,8 +61,8 @@ function check_post() {
 
 function insert_post(poster_id, poster_name, time, content, likes, dislikes, comments) {
 	post_count++;
-	var date = new Date(time);
-	var time_string = date.getDay() + ', ' 
+	var date = new Date(time*1000);
+	var time_string = ' ' +(date.getDay() + 1) + ', ' 
                   + monthNames[date.getMonth()] + ', '
                   + date.getFullYear();
 	new_post = `<li id="post` + post_count + `"><article class="excerpt">
@@ -116,13 +116,9 @@ function insert_post(poster_id, poster_name, time, content, likes, dislikes, com
 			var index = parseInt($(this).attr('id').slice(12));
 			if(disliked[index - 1]) {
 				$('#dislike_button_' + index.toString()).toggleClass("disliked");
-				$('#dislike_button_' + index.toString()).innerHTML = 
-					parseInt($('#dislike_button_' + index.toString()).innerHTML)--;
 				disliked[index - 1] = false;
 			}
 			liked[index - 1] = !liked[index - 1];
-			$('#like_button_' + index.toString()).innerHTML = 
-				parseInt($('#dislike_button_' + index.toString()).innerHTML) + liked[index - 1];
 			$(this).toggleClass("liked");
 			
 		});
@@ -141,5 +137,18 @@ function insert_post(poster_id, poster_name, time, content, likes, dislikes, com
 	});
 }
 
-
+function select_tag(index) {
+    var i;
+    var x = document.getElementsByClassName("tab_selection");
+    for (i = 0; i < x.length; i++) {
+        x[i].style.display = "none"; 
+    }
+    document.getElementsByClassName('tab_selection')[index].style.display = "block"; 
+	
+	var y = document.getElementsByName('tab');
+	for (i = 0; i < y.length; i++) {
+        y[i].className = "nav-link"
+    }
+	document.getElementsByName('tab')[(y.length - 1) % (index + 1)].className = "nav-link active"; 
+}
 

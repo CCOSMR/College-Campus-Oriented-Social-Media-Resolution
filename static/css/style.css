@@ -533,7 +533,8 @@ pre {
   width: 100%;
   min-height: 1px;
   padding-right: 15px;
-  padding-left: 15px; }
+  padding-left: 15px; 
+  overflow: auto; }
 
 .col {
   flex-basis: 0;
@@ -2719,11 +2720,11 @@ tbody.collapse.show {
     color: #6c757d; }
 
 .nav-tabs {
-  border-bottom: 1px solid #dee2e6; }
+  border-bottom: 2px solid #dee2e6; }
   .nav-tabs .nav-item {
-    margin-bottom: -1px; }
+    margin-bottom: -2px; }
   .nav-tabs .nav-link {
-    border: 1px solid transparent;
+    border: 2px solid transparent;
     border-top-left-radius: 0px;
     border-top-right-radius: 0px; }
     .nav-tabs .nav-link:hover, .nav-tabs .nav-link:focus {
@@ -6558,11 +6559,39 @@ main {
   overflow: scroll;
   height: 100%; }
 
-.right-sidebar #sidebar {
-  right: 0; }
+  #rightbar {
+  right: 0; 
+  max-width: 320px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  overflow: auto;
+  height: 100%;
+float: left;  
+display: inline-block}
 
+  
+.right-sidebar {
+  right: 0; 
+  width: auto;
+  padding: 0 15px;
+  position: auto;
+  overflow: scroll;
+  height: 100%; }}
+  
+  .three-sidebar {
+  right: 0; 
+  width: auto;
+  padding: 0 15px;
+  position: auto;
+  overflow: scroll;
+  height: 100%; }}
+  
 #content {
-  margin-left: 0; }
+  margin-left: 0;
+  padding-right: 320px;
+position: auto; 
+float: left; }
 
 a, .page-link {
   color: #824c71, 10%;
@@ -6868,12 +6897,17 @@ html {
     padding: 0; }
 
   #content {
+	  padding-right: 320px;
     padding-left: 320px; }
 
   .right-sidebar #content {
     padding-left: 0 !important;
     padding-right: 320px; }
-
+	
+	.three-sidebar #content {
+    padding-left: 320px !important;
+    padding-right: 320px; }
+	
   #content #content-wrapper {
     background-color: #fff;
     padding: 15px; } }
