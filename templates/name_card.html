@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>personal information</title>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<link rel="stylesheet" href="css/information.css">
+
+</head>
+<body>
+
+<div>
+  <div class="contact">
+    <main>
+      <section>
+        <div class="content">
+         
+          <aside>
+            <h1>User_id</h1>
+            <p>Username</p>
+            <p>Email: </p>
+             
+          </aside>
+          
+          <button>
+            <span>More</span>
+            
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"> <g class="nc-icon-wrapper" fill="#444444"> <path d="M14.83 30.83L24 21.66l9.17 9.17L36 28 24 16 12 28z"></path> </g> </svg>
+          </button>
+
+        </div>
+
+        <div class="title"><p>More</p></div>
+      </section>
+
+      
+    </main>
+
+    <nav>
+      <a href="#" class="gmail">
+        <div class="content">
+          <h1>Personal page</h1>
+        </div> 
+
+       
+      </a>
+    </nav>
+  </div>
+</div>
+
+<script>
+$('button').click(function(){
+  $('button').toggleClass('active');
+  $('.title').toggleClass('active');
+  $('nav').toggleClass('active');
+});
+</script>
+
+
+</body>
+</html>
