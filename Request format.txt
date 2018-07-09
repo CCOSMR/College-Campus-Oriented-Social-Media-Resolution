@@ -7,25 +7,28 @@
 }
 
 respond:
-{	
+[
+	{	
 	
-	"post_id": 653254,
+		"post_id": 653254,
 	
-	"poster_id": "123",
+		"poster_id": "123",
 	
-	"poster_name": "John",
+		"poster_name": "John",
 	
-	"time": 1531042368976,
+		"time": 1531042368976,
 	
-	"content": "very good",
+		"content": "very good",
 	
-	"likes": 1,
+		"likes": 1,
 	
-	"dislikes": 1,
+		"dislikes": 1,
 	
-	"comments": 1
+		"comments": 1
 
-}
+	},
+	...
+] # a list of {}s
 
 
 /register # submit register form
@@ -48,9 +51,60 @@ respond:
 /like # like a post
 {
 	"post_id": 123,
+	"like": true # true if user liked, false if cancelled
 }
 
 respond:
 {
-	status":true # true or false, bool
+	"status":true # true or false, bool, true means liked, false means cancelled
 }
+
+
+/dislike # dislike a post
+{
+	"post_id": 123,
+	"dislike": true # true if user disliked, false if cancelled
+}
+
+respond:
+{
+	"status":true # true or false, bool, true means disliked, false means cancelled
+}
+
+
+/get_comments # request comment of a specific sub
+{
+	"post_id": 123,
+	"time_stamp": 1531042368976, # last requested timestamp / 1000 int, 0 if there hasn't been any comments loaded
+	"latest_comment_time_stamp": 1531042368124, # timestamp of latet comment / 1000 int, 0 if there hasn't been any comments loaded
+}
+
+respond:
+[
+	{
+		"comment_id": 200,
+		"commenter_id": "123",
+	
+		"commenter_name": "John",
+	
+		"time": 1531042368976,
+	
+		"content": "very good",
+	
+		"likes": 1,
+	
+		"dislikes": 1,
+	
+		"comments": 3, # number of comments replying this one
+	}
+] # a list of {}s
+
+
+/comment # post a comment
+{
+	"parent_id": 123,
+	"time_stamp": 1531042368976, 
+	"content": "very good",
+	"visibility": "public" # "public", "follower", "me"
+}
+

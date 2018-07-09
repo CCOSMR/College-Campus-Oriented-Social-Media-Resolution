@@ -35,7 +35,7 @@ function request_signup() {
 		function(datar){
 			if(datar.status== true)
 				{window.location = datar.url;}
-			else
+			else  
             {
                 alert("register failed");
                 window.location = datar.url;
