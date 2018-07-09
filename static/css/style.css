@@ -138,7 +138,7 @@ dd {
   margin-left: 0; }
 
 blockquote {
-  margin: 0 0 1rem; }
+  margin: 0 0 0; }
 
 dfn {
   font-style: italic; }
@@ -413,8 +413,8 @@ mark,
   text-transform: uppercase; }
 
 .blockquote {
-  margin-bottom: 1rem;
-  font-size: 1.25rem; }
+  margin-bottom: 0;
+  font-size: 1rem; }
 
 .blockquote-footer {
   display: block;
@@ -6623,9 +6623,9 @@ table th {
 blockquote {
   display: block;
   border-left: 5px solid #ccc;
-  padding: 0.5rem;
+  padding: 0rem;
   color: #666;
-  margin-bottom: 1rem; }
+  margin-bottom: 0rem; }
 
 .btn {
   font-weight: bold; }
@@ -6917,9 +6917,9 @@ html {
 
 	
 /** new classes here **/
-.excerpt{display:block; width:100%; position:relative; padding-top:20px; padding-bottom:20px; background-color: #f8f8f8;}
+.excerpt{display:block; width:100%; position:relative; padding-top:0px; padding-bottom:0px; background-color: #f8f8f8;}
 .excerpt img{}
-.excerpt .excerpttxt{display:block; position:relative; max-width:90%; margin:-40px auto; padding:20px;}
+.excerpt .excerpttxt{display:block; position:relative; max-width:90%; padding:5px; padding-left:10px}
 .excerpt .heading{margin:0 0 5px 0;}
 .excerpt p:last-of-type{margin:0; padding:0;}
 .nospace{margin:0; padding:0; list-style:none;}
@@ -6931,6 +6931,9 @@ html {
 .font-x1{font-size:1.2rem;}
 .font-x2{font-size:1.8rem;}
 .font-x3{font-size:2.8rem;}
+.font-xxs{font-size:.65rem;}
+.font-xxxs{font-size:.6rem;}
+
 
 /** like button **/
 
@@ -7079,6 +7082,78 @@ html {
 }
 
 
+.button-comment {
+  border: 2px solid #8a8a8a;
+  background-color: transparent;
+  text-decoration: none;
+  padding: 0.5rem;
+  position: relative;
+  vertical-align: middle;
+  text-align: center;
+  display: inline-block;
+  border-radius: 3rem;
+  color: #8a8a8a;
+  transition: all ease 0.4s;
+}
+
+.button-comment span {
+  margin-left: 0.5rem;
+}
+
+.button-comment .fa,
+.button-comment span {
+  transition: all ease 0.4s;
+}
+
+.button-comment:focus {
+  background-color: transparent;
+}
+
+.button-comment:focus .fa,
+.button-comment:focus span {
+  color: #8a8a8a;
+}
+
+.button-comment:hover {
+  border-color: #1e76cd;
+  background-color: transparent;
+}
+
+.button-comment:hover .fa,
+.button-comment:hover span {
+  color: #1e76cd;
+}
+
+.showing {
+  background-color: #1e76cd;
+  border-color: #1e76cd;
+}
+
+.showing .fa,
+.showing span {
+  color: #fefefe;
+}
+
+.showing:focus {
+  background-color: #1e76cd;
+}
+
+.showing:focus .fa,
+.showing:focus span {
+  color: #fefefe;
+}
+
+.showing:hover {
+  background-color: #1e76cd;
+  border-color: #1e76cd;
+}
+
+.showing:hover .fa,
+.showing:hover span {
+  color: #fefefe;
+}
+
+
 .button-normal {
   border: 2px solid #8a8a8a;
   background-color: transparent;
@@ -7112,11 +7187,265 @@ html {
 }
 
 .button-normal:hover {
-  border-color: #528cb8;
+  border-color: #a34b88;
   background-color: transparent;
 }
 
 .button-normal:hover .fa,
 .button-normal:hover span {
-  color: #528cb8;
+  color: #a34b88;
+}
+
+
+.button-like-small {
+  border: 0px;
+  background-color: transparent;
+  text-decoration: none;
+  padding: 0;
+  width: 150%;
+  position: relative;
+  vertical-align: middle;
+  text-align: center;
+  display: inline-block;
+  border-radius: 3rem;
+  color: #8a8a8a;
+  transition: all ease 0.4s;
+}
+
+.button-like-small span {
+  margin-left: 0.5rem;
+}
+
+.button-like-small .fa,
+.button-like-small span {
+  transition: all ease 0.4s;
+}
+
+.button-like-small:focus {
+  background-color: transparent;
+}
+
+.button-like-small:focus .fa,
+.button-like-small:focus span {
+  color: #8a8a8a;
+}
+
+.button-like-small:hover {
+  background-color: transparent;
+}
+
+.button-like-small:hover .fa,
+.button-like-small:hover span {
+  color: #cc4b37;
+}
+
+
+.liked-small {
+  background-color: #cc4b37;
+}
+
+.liked-small .fa,
+.liked-small span {
+  color: #fefefe;
+}
+
+.liked-small:focus {
+  background-color: #cc4b37;
+}
+
+.liked-small:focus .fa,
+.liked-small:focus span {
+  color: #fefefe;
+}
+
+.liked-small:hover {
+  background-color: #cc4b37;
+}
+
+.liked-small:hover .fa,
+.liked-small:hover span {
+  color: #fefefe;
+}
+
+
+.button-dislike-small {
+  border: 0px;
+  background-color: transparent;
+  text-decoration: none;
+  padding: 0;
+  width: 150%;
+  position: relative;
+  vertical-align: middle;
+  text-align: center;
+  display: inline-block;
+  border-radius: 3rem;
+  color: #8a8a8a;
+  transition: all ease 0.4s;
+}
+
+.button-dislike-small span {
+  margin-left: 0.5rem;
+}
+
+.button-dislike-small .fa,
+.button-dislike-small span {
+  transition: all ease 0.4s;
+}
+
+.button-dislike-small:focus {
+  background-color: transparent;
+}
+
+.button-dislike-small:focus .fa,
+.button-dislike-small:focus span {
+  color: #8a8a8a;
+}
+
+.button-dislike-small:hover {
+  background-color: transparent;
+}
+
+.button-dislike-small:hover .fa,
+.button-dislike-small:hover span {
+  color: #616161;
+}
+
+.disliked-small {
+  background-color: #616161;
+}
+
+.disliked-small .fa,
+.disliked-small span {
+  color: #fefefe;
+}
+
+.disliked-small:focus {
+  background-color: #616161;
+}
+
+.disliked-small:focus .fa,
+.disliked-small:focus span {
+  color: #fefefe;
+}
+
+.disliked-small:hover {
+  background-color: #616161;
+}
+
+.disliked-small:hover .fa,
+.disliked-small:hover span {
+  color: #fefefe;
+}
+
+
+.button-comment-small {
+  border: 0px;
+  background-color: transparent;
+  text-decoration: none;
+  padding: 0;
+  width: 150%;
+  position: relative;
+  vertical-align: middle;
+  text-align: center;
+  display: inline-block;
+  border-radius: 3rem;
+  color: #8a8a8a;
+  transition: all ease 0.4s;
+}
+
+.button-comment-small span {
+  margin-left: 0.5rem;
+}
+
+.button-comment-small .fa,
+.button-comment-small span {
+  transition: all ease 0.4s;
+}
+
+.button-comment-small:focus {
+  background-color: transparent;
+}
+
+.button-comment-small:focus .fa,
+.button-comment-small:focus span {
+  color: #8a8a8a;
+}
+
+.button-comment-small:hover {
+  background-color: transparent;
+}
+
+.button-comment-small:hover .fa,
+.button-comment-small:hover span {
+  color: #1e76cd;
+}
+
+.showing-small {
+  background-color: #1e76cd;
+}
+
+.showing-small .fa,
+.showing-small span {
+  color: #fefefe;
+}
+
+.showing-small:focus {
+  background-color: #1e76cd;
+}
+
+.showing-small:focus .fa,
+.showing-small:focus span {
+  color: #fefefe;
+}
+
+.showing-small:hover {
+  background-color: #1e76cd;
+}
+
+.showing-small:hover .fa,
+.showing-small:hover span {
+  color: #fefefe;
+}
+
+
+.button-normal-small {
+  border: 0px;
+  background-color: transparent;
+  text-decoration: none;
+  padding: 0;
+  width: 150%;
+  position: relative;
+  vertical-align: middle;
+  text-align: center;
+  display: inline-block;
+  border-radius: 3rem;
+  color: #8a8a8a;
+  transition: all ease 0.4s;
+}
+
+.button-normal-small span {
+  margin-left: 0.5rem;
+}
+
+.button-normal-small .fa,
+.button-normal-small span {
+  transition: all ease 0.4s;
+}
+
+.button-normal-small:focus {
+  background-color: transparent;
+}
+
+.button-normal-small:focus .fa,
+.button-normal-small:focus span {
+  color: #a34b88;
+}
+
+.button-normal-small:hover {
+  background-color: transparent;
+}
+
+.button-normal:hover .fa,
+.button-normal:hover span {
+  color: #a34b88;
 }

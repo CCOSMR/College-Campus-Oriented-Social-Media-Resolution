@@ -28,7 +28,7 @@ jQuery(function($) {
 			data,
 			function(response){
 				for (var i = 0; i < response.length; i++) {
-					insert_post(response[i].poster_id, response[i].poster_name, response[i].time, 
+					insert_post(response[i].post_id, response[i].poster_id, response[i].poster_name, response[i].time, 
 						response[i].content, response[i].likes, response[i].dislikes, response[i].comments);
 				}
 			});
@@ -49,7 +49,7 @@ function check_post() {
 			data,
 			function(response){
 				for (var i = 0; i < response.length; i++) {
-					insert_post(response[i].poster_id, response[i].poster_name, response[i].time, 
+					insert_post(response[i].post_id, response[i].poster_id, response[i].poster_name, response[i].time, 
 						response[i].content, response[i].likes, response[i].dislikes, response[i].comments);
 					post_ids.push(response[i].post_id);
 				}
@@ -60,14 +60,14 @@ function check_post() {
 	 time_stamp = Date.now();
 }
 
-function insert_post(poster_id, poster_name, time, content, likes, dislikes, comments) {
+function insert_post(post_id, poster_id, poster_name, time, content, likes, dislikes, comments) {
 	post_count++;
 	var date = new Date(time*1000);
 	var time_string = ' ' +(date.getDay() + 1) + ', ' 
                   + monthNames[date.getMonth()] + ', '
                   + date.getFullYear();
 	new_post = `<li id="post` + post_count + `"><article class="excerpt">
-								<div class="excerpttxt">
+								<div class="excerpttxt" style="padding:15px;">
 									
 							
 									<ul class="nospace inline pushright font-xs">
@@ -92,7 +92,7 @@ function insert_post(poster_id, poster_name, time, content, likes, dislikes, com
 											<i class="fa fa-thumbs-down"></i>
 											<span>` + dislikes + `</span>
 											</button> </li>
-									  <li><button class="button button-normal">
+									  <li><button class="button button-comment">
 											<i class="fa fa-comment"></i>
 											<span>` + comments + `</span>
 											</button> </li>
@@ -106,7 +106,97 @@ function insert_post(poster_id, poster_name, time, content, likes, dislikes, com
 											</button> </li>
 									</ul>
 								</div>
-							</article></li>  `
+								<div id="comments_` + post_id + `" style="padding-top: 0;padding-left: 15px;">
+								
+									<fieldset>
+									<legend class="font-xs">Comments</legend>
+									<blockquote>
+									<ul><li>
+										<div class="excerpttxt font-xxs">
+									
+							
+											<ul class="nospace inline pushright font-xs">
+												<li>
+													<ul class="nospace inline pushright font-xs">
+														<li><h6 class=" font-xxs">`+ poster_name + `</h6></li>
+														<ul class="nospace inline pushright font-xs"> 
+															<li></i> <a href="#" class=" font-xxs">` + "@" + poster_id + `</a></li>
+															<li><i class="fa fa-calendar-o"></i>` + time_string + `</li>
+														</ul>
+													</ul>
+												</li>
+											</ul>
+											<p>` + content + `</p>
+											<ul class="nospace inline pushright font-xxs">
+											  <li><button class="button button-like-small" id="like_button_` + post_count + `">
+													<i class="fa fa-heart"></i>
+													<span>` + likes + `</span>
+													</button> </li>
+											  <li><button class="button button-dislike-small" id="dislike_button_` + post_count + `">
+													<i class="fa fa-thumbs-down"></i>
+													<span>` + dislikes + `</span>
+													</button> </li>
+											  <li><button class="button button-comment-small">
+													<i class="fa fa-comment"></i>
+													<span>` + comments + `</span>
+													</button> </li>
+											  <li><button class="button button-normal-small">
+													<i class="fa fa-pencil-square-o"></i>
+													<span>Reply</span>
+													</button> </li>
+											  <li><button class="button button-normal-small">
+													<i class="fa fa-share"></i>
+													<span>Share</span>
+													</button> </li>
+											</ul>
+											<div id="comments_` + post_id + `" style="padding-top: 0;padding-left: -2rem;">
+										
+											<blockquote>
+											<ul><li>
+												<div class="excerpttxt font-xxs">
+											
+									
+											<ul class="nospace inline pushright font-xs">
+												<li>
+													<ul class="nospace inline pushright font-xs">
+														<li><h6 class=" font-xxs">`+ poster_name + `</h6></li>
+														<ul class="nospace inline pushright font-xs"> 
+															<li></i> <a href="#" class=" font-xxs">` + "@" + poster_id + `</a></li>
+															<li><i class="fa fa-calendar-o"></i>` + time_string + `</li>
+														</ul>
+													</ul>
+												</li>
+											</ul>
+											<p>` + content + `</p>
+											<ul class="nospace inline pushright font-xxs">
+											  <li><button class="button button-like-small" id="like_button_` + post_count + `">
+													<i class="fa fa-heart"></i>
+													<span>` + likes + `</span>
+													</button> </li>
+											  <li><button class="button button-dislike-small" id="dislike_button_` + post_count + `">
+													<i class="fa fa-thumbs-down"></i>
+													<span>` + dislikes + `</span>
+													</button> </li>
+											  <li><button class="button button-comment-small">
+													<i class="fa fa-comment"></i>
+													<span>` + comments + `</span>
+													</button> </li>
+											  <li><button class="button button-normal-small">
+													<i class="fa fa-pencil-square-o"></i>
+													<span>Reply</span>
+													</button> </li>
+											  <li><button class="button button-normal-small">
+													<i class="fa fa-share"></i>
+													<span>Share</span>
+													</button> </li>
+											</ul>
+										</div>
+								</div>
+										
+								</fieldset>
+							</article>
+							</div>
+							</li>  `
 	
 	liked.push(false);
 	disliked.push(false);
@@ -136,6 +226,30 @@ function insert_post(poster_id, poster_name, time, content, likes, dislikes, com
 
 		});
 	});
+	$(function() {
+		$('.button-comment').on('click', function () {
+			$(this).toggleClass("showing");
+
+		});
+	});
+	$(function() {
+		$('.button-like-small').on('click', function () {
+			$(this).toggleClass("liked-small");
+
+		});
+	});
+	$(function() {
+		$('.button-dislike-small').on('click', function () {
+			$(this).toggleClass("disliked-small");
+
+		});
+	});
+	$(function() {
+		$('.button-comment-small').on('click', function () {
+			$(this).toggleClass("showing-small");
+
+		});
+	});
 }
 
 function select_tag(index) {
@@ -153,3 +267,6 @@ function select_tag(index) {
 	document.getElementsByName('tab')[(y.length - 1) % (index + 1)].className = "nav-link active"; 
 }
 
+function request_post_comments(post_id) {
+		
+}
