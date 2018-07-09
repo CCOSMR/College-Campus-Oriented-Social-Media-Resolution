@@ -51,6 +51,7 @@ function check_post() {
 				for (var i = 0; i < response.length; i++) {
 					insert_post(response[i].poster_id, response[i].poster_name, response[i].time, 
 						response[i].content, response[i].likes, response[i].dislikes, response[i].comments);
+					post_ids.push(response[i].post_id);
 				}
 			});
 	 }

@@ -6556,7 +6556,7 @@ main {
   width: auto;
   padding: 0 15px;
   position: auto;
-  overflow: scroll;
+  overflow: auto;
   height: 100%; }
 
   #rightbar {

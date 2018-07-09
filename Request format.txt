@@ -1,0 +1,56 @@
+/request_posts # Load posts
+{
+	"time_stamp": 1531042368976, # last requested timestamp / 1000 int
+	"latest_post_time_stamp": 1531042368124, # timestamp of latet post / 1000 int
+	"type":"backward", # forward or backward
+	"user":"", # empty string if requesting for home page, user id if requesting for specific user's personal page
+}
+
+respond:
+{	
+	
+	"post_id": 653254,
+	
+	"poster_id": "123",
+	
+	"poster_name": "John",
+	
+	"time": 1531042368976,
+	
+	"content": "very good",
+	
+	"likes": 1,
+	
+	"dislikes": 1,
+	
+	"comments": 1
+
+}
+
+
+/register # submit register form
+{
+	"id":"123",
+	"password":"******",
+	"email":"123@123.com",
+	"name":"John",
+	"captcha":"ABCD"
+}
+
+respond:
+{
+	"status":true, # true or false, bool
+	"message":"same username" # "same username", "same email", "wrong captcha", ...
+		# handled by client
+}
+
+
+/like # like a post
+{
+	"post_id": 123,
+}
+
+respond:
+{
+	status":true # true or false, bool
+}
