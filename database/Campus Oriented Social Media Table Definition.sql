@@ -26,8 +26,8 @@ create table Users (
 );
  
 create table Follow (
-  following_id integer,
-  follower_id integer,
+  following_id varchar(64),
+  follower_id varchar(64),
   time_followed datetime,
   seen bool,
   primary key (following_id, follower_id),

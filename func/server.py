@@ -94,9 +94,28 @@ def personalinfo(database, id):
 
 
 def friends_of(database, id):
+    friends_name = []
+    search_re = database.simple_search("Follow", "follower_id=\"{}\"".format(id))
+    if search_re:
+        for i in search_re:
+            friends_name.append(personalinfo(i[0])["name"])
+    return friends_name
 
 
 def courses_of(database, id):
+    def idtostu(database, id):
+        search_re = database.simple_search("Users_Student", "user_id=\"{}\"".format(id))
+        if search_re:
+            return search_re[0][3]
+        return False
+
+    courses = []
+    stu_id = idtostu(database, id)
+    if stu_id:
+        search_re = database.simple_search("Attend", "student_id={}".format(stu_id))
+        for i in search_re:
+            courses.append(course_detail(i[1])["name"])
+    return courses
 
 
 def request_posts(id, dir, time, num=5):

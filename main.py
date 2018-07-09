@@ -212,7 +212,7 @@ Sixty-Four comes asking for bread.'''.splitlines()
 def personalinfo():
     id = flask.request.args.get('id')
     if not id:
-        return flask.render_template("", id=id)
+        return flask.render_template("personalpage.html", id=id)
     else:
         person = server.personalinfo(db, id)
         friends = server.friends_of(db, id)
