@@ -6,3 +6,4 @@ func/__pycache__/verified_code.cpython-36.pyc
 CCOSMR.db
 func/__pycache__/captcha.cpython-36.pyc
 func/database.py
+backup/main.py
