@@ -135,11 +135,11 @@ def personaldetail():
     friends = server.friends_of(db, id)
     courses = server.courses_of(db, id)
     person = {
-        "name": "dadfas",
-        "email": "sdfadsfa"
+        "name": "sdfab",
+        "email": "sdf@qq.com"
     }
-    friends = ["12312", "213123", "dsfdf"]
-    courses = ["12312", "213123", "dsfdf"]
+     friends = {123:"andy",12333:"john", 23:"smith", 323:"dsfdf"}
+    courses = {1:"高数",12333:"大雾", 23:"C语", 323:"英语"}
     result = {
         "user_name": person["name"],
         "user_email": person["email"],
