@@ -125,3 +125,4 @@ def request_posts(id, dir, time, num=5):
 def like(database, user_id, sub_id, action):
     search_re = database.simple_search("Likes", "user_id={} and sub_id={}".format(user_id, sub_id))
     if action and not search_re:
+        pass
