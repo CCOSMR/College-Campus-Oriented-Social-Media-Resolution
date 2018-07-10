@@ -1,4 +1,4 @@
-var id="123456";  //获取该主页用户的id
+var id={{id}};  //获取该主页用户的id
 
 
 function fillinfo(){
