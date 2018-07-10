@@ -211,19 +211,28 @@ Sixty-Four comes asking for bread.'''.splitlines()
 @app.route("/personalinfo", methods=["GET"])
 def personalinfo():
     id = flask.request.args.get('id')
-    if not id:
-        return flask.render_template("personalpage.html", id=id)
-    else:
-        person = server.personalinfo(db, id)
-        friends = server.friends_of(db, id)
-        courses = server.courses_of(db, id)
-        result = {
-            "user_name": person["name"],
-            "user_email": person["email"],
-            "friends number": friends,
-            "course number": courses
-        }
-        return flask.jsonify(result)
+    return flask.render_template("personalpage.html", id=id)
+
+
+@app.route("/personaldetail", methods=["GET"])
+def personaldetail():
+    id = flask.request.args.get('id')
+    person = server.personalinfo(db, id)
+    friends = server.friends_of(db, id)
+    courses = server.courses_of(db, id)
+    person = {
+        "name": "dadfas",
+        "email": "sdfadsfa"
+    }
+    friends = ["12312", "213123", "dsfdf"]
+    courses = ["12312", "213123", "dsfdf"]
+    result = {
+        "user_name": person["name"],
+        "user_email": person["email"],
+        "friends number": friends,
+        "course number": courses
+    }
+    return flask.jsonify(result)
 
 
 @app.route("/myfriends", methods=["GET", "POST"])
