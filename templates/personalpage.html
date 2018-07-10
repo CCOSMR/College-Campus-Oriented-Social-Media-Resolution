@@ -6,14 +6,14 @@
     <link rel="stylesheet" type="text/css" href="style/register-login.css">
     <link rel="stylesheet" href="css/style.css">
 
-  
+   
  <script>
-        var id={{id}};
+       var id="123456";
 
 
 function fillinfo(){
               insert_userid(id);
-              $.get("/personaldetail"+"?id="+id,
+              $.get("/personalinfo"+"?id="+id,
               function(info){
                 //alert(JSON.stringify(info))
                 insert_username(info.user_name);
@@ -62,15 +62,14 @@ function insert_coursename(coursename) {
 
 function insert_friendname(friendname) {
 var str4=" <li class='nav-item'><a class='nav-link' href=''>"+friendname+"</a></li>";
-document.getElementById('MenuDropdown1').innerHTML += str4;
+document.getElementById('MenuDropdownfollow').innerHTML += str4;
 }
-
 
         
    
      
 
-       
+    
  
 </script>  
 </head>
@@ -128,10 +127,10 @@ document.getElementById('MenuDropdown1').innerHTML += str4;
 
                                 <hr/>
 
-                                <li class="nav-item active dropdown"  style="background-color: #cbecf1;">
-                                    <a class="nav-link dropdown-toggle" href="#MenuDropdown1" data-toggle="collapse" aria-controls="MenuDropdown1" aria-expanded="false">Following</a>
-                                    <ul id="MenuDropdown1" class="sub-navbar collapse flex-column" style="background-color: #cbecf1;">
-
+                                <li class="nav-item active dropdown"  >
+                                    <a class="nav-link dropdown-toggle" href="#MenuDropdownfollow" data-toggle="collapse" aria-controls="MenuDropdownfollow" aria-expanded="false">Following</a>
+                                    <ul id="MenuDropdownfollow" class="sub-navbar collapse flex-column" >
+                                  
                                         <!--add friendsname here-->
                                     </ul>
                                 </li>
