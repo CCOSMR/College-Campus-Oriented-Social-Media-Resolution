@@ -3,79 +3,12 @@
 <head>
     <meta charset="utf-8">
     <title>CCOSMR--Course</title>
-    <!-- Main CSS --> 
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="css/style.css">
+	<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+	
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script src="/javascript/course.js"></script>
 
-
-    <!-- Main CSS --> 
-    <link rel="stylesheet" href="css/style.css">
-
-    <!-- Font Awesome -->
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <script>
-            function request_searchcourse() {
-                var searchname = document.getElementById("mysearch").value;
-                var data = JSON.stringify({"search":searchname});
-                $.post("/searchcourse",
-                    data,
-                    function(n){
-                        var box = document.getElementById("resulttable");
-                        for(var i=0;i<n.length;i++){
-                            var str1=`
-                                                        <tr>
-                                                            <td><h5>`+`</h5></td>
-                                                            <td<h5>`+`</h5></td>
-                                                            <td><h5>`+`</h5></td>
-                                                            <td><h5>`+`</h5></td>
-                                                        </tr> 
-                            `;
-                            box.innerHTML +=str1;    
-                        }                     
-                    });
-            }
-            
-            function show(){
-                request_searchcourse();
-            }
-
-            function getRadioGrade(a){
-                var data = JSON.stringify({"grade":a});
-                $.post("/searchgrade",
-                    data,
-                    function(){
-                    });
-            }
-
-            function getRadioClasstype(a){
-                var data = JSON.stringify({"classtype":a});
-                $.post("/searchclasstype",
-                    data,
-                    function(){
-                    });
-            }
-
-            function abc(){
-                $.get("/abc",
-                    function(b){
-                        alert(b);
-                    });
-            }
-
-            function efg(){
-                var box = document.getElementById("resulttable");
-                var str="dadasdsadasd"
-                var str1=`
-                                            <tr>
-                                                <td>`+str+`</td>
-                                                <td>Rachel Johnson</td>
-                                                <td>19</td>
-                                                <td>60</td>
-                                            </tr> 
-                `;
-                box.innerHTML +=str1;
-            }
-
-    </script>  
 </head>
 <body>
 <div id="sidebar">
@@ -128,8 +61,8 @@
                         </nav>                    
                     <!-- Sidebar search form -->
                     <form class="form-inline sidebar-search-form my-2 my-lg-0" method="post">
-                            <input id="myserach" class="form-control mr-sm-2" type="text" size="10"  placeholder="Search" aria-label="Search">
-                            <button class="btn my-2 my-sm-0" type="submit">Search</button>
+                            <input id="mysearch" class="form-control mr-sm-2" type="text" size="10"  placeholder="Search" aria-label="Search">
+                            <button onclick="request_searchcourse();" class="btn my-2 my-sm-0" type="submit">Search</button>
                     </form>    
                     <!-- Social icons -->
                     <p class="sidebar-social-icons social-icons">
