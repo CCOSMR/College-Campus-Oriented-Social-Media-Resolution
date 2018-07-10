@@ -272,5 +272,6 @@ def serve_static(filename):
 
 
 if __name__ == "__main__":
+    # This is for test
     # app.run(host='0.0.0.0', port=80)
     app.run(debug=True)
