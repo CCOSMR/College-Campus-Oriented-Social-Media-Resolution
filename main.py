@@ -38,9 +38,9 @@ def register():
         data = server.get_json()
         status = server.register(db, data)
         if status == True:
-            result = {"status": status, "url": flask.url_for('login')}
+            result = {"status": True, "message": None}
             return flask.jsonify(result)
-        result = {"status": status, "url": None}
+        result = {"status": False, "message": status}
         return flask.jsonify(result)
 
 
@@ -107,185 +107,11 @@ def request_posts():
     data = server.get_json()
     # result = server.request_posts(id=flask.session["id"], dir=data["type"], time=data["time_stamp"], num=5)
     result = []
-
-    ####################################################
-    ### The following content is only for prototype: ###
-    ####################################################
-
-    names = '''Kelley
-Tatiana
-Wesley
-Wilfred
-Vernetta
-Francene
-Cira
-Murray
-Seema
-Arlean
-Jacelyn
-Darleen
-Thea
-Minna
-Georgetta
-Elke
-Adelia
-Lyda
-Fumiko
-Latarsha'''
-
-    sentences = '''If you like tuna and tomato sauce- try combining the two. It’s really not as bad as it sounds.
-My Mum tries to be cool by saying that she likes all the same things that I do.
-Two seats were vacant.
-I hear that Nancy is very pretty.
-A glittering gem is not enough.
-He didn’t want to go to the dentist, yet he went anyway.
-I want to buy a onesie… but know it won’t suit me.
-Wow, does that work?
-He turned in the research paper on Friday; otherwise, he would have not passed the class.
-Please wait outside of the house.
-I currently have 4 windows open up… and I don’t know why.
-Everyone was busy, so I went to the movie alone.
-This is the last random sentence I will be writing and I am going to stop mid-sent
-Is it free?
-He told us a very exciting adventure story.
-I often see the time 11:11 or 12:34 on clocks.
-The lake is a long way from here.
-The river stole the gods.
-The memory we used to share is no longer coherent.
-Sometimes it is better to just walk away from things and go back to them later when you’re in a better frame of mind.
-The shooter says goodbye to his love.
-Abstraction is often one floor above you.
-I was very proud of my nickname throughout high school but today- I couldn’t be any different to what my nickname was.
-Yeah, I think it's a good environment for learning English.
-He said he was not there yesterday; however, many people saw him there.
-She was too short to see over the fence.
-They got there early, and they got really good seats.
-A purple pig and a green donkey flew a kite in the middle of the night and ended up sunburnt.
-We have never been to Asia, nor have we visited Africa.
-I love eating toasted cheese and tuna sandwiches.
-Malls are great places to shop; I can find everything I need under one roof.
-I'd rather be a bird than a fish.
-Writing a list of random sentences is harder than I initially thought it would be.
-It was getting dark, and we weren’t there yet.
-He ran out of money, so he had to stop playing poker.
-She wrote him a long letter, but he didn't read it.
-She borrowed the book from him many years ago and hasn't yet returned it.
-Where do random thoughts come from?
-The sky is clear; the stars are twinkling.
-Cats are good pets, for they are clean and are not noisy.
-We have a lot of rain in June.
-The clock within this blog and the clock on my laptop are 1 hour different from each other.
-She folded her handkerchief neatly.
-Sometimes, all you need to do is completely make an ass of yourself and laugh it off to realise that life isn’t so bad after all.
-How was the math test?
-If the Easter Bunny and the Tooth Fairy had babies would they take your teeth and leave chocolate for you?
-The quick brown fox jumps over the lazy dog.
-She always speaks to him in a loud voice.
-I would have gotten the promotion, but my attendance wasn’t good enough.
-Sixty-Four comes asking for bread.'''.splitlines()
-
     for i in range(4):
         temp = {
             "post_id": random.randint(1, 999999),
             "poster_id": random.randint(1, 999999),
             "poster_name": names.split()[random.randint(0, 19)],
-            "time": random.randint(1521043208, 1531043208),
-            "content": sentences[random.randint(0, 49)],
-            "likes": random.randint(0, 99),
-            "dislikes": random.randint(0, 25),
-            "comments": random.randint(0, 25),
-        }
-        result.append(temp)
-    return flask.jsonify(result)
-
-@app.route("/get_comments", methods=["POST"])
-def get_comments():
-    import random
-    data = server.get_json()
-    # result = server.request_posts(id=flask.session["id"], dir=data["type"], time=data["time_stamp"], num=5)
-    result = []
-
-    ####################################################
-    ### The following content is only for prototype: ###
-    ####################################################
-
-    names = '''Kelley
-Tatiana
-Wesley
-Wilfred
-Vernetta
-Francene
-Cira
-Murray
-Seema
-Arlean
-Jacelyn
-Darleen
-Thea
-Minna
-Georgetta
-Elke
-Adelia
-Lyda
-Fumiko
-Latarsha'''
-
-    sentences = '''If you like tuna and tomato sauce- try combining the two. It’s really not as bad as it sounds.
-My Mum tries to be cool by saying that she likes all the same things that I do.
-Two seats were vacant.
-I hear that Nancy is very pretty.
-A glittering gem is not enough.
-He didn’t want to go to the dentist, yet he went anyway.
-I want to buy a onesie… but know it won’t suit me.
-Wow, does that work?
-He turned in the research paper on Friday; otherwise, he would have not passed the class.
-Please wait outside of the house.
-I currently have 4 windows open up… and I don’t know why.
-Everyone was busy, so I went to the movie alone.
-This is the last random sentence I will be writing and I am going to stop mid-sent
-Is it free?
-He told us a very exciting adventure story.
-I often see the time 11:11 or 12:34 on clocks.
-The lake is a long way from here.
-The river stole the gods.
-The memory we used to share is no longer coherent.
-Sometimes it is better to just walk away from things and go back to them later when you’re in a better frame of mind.
-The shooter says goodbye to his love.
-Abstraction is often one floor above you.
-I was very proud of my nickname throughout high school but today- I couldn’t be any different to what my nickname was.
-Yeah, I think it's a good environment for learning English.
-He said he was not there yesterday; however, many people saw him there.
-She was too short to see over the fence.
-They got there early, and they got really good seats.
-A purple pig and a green donkey flew a kite in the middle of the night and ended up sunburnt.
-We have never been to Asia, nor have we visited Africa.
-I love eating toasted cheese and tuna sandwiches.
-Malls are great places to shop; I can find everything I need under one roof.
-I'd rather be a bird than a fish.
-Writing a list of random sentences is harder than I initially thought it would be.
-It was getting dark, and we weren’t there yet.
-He ran out of money, so he had to stop playing poker.
-She wrote him a long letter, but he didn't read it.
-She borrowed the book from him many years ago and hasn't yet returned it.
-Where do random thoughts come from?
-The sky is clear; the stars are twinkling.
-Cats are good pets, for they are clean and are not noisy.
-We have a lot of rain in June.
-The clock within this blog and the clock on my laptop are 1 hour different from each other.
-She folded her handkerchief neatly.
-Sometimes, all you need to do is completely make an ass of yourself and laugh it off to realise that life isn’t so bad after all.
-How was the math test?
-If the Easter Bunny and the Tooth Fairy had babies would they take your teeth and leave chocolate for you?
-The quick brown fox jumps over the lazy dog.
-She always speaks to him in a loud voice.
-I would have gotten the promotion, but my attendance wasn’t good enough.
-Sixty-Four comes asking for bread.'''.splitlines()
-
-    for i in range(5):
-        temp = {
-            "comment_id": random.randint(1, 999999),
-            "commenter_id": random.randint(1, 999999),
-            "commenter_name": names.split()[random.randint(0, 19)],
             "time": random.randint(1521043208, 1531043208),
             "content": sentences[random.randint(0, 49)],
             "likes": random.randint(0, 99),
@@ -323,19 +149,11 @@ def personaldetail():
     return flask.jsonify(result)
 
 
-@app.route("/myfriends", methods=["GET", "POST"])
-def myfriends():
-    pass
+@app.route("/like", methods=["POST"])
+def like():
+    data = server.get_json()
 
-
-@app.route("/addfriend", methods=["GET", "POST"])
-def addfriend():
-    pass
-
-
-@app.route("/search", methods=["GET", "POST"])
-def search():
-    pass
+    return flask.render_template("personalpage.html", id=id)
 
 
 @app.route("/captcha", methods=["GET"])
