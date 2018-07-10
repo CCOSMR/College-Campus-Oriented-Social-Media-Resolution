@@ -229,8 +229,8 @@ def personaldetail():
     result = {
         "user_name": person["name"],
         "user_email": person["email"],
-        "friends number": friends,
-        "course number": courses
+        "friends": friends,
+        "courses": courses
     }
     return flask.jsonify(result)
 
