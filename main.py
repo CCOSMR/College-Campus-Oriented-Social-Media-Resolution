@@ -84,16 +84,7 @@ def searchcourse():
         if not id:
             return flask.render_template('course.html')
         else:
-            # data = server.course_detail(db, id)
-            data = {
-                "id": 1231231,
-                "teacher": "David",
-                "name": "Test",
-                "dscr": "This is not a course but a counterfeit for test.",
-                "ave_rating": 9.8,
-                "location": "classroom",
-                "schedule": "wan"
-            }
+            data = server.course_detail(db, id)
             if data:
                 return flask.render_template('courseinformation.html', name=data["name"], location=data["location"],
                                              teachername=data["teacher"], desc=data["dscr"], avg=data["ave_rating"])
@@ -101,12 +92,12 @@ def searchcourse():
                 pass
     elif flask.request.method == "POST":
         data = server.get_json()
-        # result = server.searchcourse(db, data["search"]
-        result = [
-            {"id": 1, "name": "1", "avg": 7.5},
-            {"id": 2, "name": "2", "avg": 2.8},
-            {"id": 3, "name": "3", "avg": 1.9}
-        ]
+        result = server.searchcourse(db, data["search"])
+        # result = [
+        #     {"id": 1, "name": "1", "avg": 7.5},
+        #     {"id": 2, "name": "2", "avg": 2.8},
+        #     {"id": 3, "name": "3", "avg": 1.9}
+        # ]
         return flask.jsonify(result)
 
 
@@ -308,19 +299,28 @@ Sixty-Four comes asking for bread.'''.splitlines()
 @app.route("/personalinfo", methods=["GET"])
 def personalinfo():
     id = flask.request.args.get('id')
-    if not id:
-        return flask.render_template("personalpage.html", id=id)
-    else:
-        person = server.personalinfo(db, id)
-        friends = server.friends_of(db, id)
-        courses = server.courses_of(db, id)
-        result = {
-            "user_name": person["name"],
-            "user_email": person["email"],
-            "friends number": friends,
-            "course number": courses
-        }
-        return flask.jsonify(result)
+    return flask.render_template("personalpage.html", id=id)
+
+
+@app.route("/personaldetail", methods=["GET"])
+def personaldetail():
+    id = flask.request.args.get('id')
+    person = server.personalinfo(db, id)
+    friends = server.friends_of(db, id)
+    courses = server.courses_of(db, id)
+    person = {
+        "name": "dadfas",
+        "email": "sdfadsfa"
+    }
+    friends = ["12312", "213123", "dsfdf"]
+    courses = ["12312", "213123", "dsfdf"]
+    result = {
+        "user_name": person["name"],
+        "user_email": person["email"],
+        "friends": friends,
+        "courses": courses
+    }
+    return flask.jsonify(result)
 
 
 @app.route("/myfriends", methods=["GET", "POST"])
@@ -369,5 +369,6 @@ def serve_static(filename):
 
 
 if __name__ == "__main__":
+    # This is for test
     # app.run(host='0.0.0.0', port=80)
     app.run(debug=True)

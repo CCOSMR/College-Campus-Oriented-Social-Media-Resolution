@@ -5,25 +5,80 @@
     <title>CCOSMR-personalpage</title>
     <link rel="stylesheet" type="text/css" href="style/register-login.css">
     <link rel="stylesheet" href="css/style.css">
-    
-    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
- 
  <script>
-          
+       var id={{id}};
+
+function fillinfo(){
+              insert_userid(id);
+              $.get("/personaldetail"+"?id="+id,
+              function(info){
+                //alert(JSON.stringify(info))
+                insert_username(info.user_name);
+                insert_useremail(info.user_email);
+
+                for(var i=0;i<info.courses.length;i++)
+                {
+                  insert_coursename(info.courses[i]);
+                }
+
+                for(var j=0;j<info.friends.length;j++)
+                {
+                  insert_friendname(info.friends[j]);
+                }
+              }
+			  ,dataType = "json")
+      };
+function insert_userid() {
+
+  var str0="<span class='text-left' style='color: #ffffff;'>"+id+"</span>";
+  document.getElementById('userid').innerHTML = str0;
+}
+
+
+function insert_username(username) {
+  var str1="<span class='text-left' style='color: #ffffff;'>"+username+"</span>";
+  document.getElementById('username').innerHTML = str1;
+}
+
+
+function insert_useremail(useremail) {
+
+  var str2="<span class='text-left' style='color: #ffffff;'>"+useremail+"</span>";
+  document.getElementById('useremail').innerHTML = str2;
+}
+
+
+
+function insert_coursename(coursename) {
+  var str3=" <li class='nav-item'><a class='nav-link' href=''>"+coursename+"</a></li>";
+  document.getElementById('MenuDropdown').innerHTML += str3;
+}
+
+
+
+function insert_friendname(friendname) {
+var str4=" <li class='nav-item'><a class='nav-link' href=''>"+friendname+"</a></li>";
+document.getElementById('MenuDropdownfollow').innerHTML += str4;
+}
+
+        
+   
+     
+
+    
  
 </script>  
 </head>
-<body onload="fillinfo();">
+<body onload="fillinfo()">
     <div id="sidebar">
-                      
+                       
             <div class="navbar-expand-md navbar-dark"> 
             
                 <header class="d-none d-md-block" >
                     <h2><span class="text-left" style='color: #ffffff;'>CCOSMR</span></h2>
                      <h5><span class="text-left" style='color: #ffffff;'>Personal information</span></h5>
                         <hr/>
-                     <h6 id="id" >
+                     <h6 id="userid" >
                           <!-- put username here-->
 
                      </h6>
@@ -32,7 +87,7 @@
                         <!-- put username here-->
                      </h6>
                      <hr/>
-                     <h6 id=useremail>
+                     <h6 id="useremail">
                           <!-- put useremail here-->
                      </h6>
                 </header>
@@ -68,10 +123,10 @@
 
                                 <hr/>
 
-                                <li class="nav-item active dropdown"  style="background-color: #cbecf1;">
-                                    <a class="nav-link dropdown-toggle" href="#MenuDropdown1" data-toggle="collapse" aria-controls="MenuDropdown1" aria-expanded="false">Follwing</a>
-                                    <ul id="MenuDropdown1" class="sub-navbar collapse flex-column" style="background-color: #cbecf1;">
-
+                                <li class="nav-item active dropdown"  >
+                                    <a class="nav-link dropdown-toggle" href="#MenuDropdownfollow" data-toggle="collapse" aria-controls="MenuDropdownfollow" aria-expanded="false">Following</a>
+                                    <ul id="MenuDropdownfollow" class="sub-navbar collapse flex-column" >
+                                  
                                         <!--add friendsname here-->
                                     </ul>
                                 </li>
@@ -159,7 +214,10 @@
                                             <ul class="nospace inline pushright font-xs">
                                                 <li><h6 class="heading">Posuere lorem placerat</h6></li>
                                                 <ul class="nospace inline pushright font-xs">
-                                                    <li><i class="fa fa-comments"></i> <a href="#">@user_id</a></li>
+                                                    <li>
+                                                        <i class="fa fa-comments"></i>
+                                                        <a href="#">@user_id</a>
+                                                    </li>
                                                     <li><i class="fa fa-calendar-o"></i> 02/01/45</li>
                                                 </ul>
                                             </ul>
