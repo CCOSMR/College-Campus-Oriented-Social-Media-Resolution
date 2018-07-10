@@ -1,12 +1,10 @@
 
             function request_searchcourse() {
                 var searchname = document.getElementById("mysearch").value;
-                alert(searchname);
                 var data = JSON.stringify({"search":searchname});
                 $.post("/course",
                     data,
                     function(n){
-                        alert("6666666");
                         var box = document.getElementById("resulttable");
                         for(var i=0;i<n.length;i++){
                             var str1=`
@@ -22,9 +20,6 @@
                     });
             }
             
-            function show(){
-                request_searchcourse();
-            }
 
             function getRadioGrade(a){
                 var data = JSON.stringify({"grade":a});
