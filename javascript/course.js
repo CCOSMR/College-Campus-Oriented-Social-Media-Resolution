@@ -7,7 +7,7 @@
                     data,
                     function(n){
                         alert("6666666");
-                        /*var box = document.getElementById("resulttable");
+                        var box = document.getElementById("resulttable");
                         for(var i=0;i<n.length;i++){
                             var str1=`
                                                         <tr>
@@ -18,7 +18,7 @@
                                                         </tr> 
                             `;
                             box.innerHTML +=str1;    
-                        } */                    
+                        }                   
                     });
             }
             
