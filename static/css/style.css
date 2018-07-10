@@ -6962,6 +6962,7 @@ html {
 
 .button-like:focus {
   background-color: transparent;
+  outline:0;
 }
 
 .button-like:focus .fa,
@@ -6991,6 +6992,7 @@ html {
 
 .liked:focus {
   background-color: #cc4b37;
+  outline:0;
 }
 
 .liked:focus .fa,
@@ -7035,6 +7037,7 @@ html {
 
 .button-dislike:focus {
   background-color: transparent;
+  outline:0;
 }
 
 .button-dislike:focus .fa,
@@ -7064,6 +7067,7 @@ html {
 
 .disliked:focus {
   background-color: #616161;
+  outline:0;
 }
 
 .disliked:focus .fa,
@@ -7107,6 +7111,7 @@ html {
 
 .button-comment:focus {
   background-color: transparent;
+  outline:0;
 }
 
 .button-comment:focus .fa,
@@ -7136,6 +7141,7 @@ html {
 
 .showing:focus {
   background-color: #1e76cd;
+  outline:0;
 }
 
 .showing:focus .fa,
@@ -7179,6 +7185,7 @@ html {
 
 .button-normal:focus {
   background-color: transparent;
+  outline:0;
 }
 
 .button-normal:focus .fa,
@@ -7223,6 +7230,7 @@ html {
 
 .button-like-small:focus {
   background-color: transparent;
+  outline:0;
 }
 
 .button-like-small:focus .fa,
@@ -7251,6 +7259,7 @@ html {
 
 .liked-small:focus {
   background-color: #cc4b37;
+  outline:0;
 }
 
 .liked-small:focus .fa,
@@ -7294,6 +7303,7 @@ html {
 
 .button-dislike-small:focus {
   background-color: transparent;
+  outline:0;
 }
 
 .button-dislike-small:focus .fa,
@@ -7321,6 +7331,7 @@ html {
 
 .disliked-small:focus {
   background-color: #616161;
+  outline:0;
 }
 
 .disliked-small:focus .fa,
@@ -7364,6 +7375,7 @@ html {
 
 .button-comment-small:focus {
   background-color: transparent;
+  outline:0;
 }
 
 .button-comment-small:focus .fa,
@@ -7391,6 +7403,7 @@ html {
 
 .showing-small:focus {
   background-color: #1e76cd;
+  outline:0;
 }
 
 .showing-small:focus .fa,
@@ -7434,6 +7447,7 @@ html {
 
 .button-normal-small:focus {
   background-color: transparent;
+  outline:0;
 }
 
 .button-normal-small:focus .fa,

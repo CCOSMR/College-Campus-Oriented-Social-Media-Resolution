@@ -1,7 +1,7 @@
 var time_stamp = Date.now();
 var earliest_post_id = -1;
 var post_count = 0;
-var posts = []
+var subs = []
 var post_ids = [];
 var liked = [];
 var disliked = [];
@@ -28,11 +28,13 @@ jQuery(function($) {
 	  $.post("/request_posts",
 			data,
 			function(response){
-				for (var i = 0; i < response.length; i++) {
-					insert_post(response[i].post_id, response[i].poster_id, response[i].poster_name, response[i].time, 
-						response[i].content, response[i].likes, response[i].dislikes, response[i].comments);
-					
-				}
+				$(function() {
+					for (var i = 0; i < response.length; i++) {
+						insert_post(response[i].post_id, response[i].poster_id, response[i].poster_name, response[i].time, 
+							response[i].content, response[i].likes, response[i].dislikes, response[i].comments);
+						
+					}
+				});
 			});
 	 }
 	 });
@@ -53,7 +55,7 @@ function check_post() {
 				for (var i = 0; i < response.length; i++) {
 					insert_post(response[i].post_id, response[i].poster_id, response[i].poster_name, response[i].time, 
 						response[i].content, response[i].likes, response[i].dislikes, response[i].comments);
-
+					
 				}
 			});
 	 }
@@ -64,7 +66,8 @@ function check_post() {
 
 function insert_post(post_id, poster_id, poster_name, time, content, likes, dislikes, comments) {
 	post_count++;
-	posts.push({'id': post_id, 'liked': false, 'disliked': false, 'comments': comments});
+	// subs.push({key: post_id, value: {'type': 'post', 'liked': false, 'disliked': false, 'comments': comments}});
+	subs[post_id] = {'type': 'post', 'liked': false, 'disliked': false, 'comments': comments};
 	var date = new Date(time*1000);
 	var time_string = ' ' +(date.getDay() + 1) + ', ' 
                   + monthNames[date.getMonth()] + ', '
@@ -84,15 +87,15 @@ function insert_post(post_id, poster_id, poster_name, time, content, likes, disl
 			</ul>
 			<p>` + content + `</p>
 			<ul class="nospace inline pushright font-xs">
-			  <li><button class="button button-like" id="like_button">
+			  <li><button class="button button-like" id="like_button" onclick="click_like(` + post_id + `);">
 					<i class="fa fa-heart"></i>
 					<span id="likes" >` + likes + `</span>
 					</button> </li>
-			  <li><button class="button button-dislike" id="dislike_button">
+			  <li><button class="button button-dislike" id="dislike_button" onclick="click_dislike(` + post_id + `);">
 					<i class="fa fa-thumbs-down"></i>
 					<span id="dislikes" >` + dislikes + `</span>
 					</button> </li>
-			  <li><button class="button button-comment">
+			  <li><button class="button button-comment" id="comment_button" onclick="click_comment(` + post_id + `);">
 					<i class="fa fa-comment"></i>
 					<span id="comments" >` + comments + `</span>
 					</button> </li>
@@ -110,151 +113,380 @@ function insert_post(post_id, poster_id, poster_name, time, content, likes, disl
 			<fieldset>
 				<legend class="font-xs">Comments</legend>
 				<blockquote>
-					<div class="excerpttxt font-xxs">
-						<ul class="nospace inline pushright font-xs">
-							<li>
-								<ul class="nospace inline pushright font-xs">
-									<li><h6 class=" font-xxs">`+ poster_name + `</h6></li>
-									<ul class="nospace inline pushright font-xs"> 
-										<li></i> <a href="#" class=" font-xxs">` + "@" + poster_id + `</a></li>
-										<li><i class="fa fa-calendar-o"></i>` + time_string + `</li>
-									</ul>
-								</ul>
-							</li>
-						</ul>
-						<p>` + content + `</p>
-						<ul class="nospace inline pushright font-xxs" style="margin-top: -20px;">
-						  <li><button class="button button-like-small" id="like_button_` + post_count + `">
-								<i class="fa fa-heart"></i>
-								<span>` + likes + `</span>
-								</button> </li>
-						  <li><button class="button button-dislike-small" id="dislike_button_` + post_count + `">
-								<i class="fa fa-thumbs-down"></i>
-								<span>` + dislikes + `</span>
-								</button> </li>
-						  <li><button class="button button-comment-small">
-								<i class="fa fa-comment"></i>
-								<span>` + comments + `</span>
-								</button> </li>
-						  <li><button class="button button-normal-small">
-								<i class="fa fa-pencil-square-o"></i>
-								<span>Reply</span>
-								</button> </li>
-						  <li><button class="button button-normal-small">
-								<i class="fa fa-share"></i>
-								<span>Share</span>
-								</button> </li>
-						</ul>
-						<div id="subcomments" style="padding-top: 0;padding-left: -2rem;">
-							<blockquote>
-								<ul><li>
-									<div class="excerpttxt font-xxs">
-								
-						
-								<ul class="nospace inline pushright font-xs">
-									<li>
-										<ul class="nospace inline pushright font-xs">
-											<li><h6 class=" font-xxs">`+ poster_name + `</h6></li>
-											<ul class="nospace inline pushright font-xs"> 
-												<li></i> <a href="#" class=" font-xxs">` + "@" + poster_id + `</a></li>
-												<li><i class="fa fa-calendar-o"></i>` + time_string + `</li>
-											</ul>
-										</ul>
-									</li>
-								</ul>
-								<p>` + content + `</p>
-								<ul class="nospace inline pushright font-xxs">
-								  <li><button class="button button-like-small" id="like_button_` + post_count + `">
-										<i class="fa fa-heart"></i>
-										<span>` + likes + `</span>
-										</button> </li>
-								  <li><button class="button button-dislike-small" id="dislike_button_` + post_count + `">
-										<i class="fa fa-thumbs-down"></i>
-										<span>` + dislikes + `</span>
-										</button> </li>
-								  <li><button class="button button-comment-small">
-										<i class="fa fa-comment"></i>
-										<span>` + comments + `</span>
-										</button> </li>
-								  <li><button class="button button-normal-small">
-										<i class="fa fa-pencil-square-o"></i>
-										<span>Reply</span>
-										</button> </li>
-								  <li><button class="button button-normal-small">
-										<i class="fa fa-share"></i>
-										<span>Share</span>
-										</button> </li>
-								</ul>
-							</blockquote>
-					</div>
 				</blockquote>
-			</div>
-				
-		</fieldset>
-	</article>
-	</div>
-	</div>  `
+			</fieldset>
+		</div>
+		<div id='reply' style='display:none;'>
+		</div>
+	</article></div>  `
 	
 	liked.push(false);
 	disliked.push(false);
 	
 	document.getElementById('posts_list').innerHTML += new_post;
+}
+
+function click_like(post_id) {
+	if (subs[post_id]['disliked'] && !subs[post_id]['liked']) {
+		// Cancel the dislike then add like
+		var data = JSON.stringify({"post_id": post_id, "like": true, "dislike": false});
+		$.post("/like",
+			data,
+			function(response){
+				if (!response['status']) {
+					alert('Something went wrong');
+				}
+				else {
+					subs[post_id]['liked'] = true;
+					subs[post_id]['disliked'] = false;
+					$('#' + post_id + ' #dislike_button').toggleClass("disliked");
+					$('#' + post_id + ' #like_button').toggleClass("liked");
+					var likes = $('#' + post_id + ' #likes')[0];
+					var dislikes = $('#' + post_id + ' #dislikes')[0];
+					likes.textContent = parseInt(likes.textContent) + 1;
+					dislikes.textContent = parseInt(dislikes.textContent) - 1;
+				}
+			});
+	}
+	else if (!subs[post_id]['liked']) {
+		// Add a like
+		var data = JSON.stringify({"post_id": post_id, "like": true, "dislike": false});
+		$.post("/like",
+			data,
+			function(response){
+				if (!response['status']) {
+					alert('Something went wrong');
+				}
+				else {
+					subs[post_id]['liked'] = true;
+					subs[post_id]['disliked'] = false;
+					$('#' + post_id + ' #like_button').toggleClass("liked");
+					var likes = $('#' + post_id + ' #likes')[0];
+					var dislikes = $('#' + post_id + ' #dislikes')[0];
+					likes.textContent = parseInt(likes.textContent) + 1;
+				}
+			});
+	}
+	else if (subs[post_id]['liked']) {
+		// Cancel the like
+		var data = JSON.stringify({"post_id": post_id, "like": false, "dislike": false});
+		$.post("/like",
+			data,
+			function(response){
+				if (!response['status']) {
+					alert('Something went wrong');
+				}
+				else {
+					subs[post_id]['liked'] = false;
+					subs[post_id]['disliked'] = false;
+					$('#' + post_id + ' #like_button').toggleClass("liked");
+					var likes = $('#' + post_id + ' #likes')[0];
+					var dislikes = $('#' + post_id + ' #dislikes')[0];
+					likes.textContent = parseInt(likes.textContent) - 1;
+				}
+			});
+	}
+	else {
+		alert('Something went wrong');
+	}
+}
+
+function click_dislike(post_id) {
+	if (subs[post_id]['liked'] && !subs[post_id]['disliked']) {
+		// Cancel the like then add dislike
+		var data = JSON.stringify({"post_id": post_id, "like": false, "dislike": true});
+		$.post("/like",
+			data,
+			function(response){
+				if (!response['status']) {
+					alert('Something went wrong');
+				}
+				else {
+					subs[post_id]['liked'] = false;
+					subs[post_id]['disliked'] = true;
+					$('#' + post_id + ' #dislike_button').toggleClass("disliked");
+					$('#' + post_id + ' #like_button').toggleClass("liked");
+					var likes = $('#' + post_id + ' #likes')[0];
+					var dislikes = $('#' + post_id + ' #dislikes')[0];
+					likes.textContent = parseInt(likes.textContent) -1;
+					dislikes.textContent = parseInt(dislikes.textContent) + 1;
+				}
+			});
+	}
+	else if (!subs[post_id]['disliked']) {
+		// Add a dislike
+		var data = JSON.stringify({"post_id": post_id, "like": false, "dislike": true});
+		$.post("/like",
+			data,
+			function(response){
+				if (!response['status']) {
+					alert('Something went wrong');
+				}
+				else {
+					subs[post_id]['liked'] = false;
+					subs[post_id]['disliked'] = true;
+					$('#' + post_id + ' #dislike_button').toggleClass("disliked");
+					var likes = $('#' + post_id + ' #likes')[0];
+					var dislikes = $('#' + post_id + ' #dislikes')[0];
+					dislikes.textContent = parseInt(dislikes.textContent) + 1;
+				}
+			});
+	}
+	else if (subs[post_id]['disliked']) {
+		// Cancel the dislike
+		var data = JSON.stringify({"post_id": post_id, "like": false, "dislike": false});
+		$.post("/like",
+			data,
+			function(response){
+				if (!response['status']) {
+					alert('Something went wrong');
+				}
+				else {
+					subs[post_id]['liked'] = false;
+					subs[post_id]['disliked'] = false;
+					$('#' + post_id + ' #dislike_button').toggleClass("disliked");
+					var likes = $('#' + post_id + ' #likes')[0];
+					var dislikes = $('#' + post_id + ' #dislikes')[0];
+					dislikes.textContent = parseInt(dislikes.textContent) - 1;
+				}
+			});
+	}
+	else {
+		alert('Something went wrong');
+	}
+}
+
+function click_comment(post_id) {
+	$('#' + post_id + ' #comment_button').toggleClass("showing");
+	if ($('#' + post_id + ' #comment_button').closest('div.post_div').find('div#comments')[0].style.display === "none") {
+		$('#' + post_id + ' #comment_button').closest('div.post_div').find('div#comments')[0].style.display = "block";
+	} 
+	else {
+		$('#' + post_id + ' #comment_button').closest('div.post_div').find('div#comments')[0].style.display = "none";
+	}
+	if ($('#' + post_id + ' #comments fieldset blockquote div').length == 0) {
+		get_comments($('#' + post_id + ' #comment_button').closest('div.post_div').attr('id'));
+	}
+}
+
+function insert_comment(post_id, comment_id, commenter_id, commenter_name, time, content, likes, dislikes, comments) {
+	subs[comment_id] = {'type': 'comment', 'liked': false, 'disliked': false, 'comments': comments};
+	var date = new Date(time*1000);
+	var time_string = ' ' +(date.getDay() + 1) + ', ' 
+                  + monthNames[date.getMonth()] + ', '
+                  + date.getFullYear();
+	var new_comment = 
+	`<div id="` + comment_id + `" class="excerpttxt">
+		<ul class="nospace inline pushright font-xs">
+			<li>
+				<ul class="nospace inline pushright font-xs">
+					<li><h6 class="font-xxs">`+ commenter_name + `</h6></li>
+					<ul class="nospace inline pushright"> 
+						<li></i> <a href="#" class="font-xxs">` + "@" + commenter_id + `</a></li>
+						<li class="font-xxs"><i class="fa fa-calendar-o"></i>` + time_string + `</li>
+					</ul>
+				</ul>
+			</li>
+		</ul>
+		<p class="font-xs">` + content + `</p>
+		<ul class="nospace inline pushright font-xxs" style="margin-top: -20px;">
+		  <li><button class="button button-like-small" id="like_button_small" onclick="click_like_small(` + comment_id + `);">
+				<i class="fa fa-heart"></i>
+				<span id="likes">` + likes + `</span>
+				</button> </li>
+		  <li><button class="button button-dislike-small" id="dislike_button_small" onclick="click_dislike_small(` + comment_id + `);">
+				<i class="fa fa-thumbs-down"></i>
+				<span id="dislikes">` + dislikes + `</span>
+				</button> </li>
+		  <li><button class="button button-comment-small" id="comment_button_small">
+				<i class="fa fa-comment"></i>
+				<span id="comments">` + comments + `</span>
+				</button> </li>
+		  <li><button class="button button-normal-small">
+				<i class="fa fa-pencil-square-o"></i>
+				<span>Reply</span>
+				</button> </li>
+		  <li><button class="button button-normal-small">
+				<i class="fa fa-share"></i>
+				<span>Share</span>
+				</button> </li>
+		</ul>
+		<div id="subcomments" style="padding-top: 0;padding-left: -2rem;">
+			<blockquote>
+				<ul><li>
+					<div class="excerpttxt font-xxs">
+				
+		
+				<ul class="nospace inline pushright font-xs">
+					<li>
+						<ul class="nospace inline pushright font-xs">
+							<li><h6 class=" font-xxs">`+ commenter_name + `</h6></li>
+							<ul class="nospace inline pushright font-xs"> 
+								<li></i> <a href="#" class=" font-xxs">` + "@" + commenter_id + `</a></li>
+								<li><i class="fa fa-calendar-o"></i>` + time_string + `</li>
+							</ul>
+						</ul>
+					</li>
+				</ul>
+				<p>` + content + `</p>
+				<ul class="nospace inline pushright font-xxs">
+				  <li><button class="button button-like-small" id="like_button_` + post_count + `">
+						<i class="fa fa-heart"></i>
+						<span>` + likes + `</span>
+						</button> </li>
+				  <li><button class="button button-dislike-small" id="dislike_button_` + post_count + `">
+						<i class="fa fa-thumbs-down"></i>
+						<span>` + dislikes + `</span>
+						</button> </li>
+				  <li><button class="button button-comment-small">
+						<i class="fa fa-comment"></i>
+						<span>` + comments + `</span>
+						</button> </li>
+				  <li><button class="button button-normal-small">
+						<i class="fa fa-pencil-square-o"></i>
+						<span>Reply</span>
+						</button> </li>
+				  <li><button class="button button-normal-small">
+						<i class="fa fa-share"></i>
+						<span>Share</span>
+						</button> </li>
+				</ul>
+			</blockquote>
+	</div>`
+	selector = $('#' + post_id + '.post_div #comments fieldset blockquote')[0];
+	selector.innerHTML += new_comment
 	
-	
-	$(function() {
-		$('.button-like').on('click', function () {
-			var index = parseInt($(this).attr('id').slice(12));
-			if(disliked[index - 1]) {
-				$('#dislike_button_' + index.toString()).toggleClass("disliked");
-				disliked[index - 1] = false;
-			}
-			liked[index - 1] = !liked[index - 1];
-			$(this).toggleClass("liked");
-			
-		});
-	});
-	$(function() {
-		$('.button-dislike').on('click', function () {
-			var index = parseInt($(this).attr('id').slice(15));
-			if(liked[index - 1]) {
-				$('#like_button_' + index.toString()).toggleClass("liked");
-				liked[index - 1] = false;
-			}
-			disliked[index - 1] = !disliked[index - 1];
-			$(this).toggleClass("disliked");
+}
 
-		});
-	});
-	$(function() {
-		$('.button-comment').on('click', function () {
-			$(this).toggleClass("showing");
-			var id = $(this).closest('div.post_div').attr('id');
-			if ($(this).closest('div.post_div').find('div#comments')[0].style.display === "none") {
-				$(this).closest('div.post_div').find('div#comments')[0].style.display = "block";
-			} 
-			else {
-				$(this).closest('div.post_div').find('div#comments')[0].style.display = "none";
-			}
-		});
-	});
-	$(function() {
-		$('.button-like-small').on('click', function () {
-			$(this).toggleClass("liked-small");
 
-		});
-	});
-	$(function() {
-		$('.button-dislike-small').on('click', function () {
-			$(this).toggleClass("disliked-small");
+function click_like_small(post_id) {
+	if (subs[post_id]['disliked'] && !subs[post_id]['liked']) {
+		// Cancel the dislike then add like
+		var data = JSON.stringify({"post_id": post_id, "like": true, "dislike": false});
+		$.post("/like",
+			data,
+			function(response){
+				if (!response['status']) {
+					alert('Something went wrong');
+				}
+				else {
+					subs[post_id]['liked'] = true;
+					subs[post_id]['disliked'] = false;
+					$('#' + post_id + ' #dislike_button_small').toggleClass("disliked-small");
+					$('#' + post_id + ' #like_button_small').toggleClass("liked-small");
+					var likes = $('#' + post_id + ' #likes')[0];
+					var dislikes = $('#' + post_id + ' #dislikes')[0];
+					likes.textContent = parseInt(likes.textContent) + 1;
+					dislikes.textContent = parseInt(dislikes.textContent) - 1;
+				}
+			});
+	}
+	else if (!subs[post_id]['liked']) {
+		// Add a like
+		var data = JSON.stringify({"post_id": post_id, "like": true, "dislike": false});
+		$.post("/like",
+			data,
+			function(response){
+				if (!response['status']) {
+					alert('Something went wrong');
+				}
+				else {
+					subs[post_id]['liked'] = true;
+					subs[post_id]['disliked'] = false;
+					$('#' + post_id + ' #like_button_small').toggleClass("liked-small");
+					var likes = $('#' + post_id + ' #likes')[0];
+					var dislikes = $('#' + post_id + ' #dislikes')[0];
+					likes.textContent = parseInt(likes.textContent) + 1;
+				}
+			});
+	}
+	else if (subs[post_id]['liked']) {
+		// Cancel the like
+		var data = JSON.stringify({"post_id": post_id, "like": false, "dislike": false});
+		$.post("/like",
+			data,
+			function(response){
+				if (!response['status']) {
+					alert('Something went wrong');
+				}
+				else {
+					subs[post_id]['liked'] = false;
+					subs[post_id]['disliked'] = false;
+					$('#' + post_id + ' #like_button_small').toggleClass("liked-small");
+					var likes = $('#' + post_id + ' #likes')[0];
+					var dislikes = $('#' + post_id + ' #dislikes')[0];
+					likes.textContent = parseInt(likes.textContent) - 1;
+				}
+			});
+	}
+	else {
+		alert('Something went wrong');
+	}
+}
 
-		});
-	});
-	$(function() {
-		$('.button-comment-small').on('click', function () {
-			$(this).toggleClass("showing-small");
-
-		});
-	});
+function click_dislike_small(post_id) {
+	if (subs[post_id]['liked'] && !subs[post_id]['disliked']) {
+		// Cancel the like then add dislike
+		var data = JSON.stringify({"post_id": post_id, "like": false, "dislike": true});
+		$.post("/like",
+			data,
+			function(response){
+				if (!response['status']) {
+					alert('Something went wrong');
+				}
+				else {
+					subs[post_id]['liked'] = false;
+					subs[post_id]['disliked'] = true;
+					$('#' + post_id + ' #dislike_button_small').toggleClass("disliked-small");
+					$('#' + post_id + ' #like_button_small').toggleClass("liked-small");
+					var likes = $('#' + post_id + ' #likes')[0];
+					var dislikes = $('#' + post_id + ' #dislikes')[0];
+					likes.textContent = parseInt(likes.textContent) -1;
+					dislikes.textContent = parseInt(dislikes.textContent) + 1;
+				}
+			});
+	}
+	else if (!subs[post_id]['disliked']) {
+		// Add a dislike
+		var data = JSON.stringify({"post_id": post_id, "like": false, "dislike": true});
+		$.post("/like",
+			data,
+			function(response){
+				if (!response['status']) {
+					alert('Something went wrong');
+				}
+				else {
+					subs[post_id]['liked'] = false;
+					subs[post_id]['disliked'] = true;
+					$('#' + post_id + ' #dislike_button_small').toggleClass("disliked-small");
+					var likes = $('#' + post_id + ' #likes')[0];
+					var dislikes = $('#' + post_id + ' #dislikes')[0];
+					dislikes.textContent = parseInt(dislikes.textContent) + 1;
+				}
+			});
+	}
+	else if (subs[post_id]['disliked']) {
+		// Cancel the dislike
+		var data = JSON.stringify({"post_id": post_id, "like": false, "dislike": false});
+		$.post("/like",
+			data,
+			function(response){
+				if (!response['status']) {
+					alert('Something went wrong');
+				}
+				else {
+					subs[post_id]['liked'] = false;
+					subs[post_id]['disliked'] = false;
+					$('#' + post_id + ' #dislike_button_small').toggleClass("disliked-small");
+					var likes = $('#' + post_id + ' #likes')[0];
+					var dislikes = $('#' + post_id + ' #dislikes')[0];
+					dislikes.textContent = parseInt(dislikes.textContent) - 1;
+				}
+			});
+	}
+	else {
+		alert('Something went wrong');
+	}
 }
 
 function select_tag(index) {
@@ -272,6 +504,14 @@ function select_tag(index) {
 	document.getElementsByName('tab')[(y.length - 1) % (index + 1)].className = "nav-link active"; 
 }
 
-function request_post_comments(post_id) {
-		
+function get_comments(post_id) {
+	var data = JSON.stringify({"post_id":post_id,"time_stamp":0,"latest_comment_time_stamp":0});
+	$.post("/get_comments",
+		data,
+		function(response){
+			for (var i = 0; i < response.length; i++) {
+				insert_comment(post_id, response[i].comment_id, response[i].commenter_id, response[i].commenter_name, response[i].time, 
+					response[i].content, response[i].likes, response[i].dislikes, response[i].comments);
+			}
+	});
 }

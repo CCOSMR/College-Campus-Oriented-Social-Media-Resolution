@@ -48,27 +48,16 @@ respond:
 }
 
 
-/like # like a post
+/like # like or dislike a post
 {
 	"post_id": 123,
 	"like": true # true if user liked, false if cancelled
-}
-
-respond:
-{
-	"status":true # true or false, bool, true means liked, false means cancelled
-}
-
-
-/dislike # dislike a post
-{
-	"post_id": 123,
 	"dislike": true # true if user disliked, false if cancelled
 }
 
 respond:
 {
-	"status":true # true or false, bool, true means disliked, false means cancelled
+	"status":true # true or false, bool, true means success
 }
 
 
@@ -78,7 +67,7 @@ respond:
 	"time_stamp": 1531042368976, # last requested timestamp / 1000 int, 0 if there hasn't been any comments loaded
 	"latest_comment_time_stamp": 1531042368124, # timestamp of latet comment / 1000 int, 0 if there hasn't been any comments loaded
 }
-
+ 
 respond:
 [
 	{
@@ -108,3 +97,8 @@ respond:
 	"visibility": "public" # "public", "follower", "me"
 }
 
+respond:
+{
+	"status": true, # true means success
+	"id": 123 # id of this comment, if success, else would be -1
+}
