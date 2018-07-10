@@ -6,7 +6,11 @@
     <link rel="stylesheet" type="text/css" href="style/register-login.css">
     <link rel="stylesheet" href="css/style.css">
  <script>
-       var id={{id}};
+	 
+var id={{id}};
+
+
+
 
 function fillinfo(){
               insert_userid(id);
@@ -16,18 +20,27 @@ function fillinfo(){
                 insert_username(info.user_name);
                 insert_useremail(info.user_email);
 
-                for(var i=0;i<info.courses.length;i++)
-                {
-                  insert_coursename(info.courses[i]);
+                var temp = "";
+                 for (var i in info.courses) { 
+                // temp += i + ":" + info.courses[i] + "\n";
+                 insert_coursename(info.courses[i],i);
+
+                }
+   
+
+
+                var temp1 = "";
+                 for (var j in info.friends) { //用javascript的for/in循环遍历对象的属性
+                 //temp1 += j + ":" + info.friends[j] + "\n";
+                 insert_friendname(info.friends[j],j);
+
                 }
 
-                for(var j=0;j<info.friends.length;j++)
-                {
-                  insert_friendname(info.friends[j]);
-                }
-              }
-			  ,dataType = "json")
+              
+              },dataType = "json")
       };
+
+
 function insert_userid() {
 
   var str0="<span class='text-left' style='color: #ffffff;'>"+id+"</span>";
@@ -36,7 +49,7 @@ function insert_userid() {
 
 
 function insert_username(username) {
-  var str1="<span class='text-left' style='color: #ffffff;'>"+username+"</span>";
+  var str1="<span class='text-left'; style='color: #ffffff;'>"+username+"</span>";
   document.getElementById('username').innerHTML = str1;
 }
 
@@ -49,15 +62,16 @@ function insert_useremail(useremail) {
 
 
 
-function insert_coursename(coursename) {
-  var str3=" <li class='nav-item'><a class='nav-link' href=''>"+coursename+"</a></li>";
+function insert_coursename(coursename,i) {
+    
+  var str3=" <li class='nav-item'><a class='nav-link' href='/course?courseid="+i+"'>"+coursename+"</a></li>";
   document.getElementById('MenuDropdown').innerHTML += str3;
 }
 
 
 
-function insert_friendname(friendname) {
-var str4=" <li class='nav-item'><a class='nav-link' href=''>"+friendname+"</a></li>";
+function insert_friendname(friendname,j) {
+var str4=" <li class='nav-item'><a class='nav-link' href='/personalinfo?id="+j+"'>"+friendname+"</a></li>";
 document.getElementById('MenuDropdownfollow').innerHTML += str4;
 }
 
@@ -65,7 +79,9 @@ document.getElementById('MenuDropdownfollow').innerHTML += str4;
    
      
 
-    
+
+
+ 
  
 </script>  
 </head>

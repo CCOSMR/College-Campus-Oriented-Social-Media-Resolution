@@ -11,9 +11,9 @@ def get_json():
 
 def register(database, data: dict):
     if database.simple_search("Users", "id = \"{}\"".format(data["id"])):
-        return "Invalid id"
+        return "same id"
     if database.simple_search("Users", "email = \"{}\"".format(data["email"])):
-        return "Invalid email"
+        return "same email"
     if len(data["email"]) > 7:
         pattern = "^.+\\@(\\[?)[a-zA-Z0-9\\-\\.]+\\.([a-zA-Z]{2,3}|[0-9]{1,3})(\\]?)$"
         if not re.match(pattern, data["email"]):
@@ -94,10 +94,35 @@ def personalinfo(database, id):
 
 
 def friends_of(database, id):
-    pass
+    friends_name = []
+    search_re = database.simple_search("Follow", "follower_id=\"{}\"".format(id))
+    if search_re:
+        for i in search_re:
+            friends_name.append(personalinfo(i[0])["name"])
+    return friends_name
+
 
 def courses_of(database, id):
-    pass
+    def idtostu(database, id):
+        search_re = database.simple_search("Users_Student", "user_id=\"{}\"".format(id))
+        if search_re:
+            return search_re[0][3]
+        return False
+
+    courses = []
+    stu_id = idtostu(database, id)
+    if stu_id:
+        search_re = database.simple_search("Attend", "student_id={}".format(stu_id))
+        for i in search_re:
+            courses.append(course_detail(i[1])["name"])
+    return courses
+
 
 def request_posts(id, dir, time, num=5):
     pass
+
+
+def like(database, user_id, sub_id, action):
+    search_re = database.simple_search("Likes", "user_id={} and sub_id={}".format(user_id, sub_id))
+    if action and not search_re:
+        pass
