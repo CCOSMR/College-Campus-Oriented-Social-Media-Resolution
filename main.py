@@ -84,16 +84,7 @@ def searchcourse():
         if not id:
             return flask.render_template('course.html')
         else:
-            # data = server.course_detail(db, id)
-            data = {
-                "id": 1231231,
-                "teacher": "David",
-                "name": "Test",
-                "dscr": "This is not a course but a counterfeit for test.",
-                "ave_rating": 9.8,
-                "location": "classroom",
-                "schedule": "wan"
-            }
+            data = server.course_detail(db, id)
             if data:
                 return flask.render_template('courseinformation.html', name=data["name"], location=data["location"],
                                              teachername=data["teacher"], desc=data["dscr"], avg=data["ave_rating"])
@@ -101,12 +92,12 @@ def searchcourse():
                 pass
     elif flask.request.method == "POST":
         data = server.get_json()
-        # result = server.searchcourse(db, data["search"]
-        result = [
-            {"id": 1, "name": "1", "avg": 7.5},
-            {"id": 2, "name": "2", "avg": 2.8},
-            {"id": 3, "name": "3", "avg": 1.9}
-        ]
+        result = server.searchcourse(db, data["search"])
+        # result = [
+        #     {"id": 1, "name": "1", "avg": 7.5},
+        #     {"id": 2, "name": "2", "avg": 2.8},
+        #     {"id": 3, "name": "3", "avg": 1.9}
+        # ]
         return flask.jsonify(result)
 
 

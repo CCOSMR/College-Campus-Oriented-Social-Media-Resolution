@@ -13,7 +13,7 @@
 
 function fillinfo(){
               insert_userid(id);
-              $.get("/personalinfo"+"?id="+id,
+              $.get("/personaldetail"+"?id="+id,
               function(info){
                 //alert(JSON.stringify(info))
                 insert_username(info.user_name);
@@ -24,11 +24,12 @@ function fillinfo(){
                   insert_coursename(info.courses[i]);
                 }
 
-                for(var j=0;i<info.friends.length;j++)
+                for(var j=0;j<info.friends.length;j++)
                 {
                   insert_friendname(info.friends[j]);
                 }
-              },dataType = "json")
+              }
+			  ,dataType = "json")
       };
 
 
