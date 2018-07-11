@@ -202,6 +202,4 @@ def get_comments(database, user_id, sub_id, timestamp):
         }
         if not timestamp or re["time"] < timestamp:
             jj.append(re)
-        if len(jj) == 5:
-            break
     return jj
