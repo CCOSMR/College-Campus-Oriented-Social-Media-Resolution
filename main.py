@@ -93,12 +93,25 @@ def searchcourse():
     elif flask.request.method == "POST":
         data = server.get_json()
         result = server.searchcourse(db, data["search"])
-        # result = [
-        #     {"id": 1, "name": "1", "avg": 7.5},
-        #     {"id": 2, "name": "2", "avg": 2.8},
-        #     {"id": 3, "name": "3", "avg": 1.9}
-        # ]
         return flask.jsonify(result)
+
+
+@app.route("/comment", methods=["POST"])
+def comment():
+    data = server.get_json()
+    result = server.comment(db, flask.session["id"], data["parent_id"], data["time_stamp"], data["content"])
+    re = {
+        "status": True,
+        "id": result
+    }
+    return flask.jsonify(re)
+
+
+@app.route("/get_comments", methods=["POST"])
+def get_comments():
+    data = server.get_json()
+    result = server.get_comments(db, flask.session["id"], data["post_id"], data["time_stamp"])
+    return flask.jsonify(result)
 
 
 @app.route("/request_posts", methods=["POST"])
@@ -152,8 +165,12 @@ def personaldetail():
 @app.route("/like", methods=["POST"])
 def like():
     data = server.get_json()
-
-    return flask.render_template("personalpage.html", id=id)
+    server.like(db, flask.session["id"], data["post_id"], data["like"])
+    server.dislike(db, flask.session["id"], data["post_id"], data["dislike"])
+    result = {
+        "status": True
+    }
+    return flask.jsonify(result)
 
 
 @app.route("/captcha", methods=["GET"])

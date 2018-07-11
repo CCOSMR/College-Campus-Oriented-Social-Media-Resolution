@@ -15,6 +15,16 @@ class Database:
         conn.close()
         return data
 
+    def simple_delete(self, table_name, condition):
+        conn = sqlite3.connect(self.name)
+        c = conn.cursor()
+        operation = "delete from {} where {}".format(table_name, condition)
+        print(operation)
+        data = c.execute(operation).fetchall()
+        conn.commit()
+        conn.close()
+        return data
+
     def add_new_user(self, data):
         conn = sqlite3.connect(self.name)
         c = conn.cursor()
@@ -27,6 +37,45 @@ class Database:
             values += quotation(data[i]) + ", "
         values += "DATETIME(\"now\")"
         operation = "INSERT INTO {} ({}) VALUES ({})".format(table_name, headers, values)
+        print(operation)
+        c.execute(operation)
+        conn.commit()
+        conn.close()
+
+    def like(self, table_name, data):
+        sub_id = str(data["sub_id"])
+        user_id = str(data["user_id"])
+        time = "DATETIME(\"now\")"
+        conn = sqlite3.connect(self.name)
+        c = conn.cursor()
+        headers = "sub_id, user_id, time_liked, seen"
+        values = ", ".join([sub_id, user_id, time, None])
+        operation = "INSERT INTO {} ({}) VALUES ({})".format(table_name, headers, values)
+        print(operation)
+        c.execute(operation)
+        conn.commit()
+        conn.close()
+
+    def sub(self, data):
+        conn = sqlite3.connect(self.name)
+        c = conn.cursor()
+        headers = "id, poster_id, time_posted, publicity, likes, dislikes, comments"
+        values = ", ".join(
+            [data["id"], data["poster_id"], "DATETIME(\"now\")", data["publicity"], data["likes"], data["dislikes"],
+             data["comments"]])
+        operation = "INSERT INTO Sub ({}) VALUES ({})".format(headers, values)
+        print(operation)
+        c.execute(operation)
+        conn.commit()
+        conn.close()
+
+    def comments(self, data):
+        conn = sqlite3.connect(self.name)
+        c = conn.cursor()
+        headers = "id, original_id, content, seen"
+        quotation = lambda x: "\"" + x + "\""
+        values = ", ".join([data["id"], data["original_id"], quotation(data["content"])]) + ", " + data["seen"]
+        operation = "INSERT INTO Sub ({}) VALUES ({})".format(headers, values)
         print(operation)
         c.execute(operation)
         conn.commit()
