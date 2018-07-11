@@ -5,7 +5,6 @@
                 $.post("/course",
                     data,
                     function(n){
-                        alert(n[0].name+n[0].id+n.length)
                         var box = document.getElementById("resulttable");
                         box.innerHTML=`
                                             <tr>
