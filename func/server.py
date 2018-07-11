@@ -125,4 +125,83 @@ def request_posts(id, dir, time, num=5):
 def like(database, user_id, sub_id, action):
     search_re = database.simple_search("Likes", "user_id={} and sub_id={}".format(user_id, sub_id))
     if action and not search_re:
-        pass
+        values = {
+            "sub_id": sub_id,
+            "user_id": user_id,
+            "action": True
+        }
+        database.like("Likes", values)
+    elif search_re and not action:
+        database.simple_delete("Likes", "user_id={} and sub_id={}".format(user_id, sub_id))
+
+
+def dislike(database, user_id, sub_id, action):
+    search_re = database.simple_search("Dislikes", "user_id={} and sub_id={}".format(user_id, sub_id))
+    if action and not search_re:
+        values = {
+            "sub_id": sub_id,
+            "user_id": user_id,
+            "action": True
+        }
+        database.like("Likes", values)
+    elif search_re and not action:
+        database.simple_delete("Dislikes", "user_id={} and sub_id={}".format(user_id, sub_id))
+
+
+def comment(database, user_id, parent_id, timestamp, content, visibility):
+    id = len(database.simple_search("Sub", "id>=0"))
+    data = {
+        "id": str(id),
+        "poster_id": str(user_id),
+        "publicity": str(0),
+        "likes": str(0),
+        "dislikes": str(0),
+        "comments": str(0)
+    }
+    database.sub(data)
+    data = {
+        "id": str(id),
+        "original_id": str(parent_id),
+        "content": content,
+        "seen": str(True)
+    }
+    database.comments(data)
+    return id
+
+
+def get_comments(database, user_id, sub_id, timestamp):
+    def STRtoTIME(string):
+        import datetime
+        date_time = datetime.datetime.strptime(string, '%Y-%m-%d %H:%M:%S')
+        time_time = time.mktime(date_time.timetuple())
+        return time_time
+
+    def checkliked(table, id):
+        if database.simple_search(table, "sub_id={} and user_id={}".format(id, user_id)):
+            return True
+        else:
+            return False
+
+    jj = []
+    search_re = database.simple_search("Comments", "original_id={}".format(sub_id))
+    for comment in search_re:
+        i = comment[0]
+        sub_info = database.simple_search("Sub", "id={}".format(i))
+        usr_info = database.simple_search("Users", "id={}".format(sub_info[1]))
+        re = {
+            "comment_id": i,
+            "commenter_id": sub_info[1],
+            "commenter_name": usr_info[6],
+            "time": STRtoTIME(sub_info[2]),
+            "content": comment[2],
+            "likes": sub_info[4],
+            "dislikes": sub_info[5],
+            "liked": checkliked("Likes", i),
+            "disliked": checkliked("Dislikes", i),
+            "comments": sub_info[6]
+        }
+        if not timestamp or re["time"] < timestamp:
+            jj.append(re)
+        if len(jj) == 5:
+            break
+    return jj

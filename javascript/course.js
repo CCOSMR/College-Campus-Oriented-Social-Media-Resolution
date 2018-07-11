@@ -5,18 +5,27 @@
                 $.post("/course",
                     data,
                     function(n){
+                        alert(n[0].name+n[0].id+n.length)
                         var box = document.getElementById("resulttable");
+                        box.innerHTML=`
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Name</th>
+                                                <th>Teacher</th>
+                                                <th>Course number</th>
+                                            </tr>                        
+                        `
                         for(var i=0;i<n.length;i++){
                             var str1=`
                                                         <tr>
-                                                            <td><h5>`+`</h5></td>
-                                                            <td<h5>`+`</h5></td>
-                                                            <td><h5>`+`</h5></td>
-                                                            <td><h5>`+`</h5></td>
-                                                        </tr> 
+                                                            <td><h5>`+n[i].id+`</h5></td>
+                                                            <td><h5>`+` <a href="course?courseid=`+n[i].id+`">`+n[i].name+`</a>`+`</h5></td>
+                                                            <td><h5>`+n[i].ave_rating+`</h5></td>
+                                                            <td><h5>`+60+`</h5></td>
+                                                        </tr>                                
                             `;
                             box.innerHTML +=str1;    
-                        }                   
+                        }           
                     });
             }
             
@@ -46,10 +55,10 @@
 
             function efg(){
                 var box = document.getElementById("resulttable");
-                var str="dadasdsadasd"
+                var str="链接测试"
                 var str1=`
                                             <tr>
-                                                <td>`+str+`</td>
+                                                <td>`+` <a href="course?courseid=1">`+str+`</a>`+`</td>
                                                 <td>Rachel Johnson</td>
                                                 <td>19</td>
                                                 <td>60</td>
