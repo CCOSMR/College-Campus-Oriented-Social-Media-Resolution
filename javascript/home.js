@@ -132,6 +132,7 @@ function insert_post(post_id, poster_id, poster_name, time, content, likes, disl
 	if (subs[post_id]['disliked']) {
 		$('#' + post_id + ' #dislike_button').toggleClass("disliked");
 	}
+	
 }
 
 function click_like(post_id) {
@@ -309,13 +310,13 @@ function submit_comment(post_id) {
 		function(response){
 			if (response['status']) {
 				$('#' + post_id + ' #reply_text').val('');
-				insert_comment(post_id, response.id, 'self', 'self', time, 
-					content, 0, 0, 0, false, false);
 				$('#' + post_id + ' #reply_button').toggleClass("clicked");
 				$('#' + post_id + ' #reply')[0].style.display = "none";
 				if ($('#' + post_id + ' div#comments')[0].style.display === "none") {
 					click_comment(post_id);
 				}
+				insert_comment(post_id, response.id, 'self', 'self', time, 
+					content, 0, 0, 0, false, false);
 			}
 			else {
 				alert('Failed');
@@ -335,13 +336,16 @@ function submit_subcomment(post_id) {
 		function(response){
 			if (response['status']) {
 				$('#' + post_id + ' #reply_text').val('');
-				insert_subcomment(post_id, response.id, 'self', 'self', time, 
-					content, 0, 0, 0, false, false);
 				$('#' + post_id + ' #reply_button_small').toggleClass("clicked-small");
 				$('#' + post_id + ' #reply')[0].style.display = "none";
+				if ($('#' + post_id + ' #subcomments blockquote .excerpttxt').length == 0) {
+					get_subcomments(post_id);
+				}
 				if ($('#' + post_id + ' div#subcomments')[0].style.display === "none") {
 					click_comment_small(post_id);
 				}
+				insert_subcomment(post_id, response.id, 'self', 'self', time, 
+					content, 0, 0, 0, false, false);
 			}
 			else {
 				alert('Failed');
