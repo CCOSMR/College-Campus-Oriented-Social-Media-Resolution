@@ -3,53 +3,112 @@
 <head>
     <meta charset="utf-8">
     <title>CCOSMR--Course--Information</title>
-     <link rel="stylesheet" href="css/style.css">
-    <script>
-            var t={{id}};
-            var a=85;
-            var b=document.getElementById("score");
-            b.value=a;
-            document.getElementById("send").innerHTML=a;
-    </script>
+    <link rel="stylesheet" href="css/style.css">
+	<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script src="/javascript/courseinformation.js"></script>
+
 </head>
 <body>
-    <div id="content-wrapper">
+
+    <!-- Main navigation -->
+    <div id="sidebar">
+                      
+            <div class="navbar-expand-md navbar-dark"> 
+            
+                <header class="d-none d-md-block">
+                    <h1><span>my</span>website</h1>
+                </header>
                 
-        <!-- Jumbtron / Slider -->
-        <header>
-        <div>
-                    <h1 align="center">CCOSMR-CourseInformation</h1>
+                
+                <!-- Mobile menu toggle and header -->
+                <div class="mobile-header-controls">
+                    <a class="navbar-brand d-md-none d-lg-none d-xl-none" href="#"><span>my</span>website</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#SidebarContent" aria-controls="SidebarContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+         
+                <div id="SidebarContent" class="collapse flex-column navbar-collapse">
+ 
+                        
+                    
+                    <!-- Main navigation items -->
+                    <nav class="navbar navbar-dark">
+                        <div id="mainNavbar">
+                            <ul class="flex-column mr-auto">
+                                
+                                <li class="nav-item">
+                                        <a class="nav-link" href="#">Coursename:{{name}}</a>
+                                </li>
+
+                                <li class="nav-item">
+                                        <a class="nav-link" href="#">Teacher:{{teachername}}</a>
+                                </li>
+
+                                <li class="nav-item">
+                                        <a class="nav-link" href="#">Location:{{location}}</a>
+                                </li>
+
+                                <li class="nav-item active dropdown">
+                                            <a class="nav-link dropdown-toggle" href="#MenuDropdown" data-toggle="collapse" aria-controls="MenuDropdown" aria-expanded="false">Examples &amp; Pages</a>
+                                            <ul id="MenuDropdown" class="sub-navbar collapse flex-column">
+                                                <li class="nav-item"><a class="nav-link" href="examples.html">Home</a></li>
+                                                <li class="nav-item"><a class="nav-link" href="three-column.html">Personalpage</a></li>
+                                                <li class="nav-item"><a class="nav-link" href="one-column.html">One column / no sidebar</a></li>
+                                                <li class="nav-item"><a class="nav-link"  href="text.html">Text / left sidebar</a></li>
+                                                <li class="nav-item"><a class="nav-link"  href="index-right.html">Right navigation</a></li>
+                                            </ul>
+                                </li>
+
+                            </ul>
+                        </div>   
+                    </nav>
+                
+                    <!-- Social icons -->
+                    <p class="sidebar-social-icons social-icons">
+                        <a href="#"><i class="fa fa-facebook fa-2x"></i></a>
+                        <a href="#"><i class="fa fa-twitter fa-2x"></i></a>
+                        <a href="#"><i class="fa fa-youtube fa-2x"></i></a>
+                        <a href="#"><i class="fa fa-instagram fa-2x"></i></a>
+                    </p>
+                
+                </div>
+            </div> 
         </div>
-        </header>
-        <hr/>  
-        <table border="1"  style="background-color:white;">
-            <tr>
-                <td align="center" width="450px" height="400px">
-                    <img src="classphoto.jpg" alt="图片" /><br/>
-                    <b>{{name}}<b><br/>
-                    <b>{{location}}<b><br/>
-                    <b>{{teachername}}<b><br/>
-                </td>
-                <td align="left" width="1000px" height="400px">
-                    <p>
-                        简介：
-                    </p> <br/>
-                    <p>
-                        {{desc}}
-                    </p>       
-                </td>
-                <td align="center" width="450px" height="400px">
-                        <h2>综合评价</h2>
-                        <progress min="0" max="10" id="score" >
-                        </progress>
-                        <p>课程当前综合评分(十分制)：</p>{{avg}}</p>
-                    </td>       
-            </tr>        
-        </table>
-        <hr>
-    </div> 
-    <div id="commment">      
-    </div>
+
+    <div id="content">
+        <div id="content-wrapper">
+                <!-- Jumbtron / Slider -->
+                <div class="jumbotron-wrap">
+                        <div class="container-fluid">
+                            <div class="jumbotron static-slider">
+                                <h1 class="text-center">课程简介</h1>
+                                <h2 class="lead text-center">{{desc}}</h2>
+                                <h2 class="lead text-center">课程平均评分：{{avg}}</h2>
+                            </div>
+                        </div>
+                    </div>    
+                
+                <!-- lookthrough comment -->       
+                
+
+
+
+                <!-- submit comment -->    
+                <fieldset>
+                        <legend>Submit Comment</legend>
+                        <div class="form-group">
+                            <label for="exampleInputMessage">Message</label>
+                             <textarea id="comment" class="form-control" id="exampleInputMessage" rows="3"></textarea>
+                        </div>
+                        <button onclick="request_comment()" type="submit" class="btn btn-primary">Submit</button>
+                    </fieldset>           
+                
+        </div>
+    </div>    
+
+
 <script src="https://code.jquery.com/jquery-3.1.0.min.js"/>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

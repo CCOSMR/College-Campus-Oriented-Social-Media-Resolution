@@ -9,10 +9,10 @@
                         for(var i=0;i<n.length;i++){
                             var str1=`
                                                         <tr>
-                                                            <td><h5>`+`</h5></td>
-                                                            <td<h5>`+`</h5></td>
-                                                            <td><h5>`+`</h5></td>
-                                                            <td><h5>`+`</h5></td>
+                                                            <td><h5>`+n[i].id`</h5></td>
+                                                            <td<h5>`+n[i].name+`</h5></td>
+                                                            <td><h5>`+n[i].teacher+`</h5></td>
+                                                            <td><h5>`+60+`</h5></td>
                                                         </tr> 
                             `;
                             box.innerHTML +=str1;    
@@ -55,6 +55,6 @@
                                                 <td>60</td>
                                             </tr> 
                 `;
-                box.innerHTML +=str1;
+                box.innerHTML =str1;
             }
  
