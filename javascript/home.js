@@ -279,7 +279,7 @@ function insert_comment(post_id, comment_id, commenter_id, commenter_name, time,
                   + monthNames[date.getMonth()] + ', '
                   + date.getFullYear();
 	var new_comment = 
-	`<div id="` + comment_id + `" class="excerpttxt">
+	`<div id="` + comment_id + `" class="excerpttxt" style="padding-right:10px;">
 		<ul class="nospace inline pushright font-xs">
 			<li>
 				<ul class="nospace inline pushright font-xs">
@@ -318,9 +318,17 @@ function insert_comment(post_id, comment_id, commenter_id, commenter_name, time,
 			<blockquote>
 			</blockquote>
 		</div>
+		<div id='reply' style='display:none;'>
+		</div>
 	</div>`
 	selector = $('#' + post_id + '.post_div #comments fieldset blockquote')[0];
 	selector.innerHTML += new_comment
+	if (subs[comment_id]['liked']) {
+		$('#' + comment_id + ' #like_button_small').toggleClass("liked-small");
+	}
+	if (subs[comment_id]['disliked']) {
+		$('#' + comment_id + ' #dislike_button_small').toggleClass("disliked-small");
+	}
 	
 }
 
@@ -515,9 +523,17 @@ function insert_subcomment(post_id, comment_id, commenter_id, commenter_name, ti
 			<blockquote>
 			</blockquote>
 		</div>
+		<div id='reply' style='display:none;'>
+		</div>
 	</div>`
 	selector = $('#' + post_id + ' #subcomments blockquote')[0];
 	selector.innerHTML += new_comment
+	if (subs[comment_id]['liked']) {
+		$('#' + comment_id + ' #like_button_small').toggleClass("liked-small");
+	}
+	if (subs[comment_id]['disliked']) {
+		$('#' + comment_id + ' #dislike_button_small').toggleClass("disliked-small");
+	}
 	
 }
 

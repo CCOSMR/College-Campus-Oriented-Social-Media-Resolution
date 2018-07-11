@@ -6919,7 +6919,7 @@ html {
 /** new classes here **/
 .excerpt{display:block; width:100%; position:relative; padding-top:0px; padding-bottom:0px; background-color: #f8f8f8;}
 .excerpt img{}
-.excerpt .excerpttxt{display:block; position:relative; max-width:90%; padding:5px; padding-left:10px}
+.excerpt .excerpttxt{display:block; position:relative; padding:5px; padding-left:10px; padding-right:0px;}
 .excerpt .heading{margin:0 0 5px 0;}
 .excerpt p:last-of-type{margin:0; padding:0;}
 .nospace{margin:0; padding:0; list-style:none;}
@@ -7201,6 +7201,37 @@ html {
 .button-normal:hover .fa,
 .button-normal:hover span {
   color: #a34b88;
+}
+
+
+.clicked {
+  background-color: #a34b88;
+  border-color: #a34b88;
+}
+
+.clicked .fa,
+.clicked span {
+  color: #fefefe;
+}
+
+.clicked:focus {
+  background-color: #a34b88;
+  outline:0;
+}
+
+.clicked:focus .fa,
+.clicked:focus span {
+  color: #fefefe;
+}
+
+.clicked:hover {
+  background-color: #a34b88;
+  border-color: #a34b88;
+}
+
+.clicked:hover .fa,
+.clicked:hover span {
+  color: #fefefe;
 }
 
 

@@ -11,7 +11,8 @@ respond:
 	{	
 	
 		"post_id": 653254,
-	
+
+		"type": "post", # post or review	
 		"poster_id": "123",
 	
 		"poster_name": "John",
@@ -24,8 +25,15 @@ respond:
 	
 		"dislikes": 1,
 	
+		"liked": false. # whether the current user has liked this post
+		"disliked": false. # whether the current user has disliked this post
 		"comments": 1
-
+,
+		"rating": 1, # 0 if is not a review
+		"course_id": 123, # -1 if is not a review
+		"course_name": "Software Engineering", # "" if is not a review
+		"teacher_name": "***", # "" if is not a review
+		"teacher_id": 999,  # -1 if is not a review
 	},
 	...
 ] # a list of {}s
@@ -84,6 +92,8 @@ respond:
 	
 		"dislikes": 1,
 	
+		"liked": false. # whether the current user has liked this comment
+		"disliked": false. # whether the current user has disliked this comment
 		"comments": 3, # number of comments replying this one
 	}
 ] # a list of {}s
