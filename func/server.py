@@ -67,6 +67,7 @@ def course_detail(database, id):
         result = {
             "id": search_re[0],
             "teacher": teacher[3],
+            "teacher_id": teacher[0],
             "name": search_re[2],
             "dscr": search_re[3],
             "ave_rating": search_re[4],
@@ -118,8 +119,71 @@ def courses_of(database, id):
     return courses
 
 
-def request_posts(id, dir, time, num=5):
-    pass
+def request_posts(database, id, dir, timestamp, num=5):
+    def STRtoTIME(string):
+        import datetime
+        import time
+        date_time = datetime.datetime.strptime(string, '%Y-%m-%d %H:%M:%S')
+        time_time = time.mktime(date_time.timetuple())
+        return time_time
+
+    def checkliked(table, sid):
+        if database.simple_search(table, "sub_id={} and user_id={}".format(sid, id)):
+            return True
+        else:
+            return False
+
+    sub = database.simple_search("Sub", "poster_id={}".format(id))
+    result = []
+    for i in sub:
+        content = None
+        rating = None
+        course_id = None
+        tre = None
+        course_name = None
+        teacher_name = None
+        teacher_id = None
+        type = None
+
+        id = i[0]
+        post = database.simple_search("Post", "id={}".format(id))
+        rev = database.simple_search("Review", "id={}".format(id))
+        if post:
+            content = post[0][1]
+            type = "post"
+        elif rev:
+            print(rev)
+            content = rev[0][3]
+            rating = rev[0][4]
+            course_id = rev[0][2]
+            tre = course_detail(database, course_id)
+            course_name = tre["name"]
+            teacher_name = tre["teacher"]
+            teacher_id = tre["id"]
+            type = "review"
+        else:
+            continue
+        user = personalinfo(database, i[1])
+        temp = {
+            "post_id": id,
+            "type": type,  # post or review
+            "poster_id": i[1],
+            "poster_name": user["name"],
+            "time": STRtoTIME(i[2]),
+            "content": content,
+            "likes": i[4],
+            "dislikes": i[5],
+            "liked": checkliked("Likes", id),  # whether the current user has liked this post
+            "disliked": checkliked("Dislikes", id),  # whether the current user has disliked this post
+            "comments": i[6],
+            "rating": rating,  # 0 if is not a review
+            "course_id": course_id,  # -1 if is not a review
+            "course_name": course_name,  # "" if is not a review
+            "teacher_name": teacher_name,  # "" if is not a review
+            "teacher_id": teacher_id,  # -1 if is not a review
+        }
+        result.append(temp)
+    return result
 
 
 def like(database, user_id, sub_id, action):
@@ -172,6 +236,7 @@ def comment(database, user_id, parent_id, timestamp, content, visibility):
 def get_comments(database, user_id, sub_id, timestamp):
     def STRtoTIME(string):
         import datetime
+        import time
         date_time = datetime.datetime.strptime(string, '%Y-%m-%d %H:%M:%S')
         time_time = time.mktime(date_time.timetuple())
         return time_time

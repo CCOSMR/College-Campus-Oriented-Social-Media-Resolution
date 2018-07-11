@@ -116,22 +116,8 @@ def get_comments():
 
 @app.route("/request_posts", methods=["POST"])
 def request_posts():
-    import random
     data = server.get_json()
-    # result = server.request_posts(id=flask.session["id"], dir=data["type"], time=data["time_stamp"], num=5)
-    result = []
-    for i in range(4):
-        temp = {
-            "post_id": random.randint(1, 999999),
-            "poster_id": random.randint(1, 999999),
-            "poster_name": names.split()[random.randint(0, 19)],
-            "time": random.randint(1521043208, 1531043208),
-            "content": sentences[random.randint(0, 49)],
-            "likes": random.randint(0, 99),
-            "dislikes": random.randint(0, 25),
-            "comments": random.randint(0, 25),
-        }
-        result.append(temp)
+    result = server.request_posts(db, id=flask.session["id"], dir=data["type"], timestamp=data["time_stamp"], num=5)
     return flask.jsonify(result)
 
 

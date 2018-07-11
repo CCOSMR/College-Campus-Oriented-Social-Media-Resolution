@@ -48,8 +48,8 @@ class Database:
         time = "DATETIME(\"now\")"
         conn = sqlite3.connect(self.name)
         c = conn.cursor()
-        headers = "sub_id, user_id, time_liked, seen"
-        values = ", ".join([sub_id, user_id, time, None])
+        headers = "sub_id, user_id, time_liked"
+        values = ", ".join([sub_id, user_id, time])
         operation = "INSERT INTO {} ({}) VALUES ({})".format(table_name, headers, values)
         print(operation)
         c.execute(operation)
