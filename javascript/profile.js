@@ -1,6 +1,8 @@
 var time_stamp = Date.now();
 var earliest_post_time_stamp = -1;
 var subs = []
+var string = window.location.href;
+var id = string.split('user=')[1];
 // var self_id = {{self_id}};
 // var self_name = {{self_name}};
 // var id={{id}};
@@ -15,6 +17,12 @@ $(function() {
 		$(this).toggleClass("liked");
 	});
 });
+
+
+$(function() {
+	get_user_info();
+});
+
 
 $(function() {
 	$("#refresh_button").hover(function(){
@@ -125,7 +133,7 @@ function insert_post(post_id, poster_id, poster_name, time, content, likes, disl
 				<ul class="nospace inline pushright font-xs">
 					<li><h6 id="poster_name" class="heading">`+ poster_name + `</h6></li>
 					<ul class="nospace inline pushright font-xs"> 
-						<li><a id="poster_id" href="#">` + "@" + poster_id + `</a></li>
+						<li><a id="poster_id" href="/user=` + poster_id + `">` + "@" + poster_id + `</a></li>
 						<li id="time" ><i class="fa fa-calendar-o"></i>` + time_string + `</li>
 					</ul>
 				</ul>
@@ -777,13 +785,34 @@ function select_tag(index) {
 	$('#rightbar #selection' + index).css('display', 'block');
 }
 
-function follow() {
-	$.post("/get_comments",
+function follow(follow) {
+	var data = JSON.stringify({"id": id, "follow": follow});
+	$.post("/follow",
 		data,
 		function(response){
-			for (var i = 0; i < response.length; i++) {
-				insert_comment(post_id, response[i].comment_id, response[i].commenter_id, response[i].commenter_name, response[i].time, 
-					response[i].content, response[i].likes, response[i].dislikes, response[i].comments, response[i].liked, response[i].disliked);
+			
+	});
+}
+
+function get_user_info() {
+	var data = JSON.stringify({"id": id});
+	$.post("/get_user_info",
+		data,
+		function(response){
+			$('#user_name').text(response['name']);
+			$('#user_id').text('@' + id);
+			if (response.following) {
+				$('#followed_badge')[0].style.display = "inline-block";
+				$('#unfollow_button')[0].style.display = "block";
+				$('#follow_button')[0].style.display = "none";
+			}
+			else {
+				$('#followed_badge')[0].style.display = "none";
+				$('#follow_button')[0].style.display = "block";
+				$('#unfollow_button')[0].style.display = "none";
+			}
+			if (response.followed) {
+				$('#following_me_badge')[0].style.display = "inline-block";
 			}
 	});
 }

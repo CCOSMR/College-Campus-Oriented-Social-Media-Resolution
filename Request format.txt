@@ -157,7 +157,7 @@ respond:
 ]
 
 
-/user # get user info 
+/user_info # get user info 
 {
 	"id": "123" # user id
 }

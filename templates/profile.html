@@ -103,10 +103,18 @@
                       
            <aside class='col-md-12' style="background-color:#f8f8f8; padding-top: 10%;">
 				<div class="sidebar-box sidebar-box-bg">
-						<h4>User name</h4>
-						<p><a href="#" class="readmore">@id</a></p>   
-						<button type="button" class="btn btn-info"><i class="fa fa-plus"></i> Follow</button>	
-						<button type="button" class="btn btn-secondary"><i class="fa fa-minus"></i> Unfollow</button>						
+						<h4 id='user_name'></h4>
+						<p style='margin:0px;'><a id='user_id'></a></p>
+							<span class="badge badge-info" id='followed_badge' style='display: none;'>
+								<i class="fa fa-check"></i> Followed</span>			
+							<span class="badge badge-light" id='following_me_badge' style='display: none;'>
+								<i class="fa fa-eye" id='following_me_badge'></i> Following you</span>
+						<div>
+							<button type="button" class="btn btn-info" id='follow_button' style='display: none;'>
+								<i class="fa fa-plus"></i> Follow</button>	
+							<button type="button" class="btn btn-secondary" id='unfollow_button' style='display: none;'>
+								<i class="fa fa-minus"></i> Unfollow</button>						
+						</div>
 					</div>
 				<div >
 				

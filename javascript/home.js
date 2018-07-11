@@ -121,6 +121,10 @@ function insert_post(post_id, poster_id, poster_name, time, content, likes, disl
 	`<div class='post_div' id="` + post_id + `"><article class="excerpt">
 		<div id="post" class="excerpttxt" style="padding:15px;">
 			<ul class="nospace inline pushright font-xs">
+				<li>
+					<img src="/static/pictures/example.png" style="border-radius: 50%; height:40px;">
+					</img>
+				</li>
 				<ul class="nospace inline pushright font-xs">
 					<li><h6 id="poster_name" class="heading">`+ poster_name + `</h6></li>
 					<ul class="nospace inline pushright font-xs"> 
@@ -190,6 +194,10 @@ function prepend_post(post_id, poster_id, poster_name, time, content, likes, dis
 	`<div class='post_div' id="` + post_id + `"><article class="excerpt">
 		<div id="post" class="excerpttxt" style="padding:15px;">
 			<ul class="nospace inline pushright font-xs">
+				<li>
+					<img src="/static/pictures/example.png" style="border-radius: 50%; height:40px;">
+					</img>
+				</li>
 				<ul class="nospace inline pushright font-xs">
 					<li><h6 id="poster_name" class="heading">`+ poster_name + `</h6></li>
 					<ul class="nospace inline pushright font-xs"> 
@@ -481,6 +489,10 @@ function insert_comment(post_id, comment_id, commenter_id, commenter_name, time,
 	`<div id="` + comment_id + `" class="excerpttxt" style="padding-right:10px;">
 		<ul class="nospace inline pushright font-xs">
 			<li>
+				<img src="/static/pictures/example.png" style="border-radius: 50%; height:18px;">
+				</img>
+			</li>
+			<li>
 				<ul class="nospace inline pushright font-xs">
 					<li><h6 class="font-xxs">`+ commenter_name + `</h6></li>
 					<ul class="nospace inline pushright"> 
@@ -689,6 +701,10 @@ function insert_subcomment(post_id, comment_id, commenter_id, commenter_name, ti
 	var new_comment = 
 	`<div id="` + comment_id + `" class="excerpttxt">
 		<ul class="nospace inline pushright font-xs">
+			<li>
+				<img src="/static/pictures/example.png" style="border-radius: 50%; height:18px;">
+				</img>
+			</li>
 			<li>
 				<ul class="nospace inline pushright font-xs">
 					<li><h6 class="font-xxs">`+ commenter_name + `</h6></li>
