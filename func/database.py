@@ -93,3 +93,16 @@ class Database:
         c.execute(operation)
         conn.commit()
         conn.close()
+
+    # new functions
+    def post(self, data):
+        conn = sqlite3.connect(self.name)
+        c = conn.cursor()
+        headers = "id, content,"
+        quotation = lambda x: "\"" + x + "\""
+        values = ", ".join([data["id"], quotation(data["content"])])
+        operation = "INSERT INTO Post ({}) VALUES ({})".format(headers, values)
+        print(operation)
+        c.execute(operation)
+        conn.commit()
+        conn.close()

@@ -76,6 +76,11 @@ def home():
         else:
             return flask.redirect("/login")
 
+			
+@app.route("/profile", methods=["GET", "POST"])
+def profile():
+    return flask.render_template('profile.html')
+	
 
 @app.route("/course", methods=["GET", "POST"])
 def searchcourse():
@@ -96,6 +101,24 @@ def searchcourse():
         return flask.jsonify(result)
 
 
+
+@app.route("/request_posts", methods=["POST"])
+def request_posts():
+    data = server.get_json()
+	
+	# need to change timestamp
+    result = request_posts(database, flask.session['id'], data['type'], 0, 5)
+		
+	return flask.jsonify(result)
+
+
+@app.route("/get_comments", methods=["POST"])	
+def get_comments():
+    data = server.get_json()
+    result = server.get_comments(db, flask.session["id"], data["post_id"])
+    return flask.jsonify(result)
+	
+	
 @app.route("/comment", methods=["POST"])
 def comment():
     data = server.get_json()
@@ -106,21 +129,13 @@ def comment():
     }
     return flask.jsonify(re)
 
-
-@app.route("/get_comments", methods=["POST"])
-def get_comments():
+	
+@app.route("/post", methods=["POST"])
+def post():
     data = server.get_json()
-    result = server.get_comments(db, flask.session["id"], data["post_id"], data["time_stamp"])
-    return flask.jsonify(result)
+    return flask.jsonify({"status": True,"id": random.randint(1, 999999),})
 
-
-@app.route("/request_posts", methods=["POST"])
-def request_posts():
-    data = server.get_json()
-    result = server.request_posts(db, id=flask.session["id"], dir=data["type"], timestamp=data["time_stamp"], num=5)
-    return flask.jsonify(result)
-
-
+	
 @app.route("/personalinfo", methods=["GET"])
 def personalinfo():
     id = flask.request.args.get('id')

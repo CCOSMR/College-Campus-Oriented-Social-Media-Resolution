@@ -225,15 +225,13 @@ def comment(database, user_id, parent_id, timestamp, content, visibility):
     database.sub(data)
     data = {
         "id": str(id),
-        "original_id": str(parent_id),
         "content": content,
-        "seen": str(True)
     }
     database.comments(data)
     return id
 
 
-def get_comments(database, user_id, sub_id, timestamp):
+def get_comments(database, user_id, sub_id,):
     def STRtoTIME(string):
         import datetime
         import time
@@ -265,6 +263,27 @@ def get_comments(database, user_id, sub_id, timestamp):
             "disliked": checkliked("Dislikes", i),
             "comments": sub_info[6]
         }
-        if not timestamp or re["time"] < timestamp:
-            jj.append(re)
+        jj.append(re)
     return jj
+
+
+# new functions
+def post(database, user_id, timestamp, content, visibility):
+    id = len(database.simple_search("Sub", "id>=0"))
+    data = {
+        "id": str(id),
+        "poster_id": str(user_id),
+        "publicity": str(0),
+        "likes": str(0),
+        "dislikes": str(0),
+        "comments": str(0)
+    }
+    database.sub(data)
+    data = {
+        "id": str(id),
+        "original_id": str(parent_id),
+        "content": content,
+        "seen": str(True)
+    }
+    database.comments(data)
+    return id
