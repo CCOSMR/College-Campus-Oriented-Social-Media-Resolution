@@ -17,7 +17,7 @@
             <div class="navbar-expand-md navbar-dark"> 
             
                 <header class="d-none d-md-block">
-                    <h1><span>my</span>website</h1>
+                    <h3 style="color:#000000">CourseInformation</h3>
                 </header>
                 
                 
@@ -90,23 +90,27 @@
                                 </div>                               
                             </div>
                         </div>
-                    </div>    
-                
-                <!-- lookthrough comment -->       
-                
+                    </div>         
+                <main class="container-fluid">
+                    <div class="row">
 
-
-
-                <!-- submit comment -->    
-                <fieldset>
-                        <legend>Submit Comment</legend>
-                        <div class="form-group">
-                            <label for="exampleInputMessage">Message</label>
-                             <textarea id="comment" class="form-control" id="exampleInputMessage" rows="3"></textarea>
+                        <!-- Main content -->
+                        <div class="col">
+                        <article>
+                        <!-- submit comment -->    
+                        <fieldset>
+                                <legend>Submit Comment</legend>
+                                <div class="form-group">
+                                    <label for="exampleInputMessage">Message</label>
+                                    <textarea id="comment" class="form-control" id="exampleInputMessage" rows="3"></textarea>
+                                </div>
+                                <p onclick="request_comment()" type="submit" class="btn btn-primary">Submit</p>
+                            </fieldset>  
+                        </article>             
                         </div>
-                        <p onclick="request_comment()" type="submit" class="btn btn-primary">Submit</p>
-                    </fieldset>           
-                
+                    </div>
+                </main>        
+
         </div>
     </div>    
 
