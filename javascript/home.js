@@ -411,7 +411,7 @@ function click_reply_small(post_id) {
 }
 
 function submit_comment(post_id) {
-	var time = Date.now()
+	var time = Date.now() / 1000;
 	var content = $('#' + post_id + ' #reply_text').val();
 	var data = JSON.stringify({"parent_id": post_id,
 	"time_stamp": time, 
@@ -440,7 +440,7 @@ function submit_comment(post_id) {
 }
 
 function submit_subcomment(post_id) {
-	var time = Date.now()
+	var time = Date.now() / 1000;
 	var content = $('#' + post_id + ' #reply_text').val();
 	var data = JSON.stringify({"parent_id": post_id,
 	"time_stamp": time, 
@@ -778,7 +778,7 @@ function select_tag(index) {
  
 function submit_post() {
 	var content = $('#rightbar #post_text').val();
-	var time = Date.now();
+	var time = Date.now() / 1000;
 	var data = JSON.stringify({
 		"time_stamp": time, 
 		"content": content,

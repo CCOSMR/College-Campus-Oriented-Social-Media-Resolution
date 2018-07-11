@@ -87,12 +87,6 @@
                 <!-- Main content area -->
                 <main class="container-fluid">
                     <div class="row">
-						<div class="col-md-12" style="padding-bottom: 20px;">
-							<button type="button" id="refresh_button" class="btn btn-light" style="width:100%;text-align:center;" onclick="load_recent_posts();">
-								<i class="fa fa-refresh fa-spin-hover" id="refresh_icon"></i>
-								<span> Load recent</span>
-							</button>
-						</div>
                         <!-- Main content -->
                         <div class="col-md-12" id="posts_list">
                         </div>
@@ -107,7 +101,13 @@
 	<div id="rightbar">
                       
            <aside class='col-md-12' style="background-color:#f8f8f8; padding-top: 10%;">
-			<div >
+				<div class="sidebar-box sidebar-box-bg">
+						<h4>User name</h4>
+						<p><a href="#" class="readmore">@id</a></p>   
+						<button type="button" class="btn btn-info"><i class="fa fa-plus"></i> Follow</button>						
+					</div>
+				<div >
+				
 								<ul class="nav nav-tabs">
 									<li class="nav-item">
 										<a class="nav-link active" id="tab0" onclick="select_tag(0);" style="font-size:0.8rem;">Following</a>
@@ -139,11 +139,6 @@
 										<input class="form-control mr-sm-2" type="text" placeholder="Courses, people..." aria-label="Search" style="width:65%;">
 										<button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
 									</form>
-								</div>
-								<div style="padding-bottom:15px;">
-								  <h4>Write a post</h4>
-									<textarea class="form-control" id="post_text" rows="3"></textarea>
-									<button type="button" class="btn btn-primary" style="margin-top:20px;" onclick="submit_post();">Submit post</button>
 								</div>
 							</div>
 			</aside>
