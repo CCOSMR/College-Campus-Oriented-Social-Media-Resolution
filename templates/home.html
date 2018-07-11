@@ -104,11 +104,14 @@
                 <!-- Main content area -->
                 <main class="container-fluid">
                     <div class="row">
+						<div class="col-md-12" style="padding-bottom: 20px;">
+							<button type="button" id="refresh_button" class="btn btn-light" style="width:100%;text-align:center;" onclick="load_recent_posts();">
+								<i class="fa fa-refresh fa-spin-hover" id="refresh_icon"></i>
+								<span> Load recent</span>
+							</button>
+						</div>
                         <!-- Main content -->
                         <div class="col-md-12" id="posts_list">
-							<ul>
-								<!-- Posts go here as <li>s -->
-							</ul>
                         </div>
                        
                     </div> 
