@@ -5,7 +5,7 @@
                 $.post("/course",
                     data,
                     function(n){
-                        alert(n)
+                        alert(n[0].name+n[0].id+n.length)
                         var box = document.getElementById("resulttable");
                         box.innerHTML=`
                                             <tr>
@@ -18,14 +18,14 @@
                         for(var i=0;i<n.length;i++){
                             var str1=`
                                                         <tr>
-                                                            <td><h5>`+n[i].id`</h5></td>
-                                                            <td<h5>`+` <a href="course?courseid=`+n[i].id+`">`+n[i].name+`</a>`+`</h5></td>
-                                                            <td><h5>`+n[i].teacher+`</h5></td>
+                                                            <td><h5>`+n[i].id+`</h5></td>
+                                                            <td><h5>`+` <a href="course?courseid=`+n[i].id+`">`+n[i].name+`</a>`+`</h5></td>
+                                                            <td><h5>`+n[i].ave_rating+`</h5></td>
                                                             <td><h5>`+60+`</h5></td>
-                                                        </tr> 
+                                                        </tr>                                
                             `;
                             box.innerHTML +=str1;    
-                        }                   
+                        }           
                     });
             }
             
