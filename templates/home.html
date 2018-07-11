@@ -19,14 +19,7 @@
                     <h2><span class="text-left" style='color: #ffffff;'>CCOSMR</span></h2>
                 </header>
                 
-                <!-- Mobile menu toggle and header -->
-                <div class="mobile-header-controls">
-                    <a class="navbar-brand d-md-none d-lg-none d-xl-none" href="#"><span>my</span>website</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#SidebarContent" aria-controls="SidebarContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                </div>
-         
+				
                 <div id="SidebarContent" class="collapse flex-column navbar-collapse">
  
                     <!-- Sidebar search form -->
@@ -34,49 +27,30 @@
                         <input class="form-control mr-sm-2" type="text" size="10"  placeholder="Search" aria-label="Search">
                         <button class="btn my-2 my-sm-0" type="submit">Search</button>
                     </form></br>
+					<ul id="search_results" class="sub-navbar collapse flex-column" style="background-color: #cbecf1;">
+					</ul>
                     
-							
+								
+					<div style="padding-bottom: 20px; width:100%;">
+						<div class="alert alert-primary" role="alert" style="padding-left:5%; padding-right:5%;">
+							<ul class="nospace inline pushright font-xs">
+								<li><h6 id="poster_name" class="heading">Self</h6></li>
+								<ul class="nospace inline pushright font-xs"> 
+									<li><a id="poster_id" href="#">@self </a></li>
+								</ul>
+							</ul>
+						</div>
+						
+					</div>
                     
                     <!-- Main navigation items -->
                     <nav class="navbar navbar-dark">
                         <div id="mainNavbar">
                             <ul class="flex-column mr-auto">
                                 <li class="nav-item active dropdown"  style="background-color: #cbecf1;">
-									<a class="nav-link dropdown-toggle" href="#MenuDropdown" data-toggle="collapse" aria-controls="MenuDropdown" aria-expanded="false">Follwing</a>
+									<a class="nav-link dropdown-toggle" href="#MenuDropdown" data-toggle="collapse" aria-controls="MenuDropdown" aria-expanded="false">Messages</a>
 									<ul id="MenuDropdown" class="sub-navbar collapse flex-column" style="background-color: #cbecf1;">
-										<li class="nav-item"><a class="nav-link" style="background-color: #cbecf1;">John Smith</a></li>
-										<li class="nav-item"><a class="nav-link" style="background-color: #cbecf1;">Fred James</a></li>
-										<li class="nav-item"><a class="nav-link" style="background-color: #cbecf1;">Rachel Johnson</a></li>
-										<li class="nav-item"><a class="nav-link" style="background-color: #cbecf1;">John Smith</a></li>
-										<li class="nav-item"><a class="nav-link" style="background-color: #cbecf1;">Fred James</a></li>
-										<li class="nav-item"><a class="nav-link" style="background-color: #cbecf1;">Rachel Johnson</a></li>
-										<li class="nav-item"><a class="nav-link" style="background-color: #cbecf1;">John Smith</a></li>
-										<li class="nav-item"><a class="nav-link" style="background-color: #cbecf1;">Fred James</a></li>
-										<li class="nav-item"><a class="nav-link" style="background-color: #cbecf1;">Rachel Johnson</a></li>
-										<li class="nav-item"><a class="nav-link" style="background-color: #cbecf1;">John Smith</a></li>
-										<li class="nav-item"><a class="nav-link" style="background-color: #cbecf1;">Fred James</a></li>
-										<li class="nav-item"><a class="nav-link" style="background-color: #cbecf1;">Rachel Johnson</a></li>
-										<li class="nav-item"><a class="nav-link" style="background-color: #cbecf1;">John Smith</a></li>
-										<li class="nav-item"><a class="nav-link" style="background-color: #cbecf1;">Fred James</a></li>
-										<li class="nav-item"><a class="nav-link" style="background-color: #cbecf1;">Rachel Johnson</a></li>
-										<li class="nav-item"><a class="nav-link" style="background-color: #cbecf1;">John Smith</a></li>
-										<li class="nav-item"><a class="nav-link" style="background-color: #cbecf1;">Fred James</a></li>
-										<li class="nav-item"><a class="nav-link" style="background-color: #cbecf1;">Rachel Johnson</a></li>
-										<li class="nav-item"><a class="nav-link" style="background-color: #cbecf1;">John Smith</a></li>
-										<li class="nav-item"><a class="nav-link" style="background-color: #cbecf1;">Fred James</a></li>
-										<li class="nav-item"><a class="nav-link" style="background-color: #cbecf1;">Rachel Johnson</a></li>
-										<li class="nav-item"><a class="nav-link" style="background-color: #cbecf1;">John Smith</a></li>
-										<li class="nav-item"><a class="nav-link" style="background-color: #cbecf1;">Fred James</a></li>
-										<li class="nav-item"><a class="nav-link" style="background-color: #cbecf1;">Rachel Johnson</a></li>
-										<li class="nav-item"><a class="nav-link" style="background-color: #cbecf1;">John Smith</a></li>
-										<li class="nav-item"><a class="nav-link" style="background-color: #cbecf1;">Fred James</a></li>
-										<li class="nav-item"><a class="nav-link" style="background-color: #cbecf1;">Rachel Johnson</a></li>
-										<li class="nav-item"><a class="nav-link" style="background-color: #cbecf1;">John Smith</a></li>
-										<li class="nav-item"><a class="nav-link" style="background-color: #cbecf1;">Fred James</a></li>
-										<li class="nav-item"><a class="nav-link" style="background-color: #cbecf1;">Rachel Johnson</a></li>
-										<li class="nav-item"><a class="nav-link" style="background-color: #cbecf1;">John Smith</a></li>
-										<li class="nav-item"><a class="nav-link" style="background-color: #cbecf1;">Fred James</a></li>
-										<li class="nav-item"><a class="nav-link" style="background-color: #cbecf1;">Rachel Johnson</a></li>
+										
 									</ul>
                                 </li>
 
@@ -127,27 +101,35 @@
 			<div >
 								<ul class="nav nav-tabs">
 									<li class="nav-item">
-										<a class="nav-link active" name="tab" onclick="select_tag(0);" style="font-size:0.8rem;">Write a post</a>
+										<a class="nav-link active" id="tab0" onclick="select_tag(0);" style="font-size:0.8rem;">Following</a>
 									</li>
 									<li class="nav-item">
-										<a class="nav-link" name="tab" onclick="select_tag(1);" style="font-size:0.8rem;">Messages</a>
+										<a class="nav-link" id="tab1" onclick="select_tag(1);" style="font-size:0.8rem;">Followers</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link" id="tab2" onclick="select_tag(2);" style="font-size:0.8rem;">Courses</a>
 									</li>
 								</ul>
-								<div class='tab_selection' style="background-color:#ffffff;">
-									<div style="padding:15px;">
-								  <h4>Post</h4>
+								<div class='tab_selection' id='selection0' style="background-color:#ffffff;">
+									<div style="height:40%; overflow:auto; padding:15px;">
+									1
+									</div>
+								</div>
+								<div class='tab_selection' id='selection1' style="display:none; background-color:#ffffff;">
+									<div style="height:40%; overflow:auto; padding:15px;">
+									2
+									</div>
+								</div>
+								<div class='tab_selection' id='selection2' style="display:none; background-color:#ffffff;">
+									<div style="height:40%; overflow:auto; padding:15px;">
+									3
+									</div>
+								</div>
+								<div style="padding:15px;">
+								  <h4>Write a post</h4>
 									<textarea class="form-control" id="exampleInputMessage" rows="3"></textarea>
-									<button type="button" class="btn btn-primary">Submit post</button>
+									<button type="button" class="btn btn-primary" style="margin-top:20px;" >Submit post</button>
 									</div>
-								</div>
-								<div class='tab_selection' style="display:none; background-color:#ffffff;">
-									<div  style="padding:15px;">
-								  <h4>Messages</h4>
-								  <textarea class="form-control" id="exampleInputMessage" rows="3"></textarea>
-									<button type="button" class="btn btn-primary">Read all</button>
-									</div>
-								</div>
-								
 								<p>&nbsp;</p>
 								<div class="sidebar-box">
 									<h4>Links</h4>

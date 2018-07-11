@@ -14,12 +14,21 @@ $(function() {
 		$(this).toggleClass("liked");
 	});
 });
+
 $(function() {
 	$("#refresh_button").hover(function(){
 		$("#refresh_icon").addClass("hover");
 		}, function() {
 		  $("#refresh_icon").removeClass("hover");
 	});
+});
+
+$(function() {
+	// request messages
+	// insert 
+	for (var i = 0; i < 10; i++) {
+		document.getElementById('MenuDropdown').innerHTML += `<li class="nav-item"><a class="nav-link" style="background-color: #cbecf1;">`+ 'message' + `</a></li>`;
+	}
 });
 
 jQuery(function($) {
@@ -115,7 +124,7 @@ function insert_post(post_id, poster_id, poster_name, time, content, likes, disl
 				<ul class="nospace inline pushright font-xs">
 					<li><h6 id="poster_name" class="heading">`+ poster_name + `</h6></li>
 					<ul class="nospace inline pushright font-xs"> 
-						<li></i> <a id="poster_id" href="#">` + "@" + poster_id + `</a></li>
+						<li><a id="poster_id" href="#">` + "@" + poster_id + `</a></li>
 						<li id="time" ><i class="fa fa-calendar-o"></i>` + time_string + `</li>
 					</ul>
 				</ul>
@@ -420,6 +429,9 @@ function submit_comment(post_id) {
 				}
 				insert_comment(post_id, response.id, 'self', 'self', time, 
 					content, 0, 0, 0, false, false);
+				
+				var comments = $('#' + post_id + ' #comments')[0];
+				comments.textContent = parseInt(comments.textContent) + 1;
 			}
 			else {
 				alert('Failed');
@@ -449,6 +461,9 @@ function submit_subcomment(post_id) {
 				}
 				insert_subcomment(post_id, response.id, 'self', 'self', time, 
 					content, 0, 0, 0, false, false);
+					
+				var comments = $('#' + post_id + ' #comments')[0];
+				comments.textContent = parseInt(comments.textContent) + 1;
 			}
 			else {
 				alert('Failed');
@@ -755,16 +770,27 @@ function get_subcomments(comment_id) {
 }
 
 function select_tag(index) {
-     var i;
-     var x = document.getElementsByClassName("tab_selection");
-     for (i = 0; i < x.length; i++) {
-         x[i].style.display = "none"; 
-     }
-     document.getElementsByClassName('tab_selection')[index].style.display = "block"; 
- 	
- 	var y = document.getElementsByName('tab');
- 	for (i = 0; i < y.length; i++) {
-         y[i].className = "nav-link"
-     }
- 	document.getElementsByName('tab')[(y.length - 1) % (index + 1)].className = "nav-link active"; 
- }
+	$('#rightbar aside div ul li .nav-link').removeClass('active');
+	var selector = $('#rightbar aside div ul li #tab'+index).addClass('active');
+	$('#rightbar .tab_selection').css('display', 'none');
+	$('#rightbar #selection' + index).css('display', 'block');
+}
+ 
+function submit_post() {
+	var content = $('#rightbar #post_text').val();
+	var time = Date.now();
+	var data = JSON.stringify({
+		"time_stamp": time, 
+		"content": content,
+		"visibility": "public"
+	});
+	$.post("/post",
+		data,
+		function(response){
+			if (response['status']) {
+				prepend_post(response.post_id, '@self', 'Self', time, 
+					content, 0, 0, 0, false, false);
+				
+			}
+	});
+}
