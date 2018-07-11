@@ -1,4 +1,4 @@
--import flask
+import flask
 import time
 import io
 import os
@@ -138,8 +138,8 @@ def personaldetail():
         "name": "sdfab",
         "email": "sdf@qq.com"
     }
-     friends = {123:"andy",12333:"john", 23:"smith", 323:"dsfdf"}
-    courses = {1:"高数",12333:"大雾", 23:"C语", 323:"英语"}
+    friends = {123: "andy", 12333: "john", 23: "smith", 323: "dsfdf"}
+    courses = {1: "高数", 12333: "大雾", 23: "C语", 323: "英语"}
     result = {
         "user_name": person["name"],
         "user_email": person["email"],
