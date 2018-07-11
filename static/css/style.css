@@ -225,8 +225,8 @@ button {
   border-radius: 0; }
 
 button:focus {
-  outline: 1px dotted;
-  outline: 5px auto -webkit-focus-ring-color; }
+  outline: 0px;
+  outline: 0px auto -webkit-focus-ring-color; }
 
 input,
 button,
@@ -7490,7 +7490,44 @@ html {
   background-color: transparent;
 }
 
-.button-normal:hover .fa,
-.button-normal:hover span {
+.button-normal-small:hover .fa,
+.button-normal-small:hover span {
   color: #a34b88;
+}
+
+.clicked-small {
+  background-color: #cc4b37;
+}
+
+.clicked-small .fa,
+.clicked-small span {
+  color: #fefefe;
+}
+
+.clicked-small:focus {
+  background-color: #cc4b37;
+  outline:0;
+}
+
+.clicked-small:focus .fa,
+.clicked-small:focus span {
+  color: #fefefe;
+}
+
+.clicked-small:hover {
+  background-color: #cc4b37;
+}
+
+.clicked-small:hover .fa,
+.clicked-small:hover span {
+  color: #fefefe;
+}
+
+.button-s {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	padding: 0.5rem;
+	padding-top: 0;
+	padding-bottom: 0;
+	font-size: .8rem;
 }

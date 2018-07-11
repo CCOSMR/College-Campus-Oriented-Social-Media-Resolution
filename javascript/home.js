@@ -99,7 +99,7 @@ function insert_post(post_id, poster_id, poster_name, time, content, likes, disl
 					<i class="fa fa-comment"></i>
 					<span id="comments" >` + comments + `</span>
 					</button> </li>
-			  <li><button class="button button-normal">
+			  <li><button class="button button-normal"  id="reply_button" onclick="click_reply(` + post_id + `);">
 					<i class="fa fa-pencil-square-o"></i>
 					<span>Reply</span>
 					</button> </li>
@@ -109,14 +109,19 @@ function insert_post(post_id, poster_id, poster_name, time, content, likes, disl
 					</button> </li>
 			</ul>
 		</div>
+		<div id='reply' style="padding-top: 0;padding-left: 15px; display: none;">
+			<fieldset>
+				<legend class="font-xs">Reply</legend>
+				<textarea class="form-control" id="reply_text" rows="2" style:"font-size:.8rem;"></textarea>
+				<button type="submit" class="btn btn-primary button-s" onclick="submit_comment(` + post_id + `);">Submit</button>
+			</fieldset>
+		</div>
 		<div id="comments" style="padding-top: 0;padding-left: 15px; display: none;">
 			<fieldset>
 				<legend class="font-xs">Comments</legend>
 				<blockquote>
 				</blockquote>
 			</fieldset>
-		</div>
-		<div id='reply' style='display:none;'>
 		</div>
 	</article></div>  `
 	
@@ -272,6 +277,78 @@ function click_comment(post_id) {
 	}
 }
 
+function click_reply(post_id) {
+	$('#' + post_id + ' #reply_button').toggleClass("clicked");
+	if ($('#' + post_id + ' #reply')[0].style.display === "none") {
+		$('#' + post_id + ' #reply')[0].style.display = "block";
+	} 
+	else {
+		$('#' + post_id + ' #reply')[0].style.display = "none";
+	}
+}
+
+function click_reply_small(post_id) {
+	$('#' + post_id + ' #reply_button_small').toggleClass("clicked-small");
+	if ($('#' + post_id + ' #reply')[0].style.display === "none") {
+		$('#' + post_id + ' #reply')[0].style.display = "block";
+	} 
+	else {
+		$('#' + post_id + ' #reply')[0].style.display = "none";
+	}
+}
+
+function submit_comment(post_id) {
+	var time = Date.now()
+	var content = $('#' + post_id + ' #reply_text').val();
+	var data = JSON.stringify({"parent_id": post_id,
+	"time_stamp": time, 
+	"content": content,
+	"visibility": "public"});
+	$.post("/comment",
+		data,
+		function(response){
+			if (response['status']) {
+				$('#' + post_id + ' #reply_text').val('');
+				insert_comment(post_id, response.id, 'self', 'self', time, 
+					content, 0, 0, 0, false, false);
+				$('#' + post_id + ' #reply_button').toggleClass("clicked");
+				$('#' + post_id + ' #reply')[0].style.display = "none";
+				if ($('#' + post_id + ' div#comments')[0].style.display === "none") {
+					click_comment(post_id);
+				}
+			}
+			else {
+				alert('Failed');
+			}
+		});
+}
+
+function submit_subcomment(post_id) {
+	var time = Date.now()
+	var content = $('#' + post_id + ' #reply_text').val();
+	var data = JSON.stringify({"parent_id": post_id,
+	"time_stamp": time, 
+	"content": content,
+	"visibility": "public"});
+	$.post("/comment",
+		data,
+		function(response){
+			if (response['status']) {
+				$('#' + post_id + ' #reply_text').val('');
+				insert_subcomment(post_id, response.id, 'self', 'self', time, 
+					content, 0, 0, 0, false, false);
+				$('#' + post_id + ' #reply_button_small').toggleClass("clicked-small");
+				$('#' + post_id + ' #reply')[0].style.display = "none";
+				if ($('#' + post_id + ' div#subcomments')[0].style.display === "none") {
+					click_comment_small(post_id);
+				}
+			}
+			else {
+				alert('Failed');
+			}
+		});
+}
+
 function insert_comment(post_id, comment_id, commenter_id, commenter_name, time, content, likes, dislikes, comments, liked, disliked) {
 	subs[comment_id] = {'type': 'comment', 'liked': liked, 'disliked': disliked, 'comments': comments};
 	var date = new Date(time*1000);
@@ -305,7 +382,7 @@ function insert_comment(post_id, comment_id, commenter_id, commenter_name, time,
 				<i class="fa fa-comment"></i>
 				<span id="comments">` + comments + `</span>
 				</button> </li>
-		  <li><button class="button button-normal-small">
+		  <li><button class="button button-normal-small" onclick="click_reply_small(` + comment_id + `);"
 				<i class="fa fa-pencil-square-o"></i>
 				<span>Reply</span>
 				</button> </li>
@@ -314,6 +391,10 @@ function insert_comment(post_id, comment_id, commenter_id, commenter_name, time,
 				<span>Share</span>
 				</button> </li>
 		</ul>
+		<div id='reply' style="padding-top: 0;padding-left: -2rem; display: none;">
+			<textarea class="form-control" id="reply_text" rows="2" style:"font-size:.8rem;"></textarea>
+			<button type="submit" class="btn btn-primary button-s" onclick="submit_subcomment(` + comment_id + `);">Submit</button>
+		</div>
 		<div id="subcomments" style="padding-top: 0;padding-left: -2rem; display:none;">
 			<blockquote>
 			</blockquote>
@@ -510,7 +591,7 @@ function insert_subcomment(post_id, comment_id, commenter_id, commenter_name, ti
 				<i class="fa fa-comment"></i>
 				<span id="comments">` + comments + `</span>
 				</button> </li>
-		  <li><button class="button button-normal-small">
+		  <li><button class="button button-normal-small" onclick="click_reply_small(` + comment_id + `);">
 				<i class="fa fa-pencil-square-o"></i>
 				<span>Reply</span>
 				</button> </li>
@@ -519,6 +600,10 @@ function insert_subcomment(post_id, comment_id, commenter_id, commenter_name, ti
 				<span>Share</span>
 				</button> </li>
 		</ul>
+		<div id='reply' style="padding-top: 0;padding-left: -2rem; display: none;">
+			<textarea class="form-control" id="reply_text" rows="2" style:"font-size:.8rem;"></textarea>
+			<button type="submit" class="btn btn-primary button-s" onclick="submit_subcomment(` + comment_id + `);">Submit</button>
+		</div>
 		<div id="subcomments" style="padding-top: 0;padding-left: -2rem; display:none;">
 			<blockquote>
 			</blockquote>
