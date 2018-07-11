@@ -126,4 +126,32 @@ respond:
 	"status": true, # success
 }
 
+
 /followers # get list of followers
+{
+	"id": "123" # own id
+}
+
+respond:
+[
+	{
+		"id": "123", # user id
+		"name": "John", # ...
+	},
+	...
+]
+
+
+/followings # get list of followings
+{
+	"id": "123" # own id
+}
+
+respond:
+[
+	{
+		"id": "123", # user id
+		"name": "John", # ...
+	},
+	...
+]
