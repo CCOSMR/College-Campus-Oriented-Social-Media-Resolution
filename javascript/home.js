@@ -790,7 +790,7 @@ function submit_post() {
 			if (response['status']) {
 				prepend_post(response.post_id, '@self', 'Self', time, 
 					content, 0, 0, 0, false, false);
-				
+				$('#rightbar #post_text').val("");
 			}
 	});
 }
