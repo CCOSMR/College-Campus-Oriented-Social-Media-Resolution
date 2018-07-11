@@ -122,7 +122,7 @@ function insert_post(post_id, poster_id, poster_name, time, content, likes, disl
 		<div id="post" class="excerpttxt" style="padding:15px;">
 			<ul class="nospace inline pushright font-xs">
 				<li>
-					<img src="/static/pictures/example.png" style="border-radius: 50%; height:40px;">
+					<img src="/static/pictures/` + post_id + `" style="border-radius: 50%; height:40px;">
 					</img>
 				</li>
 				<ul class="nospace inline pushright font-xs">
@@ -171,7 +171,7 @@ function insert_post(post_id, poster_id, poster_name, time, content, likes, disl
 				</blockquote>
 			</fieldset>
 		</div>
-	</article></div>  `
+	</article></div>  `;
 	
 	document.getElementById('posts_list').innerHTML += new_post;
 	if (subs[post_id]['liked']) {
@@ -195,13 +195,13 @@ function prepend_post(post_id, poster_id, poster_name, time, content, likes, dis
 		<div id="post" class="excerpttxt" style="padding:15px;">
 			<ul class="nospace inline pushright font-xs">
 				<li>
-					<img src="/static/pictures/example.png" style="border-radius: 50%; height:40px;">
+					<img src="/static/pictures/` + poster_id + `" style="border-radius: 50%; height:40px;">
 					</img>
 				</li>
 				<ul class="nospace inline pushright font-xs">
 					<li><h6 id="poster_name" class="heading">`+ poster_name + `</h6></li>
 					<ul class="nospace inline pushright font-xs"> 
-						<li></i> <a id="poster_id" href="#">` + "@" + poster_id + `</a></li>
+						<li></i> <a id="poster_id"  href="/user=` + poster_id + `">` + "@" + poster_id + `</a></li>
 						<li id="time" ><i class="fa fa-calendar-o"></i>` + time_string + `</li>
 					</ul>
 				</ul>
@@ -489,14 +489,14 @@ function insert_comment(post_id, comment_id, commenter_id, commenter_name, time,
 	`<div id="` + comment_id + `" class="excerpttxt" style="padding-right:10px;">
 		<ul class="nospace inline pushright font-xs">
 			<li>
-				<img src="/static/pictures/example.png" style="border-radius: 50%; height:18px;">
+				<img src="/static/pictures/` + commenter_id + `" style="border-radius: 50%; height:18px;">
 				</img>
 			</li>
 			<li>
 				<ul class="nospace inline pushright font-xs">
 					<li><h6 class="font-xxs">`+ commenter_name + `</h6></li>
 					<ul class="nospace inline pushright"> 
-						<li></i> <a href="#" class="font-xxs">` + "@" + commenter_id + `</a></li>
+						<li></i> <a class="font-xxs" href="/user=` + commenter_id + `">` + "@" + commenter_id + `</a></li>
 						<li class="font-xxs"><i class="fa fa-calendar-o"></i>` + time_string + `</li>
 					</ul>
 				</ul>
@@ -702,14 +702,14 @@ function insert_subcomment(post_id, comment_id, commenter_id, commenter_name, ti
 	`<div id="` + comment_id + `" class="excerpttxt">
 		<ul class="nospace inline pushright font-xs">
 			<li>
-				<img src="/static/pictures/example.png" style="border-radius: 50%; height:18px;">
+				<img src="/static/pictures/` + commenter_id + `" style="border-radius: 50%; height:18px;">
 				</img>
 			</li>
 			<li>
 				<ul class="nospace inline pushright font-xs">
 					<li><h6 class="font-xxs">`+ commenter_name + `</h6></li>
 					<ul class="nospace inline pushright"> 
-						<li></i> <a href="#" class="font-xxs">` + "@" + commenter_id + `</a></li>
+						<li></i> <a class="font-xxs" href="/user=` + commenter_id + `">` + "@" + commenter_id + `</a></li>
 						<li class="font-xxs"><i class="fa fa-calendar-o"></i>` + time_string + `</li>
 					</ul>
 				</ul>
