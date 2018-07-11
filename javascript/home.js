@@ -1,10 +1,8 @@
 var time_stamp = Date.now();
-var earliest_post_id = -1;
-var post_count = 0;
+var earliest_post_time_stamp = -1;
 var subs = []
-var post_ids = [];
-var liked = [];
-var disliked = [];
+// var self_id = {{self_id}};
+// var self_name = {{self_name}};
 
 const monthNames = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
@@ -16,12 +14,24 @@ $(function() {
 		$(this).toggleClass("liked");
 	});
 });
+$(function() {
+	$("#refresh_button").hover(function(){
+		$("#refresh_icon").addClass("hover");
+		}, function() {
+		  $("#refresh_icon").removeClass("hover");
+	});
+});
 
 jQuery(function($) {
 	jQuery(window).scroll(function(){
 	 var ScrollTop = jQuery(window).scrollTop();
 	 var data;
-	 var data = JSON.stringify({"time_stamp":time_stamp,"type":"backward"});
+	 var data = JSON.stringify({
+		"earliest_post_time_stamp": time_stamp,
+		"latest_post_time_stamp": 0,
+		"type":"backward",
+		"user":"",
+	});
 	 
 	 if ($(this).scrollTop() + $(window).innerHeight() + 1 >= $("#content-wrapper").innerHeight()) { 
 		
@@ -43,9 +53,15 @@ jQuery(function($) {
 });
 
 function check_post() {
+	var earliest_post_time_stamp = Date.now();
 	 var ScrollTop = jQuery(window).scrollTop();
 	 var data;
-	 var data = JSON.stringify({"time_stamp":time_stamp,"type":"backward"});
+	 var data = JSON.stringify({
+		"earliest_post_time_stamp": time_stamp,
+		"latest_post_time_stamp": 0,
+		"type":"backward",
+		"user":"",
+	});
 	 
 	 if ($(this).scrollTop() + $(window).innerHeight() + 1 >= $("#content-wrapper").innerHeight()) { 
 		
@@ -64,9 +80,28 @@ function check_post() {
 	 time_stamp = Date.now();
 }
 
+function load_recent_posts() {
+	var earliest_post_time_stamp = Date.now();
+	var latest_post_time_stamp = Date.now();
+	var data;
+	var data = JSON.stringify({
+		"earliest_post_time_stamp": time_stamp,
+		"latest_post_time_stamp": latest_post_time_stamp,
+		"type":"forward",
+		"user":"",
+	});
+	$.post("/request_posts",
+		data,
+		function(response){
+			for (var i = 0; i < response.length; i++) {
+				prepend_post(response[i].post_id, response[i].poster_id, response[i].poster_name, response[i].time, 
+					response[i].content, response[i].likes, response[i].dislikes, response[i].comments, response[i].liked, response[i].disliked);
+				
+			}
+		});
+	
+}
 function insert_post(post_id, poster_id, poster_name, time, content, likes, dislikes, comments, liked, disliked) {
-	post_count++;
-	// subs.push({key: post_id, value: {'type': 'post', 'liked': false, 'disliked': false, 'comments': comments}});
 	subs[post_id] = {'type': 'post', 'liked': liked, 'disliked': disliked, 'comments': comments};
 	var date = new Date(time*1000);
 	var time_string = ' ' +(date.getDay() + 1) + ', ' 
@@ -133,6 +168,74 @@ function insert_post(post_id, poster_id, poster_name, time, content, likes, disl
 		$('#' + post_id + ' #dislike_button').toggleClass("disliked");
 	}
 	
+}
+
+function prepend_post(post_id, poster_id, poster_name, time, content, likes, dislikes, comments, liked, disliked) {
+	subs[post_id] = {'type': 'post', 'liked': liked, 'disliked': disliked, 'comments': comments};
+	var date = new Date(time*1000);
+	var time_string = ' ' +(date.getDay() + 1) + ', ' 
+                  + monthNames[date.getMonth()] + ', '
+                  + date.getFullYear();
+				  
+	new_post = 
+	`<div class='post_div' id="` + post_id + `"><article class="excerpt">
+		<div id="post" class="excerpttxt" style="padding:15px;">
+			<ul class="nospace inline pushright font-xs">
+				<ul class="nospace inline pushright font-xs">
+					<li><h6 id="poster_name" class="heading">`+ poster_name + `</h6></li>
+					<ul class="nospace inline pushright font-xs"> 
+						<li></i> <a id="poster_id" href="#">` + "@" + poster_id + `</a></li>
+						<li id="time" ><i class="fa fa-calendar-o"></i>` + time_string + `</li>
+					</ul>
+				</ul>
+			</ul>
+			<p>` + content + `</p>
+			<ul class="nospace inline pushright font-xs">
+			  <li><button class="button button-like" id="like_button" onclick="click_like(` + post_id + `);">
+					<i class="fa fa-heart"></i>
+					<span id="likes" >` + likes + `</span>
+					</button> </li>
+			  <li><button class="button button-dislike" id="dislike_button" onclick="click_dislike(` + post_id + `);">
+					<i class="fa fa-thumbs-down"></i>
+					<span id="dislikes" >` + dislikes + `</span>
+					</button> </li>
+			  <li><button class="button button-comment" id="comment_button" onclick="click_comment(` + post_id + `);">
+					<i class="fa fa-comment"></i>
+					<span id="comments" >` + comments + `</span>
+					</button> </li>
+			  <li><button class="button button-normal"  id="reply_button" onclick="click_reply(` + post_id + `);">
+					<i class="fa fa-pencil-square-o"></i>
+					<span>Reply</span>
+					</button> </li>
+			  <li><button class="button button-normal">
+					<i class="fa fa-share"></i>
+					<span>Share</span>
+					</button> </li>
+			</ul>
+		</div>
+		<div id='reply' style="padding-top: 0;padding-left: 15px; display: none;">
+			<fieldset>
+				<legend class="font-xs">Reply</legend>
+				<textarea class="form-control" id="reply_text" rows="2" style:"font-size:.8rem;"></textarea>
+				<button type="submit" class="btn btn-primary button-s" onclick="submit_comment(` + post_id + `);">Submit</button>
+			</fieldset>
+		</div>
+		<div id="comments" style="padding-top: 0;padding-left: 15px; display: none;">
+			<fieldset>
+				<legend class="font-xs">Comments</legend>
+				<blockquote>
+				</blockquote>
+			</fieldset>
+		</div>
+	</article></div>  `
+	
+	document.getElementById('posts_list').innerHTML = new_post + document.getElementById('posts_list').innerHTML;
+	if (subs[post_id]['liked']) {
+		$('#' + post_id + ' #like_button').toggleClass("liked");
+	}
+	if (subs[post_id]['disliked']) {
+		$('#' + post_id + ' #dislike_button').toggleClass("disliked");
+	}
 }
 
 function click_like(post_id) {
@@ -650,3 +753,18 @@ function get_subcomments(comment_id) {
 			}
 	});
 }
+
+function select_tag(index) {
+     var i;
+     var x = document.getElementsByClassName("tab_selection");
+     for (i = 0; i < x.length; i++) {
+         x[i].style.display = "none"; 
+     }
+     document.getElementsByClassName('tab_selection')[index].style.display = "block"; 
+ 	
+ 	var y = document.getElementsByName('tab');
+ 	for (i = 0; i < y.length; i++) {
+         y[i].className = "nav-link"
+     }
+ 	document.getElementsByName('tab')[(y.length - 1) % (index + 1)].className = "nav-link active"; 
+ }
