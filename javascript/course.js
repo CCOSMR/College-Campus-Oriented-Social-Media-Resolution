@@ -5,8 +5,9 @@
                 $.post("/course",
                     data,
                     function(n){
+                        alert(n)
                         var box = document.getElementById("resulttable");
-                        box.box.innerHTML=`
+                        box.innerHTML=`
                                             <tr>
                                                 <th>ID</th>
                                                 <th>Name</th>
@@ -57,7 +58,7 @@
                 var str="链接测试"
                 var str1=`
                                             <tr>
-                                                <td>`+` <a href="courseinformation.html">`+str+`</a>`+`</td>
+                                                <td>`+` <a href="course?courseid=1">`+str+`</a>`+`</td>
                                                 <td>Rachel Johnson</td>
                                                 <td>19</td>
                                                 <td>60</td>

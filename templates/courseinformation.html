@@ -23,7 +23,7 @@
                 
                 <!-- Mobile menu toggle and header -->
                 <div class="mobile-header-controls">
-                    <a class="navbar-brand d-md-none d-lg-none d-xl-none" href="#"><span>my</span>website</a>
+                    <a class="navbar-brand d-md-none d-lg-none d-xl-none" href="#"><h2>courseinformation</h2></a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#SidebarContent" aria-controls="SidebarContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -85,7 +85,9 @@
                             <div class="jumbotron static-slider">
                                 <h1 class="text-center">课程简介</h1>
                                 <h2 class="lead text-center">{{desc}}</h2>
-                                <h2 class="lead text-center">课程平均评分：{{avg}}</h2>
+                                <div class="alert alert-info" role="alert" align="center">
+                                        <h2>课程平均评分：{{avg}}</h2>   
+                                </div>                               
                             </div>
                         </div>
                     </div>    
@@ -102,7 +104,7 @@
                             <label for="exampleInputMessage">Message</label>
                              <textarea id="comment" class="form-control" id="exampleInputMessage" rows="3"></textarea>
                         </div>
-                        <button onclick="request_comment()" type="submit" class="btn btn-primary">Submit</button>
+                        <p onclick="request_comment()" type="submit" class="btn btn-primary">Submit</p>
                     </fieldset>           
                 
         </div>
