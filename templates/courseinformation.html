@@ -6,8 +6,21 @@
     <link rel="stylesheet" href="css/style.css">
 	<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-	<script src="/javascript/courseinformation.js"></script>
-
+    <script>
+            var t={{id}};
+            var score;
+            function request_comment() {
+                var c = document.getElementById("comment").value;
+                var data = JSON.stringify({"comment":c,"id":t,"rating":score});
+                $.post("/review",
+                    data,
+                    function(n){
+                            alert(data);
+                            alert(n);
+                        }
+                    );
+            }                    
+    </script>
 </head>
 <body>
 
