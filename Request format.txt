@@ -171,3 +171,16 @@ respond:
 	"followings": 1, # user's followings
 	"courses": 5, # user's courses
 }
+
+/follow # follow a user
+{
+	"id": "123", # user id to be followed by self
+	"follow": ture, # follow or unfollow
+}
+
+respond:
+{
+
+	"status": true, # success
+}
+	

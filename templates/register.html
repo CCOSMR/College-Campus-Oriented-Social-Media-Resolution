@@ -24,7 +24,45 @@
                         <!-- Main content -->
 						<aside class="col-md-4">
                             <div class="sidebar-box">
-							Stuff
+							<div class="jumbotron-wrap">
+								<div class="container-fluid">
+									<div id="mainCarousel" class="carousel slide" data-ride="carousel">
+										<div class="carousel-inner">
+											<div class="carousel-item active">
+												<div class="jumbotron">
+													<h3 class="text-center">Explore </h3>
+													<p class="lead text-center">See what's happening in your campus.</p>
+													<p class="lead text-center">
+															<a class="btn btn-outline-primary btn-lg" href="#" role="button"><i class="fa fa-info"></i> &nbsp; Learn more</a>
+													</p>
+												</div>
+
+											</div>
+
+											<div class="carousel-item">
+												<div class="jumbotron">
+													<h3 class="text-center">Review, Rate, Share </h3>
+													<p class="lead text-center">Find the best course for yourself.</p>
+													<p class="lead text-center">
+															<a class="btn btn-outline-primary btn-lg" href="#" role="button"><i class="fa fa-info"></i> &nbsp; Learn more</a>
+														
+													</p>
+												</div>
+
+											</div>
+										</div>
+
+										<a class="carousel-control-prev" href="#mainCarousel" role="button" data-slide="prev">
+												<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+												<span class="sr-only">Previous</span>
+										</a>
+										<a class="carousel-control-next" href="#mainCarousel" role="button" data-slide="next">
+												<span class="carousel-control-next-icon" aria-hidden="true"></span>
+											<span class="sr-only">Next</span>
+										</a>
+									</div>
+								</div>
+							</div>
 							</div>
 						</aside>
                         <div class="col-md-4">
@@ -59,7 +97,7 @@
                                         <label for="exampleInputName">Captcha:</label>
 										<div id="captcha_image" style='display: flex; align-items: center; justify-content: center'>
 										</div>
-										<a class="fa fa-info" id="refresh_captcha">Click on image to refresh</a>
+										<a class="fa fa-info" id="refresh_captcha">Click on image to change</a>
 										<input type="text" class="form-control" name="captcha" id="captcha" class="ipt" placeholder="Captcha" required  onchange='enter_captcha();'>
                                     </div>
 										<p id='captcha_message'></p>
@@ -71,13 +109,26 @@
                         <!-- Sidebar -->
                         <aside class="col-md-4">
                             <div class="sidebar-box">
-								Also stuff here
-                                
+								<div style="padding:15px;">
+									<h5>Registration for other entities</h4>
+									<div class="list-group list-group-root">
+										<a class="list-group-item" href="">Register a course</a>
+										<a class="list-group-item" href="">Register a teacher</a>
+										<a class="list-group-item" href="">Register a university</a>
+										<a class="list-group-item" href="">Register a college</a>
+									</div>
+                                </div>
+								<div style="padding:15px;">
+									<h5>Modify information</h4>
+									<div class="list-group list-group-root">
+										<a class="list-group-item" href="">Modify course information</a>
+										<a class="list-group-item" href="">Modify teacher information</a>
+										<a class="list-group-item" href="">Modify university information</a>
+										<a class="list-group-item" href="">Modify college information</a>
+									</div>
+                                </div>
                             </div>
 
-                            <div class="sidebar-box sidebar-box-bg">
-							More stuff
-                            </div>
                         </aside> 
                     </div> 
                 </main>

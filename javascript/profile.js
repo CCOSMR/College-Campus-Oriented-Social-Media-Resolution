@@ -3,6 +3,7 @@ var earliest_post_time_stamp = -1;
 var subs = []
 // var self_id = {{self_id}};
 // var self_name = {{self_name}};
+// var id={{id}};
 
 const monthNames = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
@@ -124,7 +125,7 @@ function insert_post(post_id, poster_id, poster_name, time, content, likes, disl
 				<ul class="nospace inline pushright font-xs">
 					<li><h6 id="poster_name" class="heading">`+ poster_name + `</h6></li>
 					<ul class="nospace inline pushright font-xs"> 
-						<li><a id="poster_id" href="/user=` + poster_id + `">` + "@" + poster_id + `</a></li>
+						<li><a id="poster_id" href="#">` + "@" + poster_id + `</a></li>
 						<li id="time" ><i class="fa fa-calendar-o"></i>` + time_string + `</li>
 					</ul>
 				</ul>
@@ -775,22 +776,14 @@ function select_tag(index) {
 	$('#rightbar .tab_selection').css('display', 'none');
 	$('#rightbar #selection' + index).css('display', 'block');
 }
- 
-function submit_post() {
-	var content = $('#rightbar #post_text').val();
-	var time = Date.now() / 1000;
-	var data = JSON.stringify({
-		"time_stamp": time, 
-		"content": content,
-		"visibility": "public"
-	});
-	$.post("/post",
+
+function follow() {
+	$.post("/get_comments",
 		data,
 		function(response){
-			if (response['status']) {
-				prepend_post(response.id, 'self', 'Self', time, 
-					content, 0, 0, 0, false, false);
-				$('#rightbar #post_text').val("");
+			for (var i = 0; i < response.length; i++) {
+				insert_comment(post_id, response[i].comment_id, response[i].commenter_id, response[i].commenter_name, response[i].time, 
+					response[i].content, response[i].likes, response[i].dislikes, response[i].comments, response[i].liked, response[i].disliked);
 			}
 	});
 }
