@@ -9,10 +9,6 @@
     <script>
 
             var courseid={{id}};
-            var tid={{teacherid}};
-
-            // var tool=document.getElementById("teacher");
-            // tool.href="/teacherinfo?teacherid={{teacherid}}";
 
             function request_comment() {
                 var classid={{id}};
@@ -175,13 +171,13 @@
             <div class="navbar-expand-md navbar-dark"> 
             
                 <header class="d-none d-md-block">
-                    <h3 style="color:#000000">CourseInformation</h3>
+                    <h3 style="color:#000000">TeacherInformation</h3>
                 </header>
                 
                 
                 <!-- Mobile menu toggle and header -->
                 <div class="mobile-header-controls">
-                    <a class="navbar-brand d-md-none d-lg-none d-xl-none" href="#"><h2>courseinformation</h2></a>
+                    <a class="navbar-brand d-md-none d-lg-none d-xl-none" href="#"><h2>Teacherinformation</h2></a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#SidebarContent" aria-controls="SidebarContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -195,19 +191,6 @@
                     <nav class="navbar navbar-dark">
                         <div id="mainNavbar">
                             <ul class="flex-column mr-auto">
-                                
-                                <li class="nav-item">
-                                        <a class="nav-link" href="#">Coursename:{{name}}</a>
-                                </li>
-
-                                <li class="nav-item">
-                                        <a id="teacher" class="nav-link" href="/teacherinfo?teacherid={{teacherid}}">Teacher:{{teachername}}</a>
-                                </li>
-
-                                <li class="nav-item">
-                                        <a class="nav-link" href="#">Location:{{location}}</a>
-                                </li>
-
                                 <li class="nav-item active dropdown">
                                             <a class="nav-link dropdown-toggle" href="#MenuDropdown" data-toggle="collapse" aria-controls="MenuDropdown" aria-expanded="false">Navigation</a>
                                             <ul id="MenuDropdown" class="sub-navbar collapse flex-column">
@@ -220,8 +203,6 @@
                         </div>   
                     </nav>
                 
-                    <p id="follow" onclick="follow();" type="button" class="btn btn-danger"> Follow </p>
-                    <p id="unfollow" onclick="unfollow();" type="button" class="btn btn-dark">UnFollow</p>
                     <!-- Social icons -->
                     <p class="sidebar-social-icons social-icons">
                         <a href="#"><i class="fa fa-facebook fa-2x"></i></a>
@@ -240,82 +221,14 @@
                 <div class="jumbotron-wrap">
                         <div class="container-fluid">
                             <div class="jumbotron static-slider">
-                                <h1 class="text-center">课程简介</h1>
-                                <h2 class="lead text-center">{{desc}}</h2>
+                                <h1 class="text-center">{{name}}老师简介</h1>
                                 <div class="alert alert-info" role="alert" align="center">
-                                        <h2>课程平均评分：{{avg}}</h2>   
-                                </div>                               
+                                    <h2>所属学院：{{college}}</h2>   
+                                </div>                                 
+                                <h2 class="lead text-center">{{desc}}</h2>
                             </div>
                         </div>
-                    </div>         
-                <main class="container-fluid">
-                    <div class="row">
-
-                        <!-- Main content -->
-                        <div class="col">
-                            <div id="f">
-                                <!-- <article class="excerpt">
-                                        <div class="excerpttxt">
-                                            <ul class="nospace inline pushright font-xs">
-                                                <li>
-                                                    <ul class="nospace inline pushright font-xs">
-                                                        <li><h6 class="heading">Course comment</h6></li>
-                                                        <ul class="nospace inline pushright font-xs">
-                                                            <li><i class="fa fa-comments"></i> <a href="#">@peter</a></li>
-                                                            <li><i class="fa fa-calendar-o"></i>2018-07-01</li>
-                                                        </ul>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                            <p>It's a good Course! Teacher is very considerate!</p>
-                                        </div>
-                                </article>            
-                                <article class="excerpt">
-                                        <div class="excerpttxt">
-                                            <ul class="nospace inline pushright font-xs">
-                                                <li>
-                                                    <ul class="nospace inline pushright font-xs">
-                                                        <li><h6 class="heading">Course comment</h6></li>
-                                                        <ul class="nospace inline pushright font-xs">
-                                                            <li><i class="fa fa-comments"></i> <a href="#">@Tom</a></li>
-                                                            <li><i class="fa fa-calendar-o"></i>2018-07-05</li>
-                                                        </ul>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                            <p>老师上课很负责，而且可以结合视频、最新资讯等多种形式上课，教授过程不会无聊，上课还会举很好的例题，帮同学加深印象是一门很好的课程</p>
-                                        </div>
-                                </article> -->
-                            </div>                             
-                        <!-- submit comment -->    
-                        <article>
-                        <fieldset>
-                                <legend>Submit Comment</legend>
-                                <div class="form-group">
-                                    <label for="exampleInputMessage">Message</label>
-                                    <textarea id="comment" class="form-control" id="exampleInputMessage" rows="3"></textarea>
-                                    <label for="exampleInputMessage">Score</label>
-                                    <select id="s">
-                                        <option value ="10">10</option>
-                                        <option value ="9">9</option>
-                                        <option value ="8">8</option>
-                                        <option value ="7">7</option>
-                                        <option value ="6">6</option>
-                                        <option value ="5">5</option>
-                                        <option value ="4">4</option>
-                                        <option value ="3">3</option>
-                                        <option value ="2">2</option>
-                                        <option value ="1">1</option>
-                                        <option value ="0">0</option>
-                                    </select>
-                                </div>
-                                <button onclick="request_comment();" type="submit" class="btn btn-primary">Submit</button>
-                            </fieldset>  
-                        </article>     
-
-                        </div>
-                    </div>
-                </main>        
+                    </div>               
             
         </div>
     </div>    

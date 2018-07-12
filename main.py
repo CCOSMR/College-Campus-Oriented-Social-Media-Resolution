@@ -106,7 +106,7 @@ def searchcourse():
             if data:
                 return flask.render_template('courseinformation.html', id=data["id"], name=data["name"],
                                              location=data["location"], teachername=data["teacher"], desc=data["dscr"],
-                                             avg=data["ave_rating"])
+                                             avg=data["ave_rating"], teacherid=data["teacher_id"])
             else:
                 pass
     elif flask.request.method == "POST":
@@ -249,6 +249,14 @@ def attend():
     return "123"
 
 
+@app.route('/teacherinfo', methods=["GET"])
+def teacherinfo():
+    id = flask.request.args.get('teacherid')
+    result = server.teacher(db, id)
+    return flask.render_template("teacherinformation.html", name=result["name"], desc=result["dscr"],
+                                 college=result["college"])
+
+
 @app.route('/<path:path>')
 def send_static(path):
     return app.send_static_file(path)
@@ -284,6 +292,20 @@ def user_info():
 @app.route('/static/pictures/<path:filename>')
 def picture(filename):
     return send_from_directory('static/pictures', 'example.png', mimetype='image/png')
+
+
+@app.route('/tool', methods=["GET", "POST"])
+def tool():
+    if flask.session["id"] == "admin":
+        if flask.request.method == "GET":
+            return flask.render_template("adtool.html")
+        elif flask.request.method == "POST":
+            if flask.session["id"] == "admin":
+                data = server.get_json()
+                server.tool(db, data["courseid"], flask.session["id"])
+                return "123"
+    else:
+        return "Invalid access"
 
 
 if __name__ == "__main__":

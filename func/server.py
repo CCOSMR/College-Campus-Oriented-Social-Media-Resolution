@@ -428,3 +428,22 @@ def follows(database, follower_id, following_id):
     if database.simple_search("Follow", "following_id={} and follower_id={}".format(following_id, follower_id)):
         return True
     return False
+
+
+def teacher(database, id):
+    def IDtoCOLLEGE(database, cid):
+        re = database.simple_search("College", "id={}".format(cid))[0]
+        return re[2]
+
+    re = database.simple_search("Teacher", "id={}".format(id))[0]
+    temp = {
+        "name": re[2],
+        "dscr": re[3],
+        "college": IDtoCOLLEGE(database, re[1])
+    }
+    return temp
+
+
+def tool(database, func, values):
+    database[func](*values)
+    return True

@@ -4,6 +4,18 @@ import sqlite3
 class Database:
     def __init__(self, database_name: str):
         self.name = database_name
+        self.func = {
+            "simple_search": self.simple_search,
+            "simple_delete": self.simple_delete,
+            "simple_set": self.simple_set,
+            "add_new_user": self.add_new_user,
+            "like": self.like,
+            "sub": self.sub,
+            "comment": self.comment,
+            "review": self.review,
+            "insert": self.insert,
+            "post": self.post
+        }
 
     def simple_search(self, table_name: str, condition: str):
         conn = sqlite3.connect(self.name)
