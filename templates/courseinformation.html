@@ -141,9 +141,9 @@
             }
 
             function follow(){
-                var c = document.getElementById("s").value;
-                var data = JSON.stringify({"score":c});
-                $.post("/score",
+                var cid={{id}};
+                var data = JSON.stringify({"courseid":cid,"bool":1});
+                $.post("/attend",
                     data,
                     function(n){
                         }
@@ -151,9 +151,9 @@
             }
 
             function unfollow(){
-                var c = document.getElementById("s").value;
-                var data = JSON.stringify({"score":c});
-                $.post("/score",
+                var cid={{id}};
+                var data = JSON.stringify({"courseid":cid,"bool":0});
+                $.post("/attend",
                     data,
                     function(n){
                         }
