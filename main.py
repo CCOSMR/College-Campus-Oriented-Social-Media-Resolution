@@ -289,7 +289,7 @@ def picture(filename):
 
 
 @app.route('/tool', methods=["GET", "POST"])
-def attend():
+def tool():
     if flask.session["id"] == "admin":
         if flask.request.method == "GET":
             return flask.render_template("adtool.html")
