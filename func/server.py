@@ -196,8 +196,12 @@ def like(database, user_id, sub_id, action):
             "action": True
         }
         database.like("Likes", values)
+        database.simple_set('Sub', 'id={}'.format(sub_id), 'likes',
+                            list(database.simple_search("Sub", "id={}".format(sub_id)))[0][6] + 1)
     elif search_re and not action:
         database.simple_delete("Likes", "user_id={} and sub_id={}".format(user_id, sub_id))
+        database.simple_set('Sub', 'id={}'.format(sub_id), 'likes',
+                            list(database.simple_search("Sub", "id={}".format(sub_id)))[0][6] - 1)
 
 
 def dislike(database, user_id, sub_id, action):
@@ -209,8 +213,12 @@ def dislike(database, user_id, sub_id, action):
             "action": True
         }
         database.like("Likes", values)
+        database.simple_set('Sub', 'id={}'.format(sub_id), 'dislikes',
+                            list(database.simple_search("Sub", "id={}".format(sub_id)))[0][6] + 1)
     elif search_re and not action:
         database.simple_delete("Dislikes", "user_id={} and sub_id={}".format(user_id, sub_id))
+        database.simple_set('Sub', 'id={}'.format(sub_id), 'dislikes',
+                            list(database.simple_search("Sub", "id={}".format(sub_id)))[0][6] + 1)
 
 
 def follow(database, user_id, follow_id, follow):

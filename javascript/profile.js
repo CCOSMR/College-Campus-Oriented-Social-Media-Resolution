@@ -484,9 +484,6 @@ function submit_subcomment(post_id) {
 				$('#' + post_id + ' #reply_text').val('');
 				$('#' + post_id + ' #reply_button_small').toggleClass("clicked-small");
 				$('#' + post_id + ' #reply')[0].style.display = "none";
-				if ($('#' + post_id + ' #subcomments blockquote .excerpttxt').length == 0) {
-					get_subcomments(post_id);
-				}
 				if ($('#' + post_id + ' div#subcomments')[0].style.display === "none") {
 					click_comment_small(post_id);
 				}
@@ -709,9 +706,8 @@ function click_comment_small(post_id) {
 	else {
 		$('#' + post_id + ' #subcomments')[0].style.display = "none";
 	}
-	if (parseInt($('#' + post_id + ' #comments').text()) > $('#' + post_id + ' #subcomments blockquote .excerpttxt').length) {
-		get_subcomments(post_id);
-	}
+	$('#' + post_id + ' #subcomments blockquote').empty();
+	get_subcomments(post_id);
 }
 
 
