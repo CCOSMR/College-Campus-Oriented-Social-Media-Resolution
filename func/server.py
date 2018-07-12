@@ -263,11 +263,12 @@ def comment(database, user_id, parent_id, timestamp, content, visibility):
         "content": content,
     }
     database.comment(data)
-    database.simple_set('Sub', 'id={}'.format(parent_id), 'comments', list(database.simple_search("Sub", "id={}".format(parent_id)))[0][6] + 1)
+    database.simple_set('Sub', 'id={}'.format(parent_id), 'comments',
+                        list(database.simple_search("Sub", "id={}".format(parent_id)))[0][6] + 1)
     return id
 
 
-def get_comments(database, user_id, sub_id,):
+def get_comments(database, user_id, sub_id, ):
     def STRtoTIME(string):
         import datetime
         import time
@@ -322,6 +323,31 @@ def post(database, user_id, content, visibility):
     }
     database.post(data)
     return id
+
+
+def review(database, user_id, course_id, content, rating):
+    id = len(database.simple_search("Sub", "id>=0"))
+    data = {
+        "id": str(id),
+        "poster_id": str(user_id),
+        "publicity": str(0),
+        "likes": str(0),
+        "dislikes": str(0),
+        "comments": str(0)
+    }
+    database.sub(data)
+    data = {
+        "id": str(id),
+        "user_id": str(user_id),
+        "course_id": str(course_id),
+        "content": content,
+        "rating": str(rating),
+        "anonymous": str(False),
+        "seen": str(True),
+        "quality": str(None)
+    }
+    database.review(data)
+    return True
 
 
 def followers(database, user_id):

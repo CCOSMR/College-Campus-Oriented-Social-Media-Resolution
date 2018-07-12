@@ -87,7 +87,7 @@ def self():
 @app.route("/profile", methods=["GET", "POST"])
 def profile():
     return flask.render_template('profile.html')
-	
+
 
 @app.route("/course", methods=["GET", "POST"])
 def searchcourse():
@@ -98,15 +98,15 @@ def searchcourse():
         else:
             data = server.course_detail(db, id)
             if data:
-                return flask.render_template('courseinformation.html', name=data["name"], location=data["location"],
-                                             teachername=data["teacher"], desc=data["dscr"], avg=data["ave_rating"])
+                return flask.render_template('courseinformation.html', id=data["id"], name=data["name"],
+                                             location=data["location"], teachername=data["teacher"], desc=data["dscr"],
+                                             avg=data["ave_rating"])
             else:
                 pass
     elif flask.request.method == "POST":
         data = server.get_json()
         result = server.searchcourse(db, data["search"])
         return flask.jsonify(result)
-
 
 
 @app.route("/request_posts", methods=["POST"])
@@ -118,24 +118,25 @@ def request_posts():
     return flask.jsonify(result)
 
 
-@app.route("/get_comments", methods=["POST"])	
+@app.route("/get_comments", methods=["POST"])
 def get_comments():
     data = server.get_json()
     result = server.get_comments(db, flask.session["id"], data["post_id"])
     return flask.jsonify(result)
-	
-	
+
+
 @app.route("/comment", methods=["POST"])
 def comment():
     data = server.get_json()
-    result = server.comment(db, flask.session["id"], data["parent_id"], data["time_stamp"], data["content"], data["visibility"])
+    result = server.comment(db, flask.session["id"], data["parent_id"], data["time_stamp"], data["content"],
+                            data["visibility"])
     re = {
         "status": True,
         "id": result
     }
     return flask.jsonify(re)
 
-	
+
 @app.route("/post", methods=["POST"])
 def post():
     data = server.get_json()
@@ -152,7 +153,7 @@ def follow():
     }
     return flask.jsonify(re)
 
-	
+
 @app.route("/personalinfo", methods=["GET"])
 def personalinfo():
     id = flask.request.args.get('id')
@@ -165,12 +166,6 @@ def personaldetail():
     person = server.personalinfo(db, id)
     friends = server.friends_of(db, id)
     courses = server.courses_of(db, id)
-    person = {
-        "name": "sdfab",
-        "email": "sdf@qq.com"
-    }
-    friends = {123: "andy", 12333: "john", 23: "smith", 323: "dsfdf"}
-    courses = {1: "高数", 12333: "大雾", 23: "C语", 323: "英语"}
     result = {
         "user_name": person["name"],
         "user_email": person["email"],
@@ -211,6 +206,17 @@ def gen_captcha():
     return flask.send_file(img_io, mimetype='image/png', cache_timeout=0)
 
 
+@app.route('/review', methods=["POST"])
+def review():
+    data = server.get_json()
+    status = server.review(db, flask.session["id"], data["course_id"], data["content"], data["rating"])
+    re = {
+        "id": flask.session["id"],
+        "name": server.personalinfo(db, flask.session["id"])["name"]
+    }
+    return flask.jsonify(re)
+
+
 @app.route('/<path:path>')
 def send_static(path):
     return app.send_static_file(path)
@@ -232,15 +238,16 @@ def user_info():
     personal_info = server.personalinfo(db, data['id'])
     result = {
         "name": personal_info['id'],
-        "followings": server.followings(db,  data['id']),
+        "followings": server.followings(db, data['id']),
         "followed": server.follows(db, data['id'], flask.session["id"]),
-        "followers": server.followers(db,  data['id']),
+        "followers": server.followers(db, data['id']),
         "following": server.follows(db, flask.session["id"], data['id']),
-        "courses": server.courses(db,  data['id']),
+        "courses": server.courses(db, data['id']),
         "dscr": personal_info['dscr'],
     }
     print(server.follows(db, '123', '123'))
     return flask.jsonify(result)
+
 
 @app.route('/static/pictures/<path:filename>')
 def picture(filename):
