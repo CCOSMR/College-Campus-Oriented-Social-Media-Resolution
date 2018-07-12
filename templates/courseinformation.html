@@ -79,7 +79,8 @@
                 time = year + "-" + month + "-" + date;
                 var e = document.getElementById("f");
                 var q = document.getElementById("comment").value;
-                e.innerHTML+=`
+
+                        e.innerHTML+=`
                                 <article class="excerpt">
                                         <div class="excerpttxt">
                                             <ul class="nospace inline pushright font-xs">
@@ -97,6 +98,36 @@
                                         </div>
                                 </article>                  
                 `;
+            }
+
+            function getcomment(){
+                var cid={{id}};
+                $.get(`/review?courseid=`+cid+``,
+                    function(n){
+                        var e = document.getElementById("f");
+                        for(var i=0;i<n.length;i++){
+                                e.innerHTML+=`
+                                        <article class="excerpt">
+                                                <div class="excerpttxt">
+                                                    <ul class="nospace inline pushright font-xs">
+                                                        <li>
+                                                            <ul class="nospace inline pushright font-xs">
+                                                                <li><h6 class="heading">Course comment</h6></li>
+                                                                <ul class="nospace inline pushright font-xs">
+                                                                    <li><i class="fa fa-comments"></i> <a href="/personalinfo?id=`+n[i].post_id+`">`+n[i].post_name+`</a></li>
+                                                                    <li><i class="fa fa-calendar-o"></i>`+n[i].time+`</li>
+                                                                </ul>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                    <p>`+n[i].content+`</p>
+                                                </div>
+                                        </article>                
+                            `;
+                            }
+                    }
+                )
+
             }
 
             function submitscore(){
@@ -132,7 +163,7 @@
 
     </script>
 </head>
-<body>
+<body onload="getcomment()">
 
     <!-- Main navigation -->
     <div id="sidebar">
@@ -219,7 +250,7 @@
                         <!-- Main content -->
                         <div class="col">
                             <div id="f">
-                                <article class="excerpt">
+                                <!-- <article class="excerpt">
                                         <div class="excerpttxt">
                                             <ul class="nospace inline pushright font-xs">
                                                 <li>
@@ -250,7 +281,7 @@
                                             </ul>
                                             <p>老师上课很负责，而且可以结合视频、最新资讯等多种形式上课，教授过程不会无聊，上课还会举很好的例题，帮同学加深印象是一门很好的课程</p>
                                         </div>
-                                </article>
+                                </article> -->
                             </div>                             
                         <!-- submit comment -->    
                         <article>
