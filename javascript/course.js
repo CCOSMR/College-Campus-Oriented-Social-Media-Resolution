@@ -10,7 +10,7 @@
                                             <tr>
                                                 <th>ID</th>
                                                 <th>Name</th>
-                                                <th>Teacher</th>
+                                                <th>Score</th>
                                                 <th>Course number</th>
                                             </tr>                        
                         `

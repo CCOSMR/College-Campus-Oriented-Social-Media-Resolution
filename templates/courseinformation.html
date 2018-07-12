@@ -7,17 +7,56 @@
 	<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script>
-            var score;
+
+            var courseid={{id}};
+
             function request_comment() {
+                var classid={{id}};
                 var c = document.getElementById("comment").value;
-                var data = JSON.stringify({"comment":c,"id":t,"rating":score});
+                var score=document.getElementById("s").value;
+                var data = JSON.stringify({"review":c,"id":classid,"rating":score});
                 $.post("/review",
                     data,
                     function(n){
-                            alert(data);
-                            alert(n);
-                        }
-                    );
+                        var now = new Date();
+                        var year = now.getFullYear(); //得到年份
+                        var month = now.getMonth();//得到月份
+                        var date = now.getDate();//得到日期
+                        var day = now.getDay();//得到周几
+                        var hour = now.getHours();//得到小时
+                        var minu = now.getMinutes();//得到分钟
+                        var sec = now.getSeconds();//得到秒
+                        month = month + 1;
+                        if (month < 10) month = "0" + month;
+                        if (date < 10) date = "0" + date;
+                        if (hour < 10) hour = "0" + hour;
+                        if (minu < 10) minu = "0" + minu;
+                        if (sec < 10) sec = "0" + sec;
+                        var time = "";
+                        //精确到天
+                        time = year + "-" + month + "-" + date;
+                        var e = document.getElementById("f");
+                        var q = document.getElementById("comment").value;
+                        e.innerHTML+=`
+                                        <article class="excerpt">
+                                                <div class="excerpttxt">
+                                                    <ul class="nospace inline pushright font-xs">
+                                                        <li>
+                                                            <ul class="nospace inline pushright font-xs">
+                                                                <li><h6 class="heading">Course comment</h6></li>
+                                                                <ul class="nospace inline pushright font-xs">
+                                                                    <li><i class="fa fa-comments"></i> <a href="/personalinfo?id=`+n.id+`">`+n.name+`</a></li>
+                                                                    <li><i class="fa fa-calendar-o"></i>`+time+`</li>
+                                                                </ul>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                    <p>`+q+`</p>
+                                                </div>
+                                        </article>                  
+                        `;                           
+                                }
+                            );
             }
             
             function addcomment(){
@@ -40,7 +79,8 @@
                 time = year + "-" + month + "-" + date;
                 var e = document.getElementById("f");
                 var q = document.getElementById("comment").value;
-                e.innerHTML+=`
+
+                        e.innerHTML+=`
                                 <article class="excerpt">
                                         <div class="excerpttxt">
                                             <ul class="nospace inline pushright font-xs">
@@ -58,6 +98,36 @@
                                         </div>
                                 </article>                  
                 `;
+            }
+
+            function getcomment(){
+                var cid={{id}};
+                $.get(`/review?courseid=`+cid+``,
+                    function(n){
+                        var e = document.getElementById("f");
+                        for(var i=0;i<n.length;i++){
+                                e.innerHTML+=`
+                                        <article class="excerpt">
+                                                <div class="excerpttxt">
+                                                    <ul class="nospace inline pushright font-xs">
+                                                        <li>
+                                                            <ul class="nospace inline pushright font-xs">
+                                                                <li><h6 class="heading">Course comment</h6></li>
+                                                                <ul class="nospace inline pushright font-xs">
+                                                                    <li><i class="fa fa-comments"></i> <a href="/personalinfo?id=`+n[i].post_id+`">`+n[i].post_name+`</a></li>
+                                                                    <li><i class="fa fa-calendar-o"></i>`+n[i].time+`</li>
+                                                                </ul>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                    <p>`+n[i].content+`</p>
+                                                </div>
+                                        </article>                
+                            `;
+                            }
+                    }
+                )
+
             }
 
             function submitscore(){
@@ -93,7 +163,7 @@
 
     </script>
 </head>
-<body>
+<body onload="getcomment()">
 
     <!-- Main navigation -->
     <div id="sidebar">
@@ -180,7 +250,7 @@
                         <!-- Main content -->
                         <div class="col">
                             <div id="f">
-                                <article class="excerpt">
+                                <!-- <article class="excerpt">
                                         <div class="excerpttxt">
                                             <ul class="nospace inline pushright font-xs">
                                                 <li>
@@ -211,7 +281,7 @@
                                             </ul>
                                             <p>老师上课很负责，而且可以结合视频、最新资讯等多种形式上课，教授过程不会无聊，上课还会举很好的例题，帮同学加深印象是一门很好的课程</p>
                                         </div>
-                                </article>
+                                </article> -->
                             </div>                             
                         <!-- submit comment -->    
                         <article>
@@ -220,16 +290,6 @@
                                 <div class="form-group">
                                     <label for="exampleInputMessage">Message</label>
                                     <textarea id="comment" class="form-control" id="exampleInputMessage" rows="3"></textarea>
-                                </div>
-                                <button onclick="addcomment();" type="submit" class="btn btn-primary">Submit</button>
-                            </fieldset>  
-                        </article>     
-
-                        <!--submit score-->
-                        <article>
-                        <fieldset>
-                                <legend>Submit Score</legend>
-                                <div class="form-group">
                                     <label for="exampleInputMessage">Score</label>
                                     <select id="s">
                                         <option value ="10">10</option>
@@ -245,10 +305,9 @@
                                         <option value ="0">0</option>
                                     </select>
                                 </div>
-                                <button onclick="submitscore();" type="submit" class="btn btn-primary">Submit</button>
+                                <button onclick="request_comment();" type="submit" class="btn btn-primary">Submit</button>
                             </fieldset>  
-                        </article>             
-
+                        </article>     
 
                         </div>
                     </div>
