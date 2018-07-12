@@ -401,6 +401,7 @@ def followings(database, user_id):
         "id": id,
         "name": name
     }
+    print(re)
     return re
 
 

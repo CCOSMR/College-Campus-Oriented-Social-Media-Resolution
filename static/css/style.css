@@ -7533,6 +7533,16 @@ html {
 	font-size: .8rem;
 }
 
+.button-xs {
+	margin-top: 0px;
+	margin-bottom: 0px;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top: 0;
+	padding-bottom: 0;
+	font-size: .75rem;
+}
+
 
 /* Spinning icon */
 .fa-spin-hover.hover {

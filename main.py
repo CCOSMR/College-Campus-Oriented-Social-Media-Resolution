@@ -39,7 +39,7 @@ def register():
         status = server.register(db, data)
         if status == True:
             result = {"status": True, "message": None}
-            return flask.jsonify(result)
+            return flask.redirect("/home")
         result = {"status": False, "message": status}
         return flask.jsonify(result)
 
