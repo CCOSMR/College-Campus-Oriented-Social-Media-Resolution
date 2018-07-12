@@ -206,15 +206,20 @@ def gen_captcha():
     return flask.send_file(img_io, mimetype='image/png', cache_timeout=0)
 
 
-@app.route('/review', methods=["POST"])
+@app.route('/review', methods=["GET", "POST"])
 def review():
-    data = server.get_json()
-    status = server.review(db, flask.session["id"], data["course_id"], data["content"], data["rating"])
-    re = {
-        "id": flask.session["id"],
-        "name": server.personalinfo(db, flask.session["id"])["name"]
-    }
-    return flask.jsonify(re)
+    if flask.request.method == "GET":
+        id = flask.request.args.get('courseid')
+        re = server.request_reviews(db, id)
+        return flask.jsonify(re)
+    elif flask.request.method == "POST":
+        data = server.get_json()
+        status = server.review(db, flask.session["id"], data["course_id"], data["content"], data["rating"])
+        re = {
+            "id": flask.session["id"],
+            "name": server.personalinfo(db, flask.session["id"])["name"]
+        }
+        return flask.jsonify(re)
 
 
 @app.route('/<path:path>')

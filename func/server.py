@@ -187,6 +187,28 @@ def request_posts(db, id, dir, timestamp, num=5):
     return result
 
 
+def request_reviews(database, id):
+    rev = database.simple_search("Review", "course_id={}".format(id))
+    result = []
+    for i in rev:
+        id = i[0]
+        time = database.simple_search("Sub", "id={}".format(id))[0][2]
+        content = i[3]
+        rating = i[4]
+        user = personalinfo(database, i[1])
+        temp = {
+            "post_id": id,
+            "poster_id": i[1],
+            "poster_name": user["name"],
+            "time": time,
+            "content": content,
+            "rating": rating,  # 0 if is not a review
+        }
+        print(i)
+        result.append(temp)
+    return result
+
+
 def like(database, user_id, sub_id, action):
     search_re = database.simple_search("Likes", "user_id={} and sub_id={}".format(user_id, sub_id))
     if action and not search_re:
@@ -347,7 +369,17 @@ def review(database, user_id, course_id, content, rating):
         "quality": str(None)
     }
     database.review(data)
+    update_rating(course_id)
     return True
+
+
+def update_rating(database, id):
+    re = database.simple_search("Review", "id={}".format(id))
+    sum = 0
+    for i in re:
+        sum += i[4]
+    avg = round(sum / len(re), 1)
+    database.simple_set("Course", "id=".format(id), "ave_rating", avg)
 
 
 def followers(database, user_id):
