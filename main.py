@@ -154,6 +154,20 @@ def follow():
     return flask.jsonify(re)
 
 
+@app.route("/followers", methods=["POST"])
+def followers():
+    data = server.get_json()
+    result = server.followers(db, data["id"])
+    return flask.jsonify(result)
+
+
+@app.route("/followings", methods=["POST"])
+def followers():
+    data = server.get_json()
+    result = server.followings(db, data["id"])
+    return flask.jsonify(result)
+
+
 @app.route("/personalinfo", methods=["GET"])
 def personalinfo():
     id = flask.request.args.get('id')
