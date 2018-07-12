@@ -236,6 +236,13 @@ def review():
         return flask.jsonify(re)
 
 
+@app.route('/attend', methods=["POST"])
+def attend():
+    data = server.get_json()
+    server.attend(db, data["courseid"], flask.session["id"])
+    return "123"
+
+
 @app.route('/<path:path>')
 def send_static(path):
     return app.send_static_file(path)
