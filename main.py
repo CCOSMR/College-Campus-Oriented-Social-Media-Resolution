@@ -100,7 +100,7 @@ def searchcourse():
             if data:
                 return flask.render_template('courseinformation.html', id=data["id"], name=data["name"],
                                              location=data["location"], teachername=data["teacher"], desc=data["dscr"],
-                                             avg=data["ave_rating"])
+                                             avg=data["ave_rating"], teacherid=data["teacher_id"])
             else:
                 pass
     elif flask.request.method == "POST":
