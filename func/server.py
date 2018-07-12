@@ -119,7 +119,7 @@ def courses_of(database, id):
     return courses
 
 
-def request_posts(database, id, dir, timestamp, num=5):
+def request_posts(db, id, dir, timestamp, num=5):
     def STRtoTIME(string):
         import datetime
         import time
@@ -128,12 +128,12 @@ def request_posts(database, id, dir, timestamp, num=5):
         return time_time
 
     def checkliked(table, sid):
-        if database.simple_search(table, "sub_id={} and user_id={}".format(sid, id)):
+        if db.simple_search(table, "sub_id={} and user_id={}".format(sid, id)):
             return True
         else:
             return False
 
-    sub = database.simple_search("Sub", "poster_id={}".format(id))
+    sub = db.simple_search("Sub", "poster_id={}".format(id))
     result = []
     for i in sub:
         content = None
@@ -146,8 +146,8 @@ def request_posts(database, id, dir, timestamp, num=5):
         type = None
 
         id = i[0]
-        post = database.simple_search("Post", "id={}".format(id))
-        rev = database.simple_search("Review", "id={}".format(id))
+        post = db.simple_search("Post", "id={}".format(id))
+        rev = db.simple_search("Review", "id={}".format(id))
         if post:
             content = post[0][1]
             type = "post"
@@ -156,14 +156,14 @@ def request_posts(database, id, dir, timestamp, num=5):
             content = rev[0][3]
             rating = rev[0][4]
             course_id = rev[0][2]
-            tre = course_detail(database, course_id)
+            tre = course_detail(db, course_id)
             course_name = tre["name"]
             teacher_name = tre["teacher"]
             teacher_id = tre["id"]
             type = "review"
         else:
             continue
-        user = personalinfo(database, i[1])
+        user = personalinfo(db, i[1])
         temp = {
             "post_id": id,
             "type": type,  # post or review
@@ -220,14 +220,16 @@ def comment(database, user_id, parent_id, timestamp, content, visibility):
         "publicity": str(0),
         "likes": str(0),
         "dislikes": str(0),
-        "comments": str(0)
+        "comments": str(0),
+        'visibility': visibility,
     }
     database.sub(data)
     data = {
         "id": str(id),
+        'parent_id': str(parent_id),
         "content": content,
     }
-    database.comments(data)
+    database.comment(data)
     return id
 
 
@@ -268,7 +270,7 @@ def get_comments(database, user_id, sub_id,):
 
 
 # new functions
-def post(database, user_id, timestamp, content, visibility):
+def post(database, user_id, content, visibility):
     id = len(database.simple_search("Sub", "id>=0"))
     data = {
         "id": str(id),
@@ -281,9 +283,23 @@ def post(database, user_id, timestamp, content, visibility):
     database.sub(data)
     data = {
         "id": str(id),
-        "original_id": str(parent_id),
         "content": content,
-        "seen": str(True)
     }
-    database.comments(data)
+    database.post(data)
     return id
+
+
+def followers(database, user_id):
+    return 100
+
+
+def followings(database, user_id):
+    return 100
+
+
+def courses(database, user_id):
+    return 100
+
+
+def follows(database, follower_id, following_id):
+    return True

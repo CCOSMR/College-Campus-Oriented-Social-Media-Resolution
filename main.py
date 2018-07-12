@@ -72,11 +72,18 @@ def login():
 def home():
     if flask.request.method == "GET":
         if "id" in flask.session.keys():
-            return flask.render_template('home.html')
+            id = flask.request.args.get('id')
+            return flask.render_template('home.html', id=id)
         else:
             return flask.redirect("/login")
 
-			
+
+@app.route("/self", methods=["POST"])
+def self():
+    result = flask.jsonify({'id': flask.session['id'], 'name': server.personalinfo(db, flask.session['id'])['name']})
+    return result
+
+
 @app.route("/profile", methods=["GET", "POST"])
 def profile():
     return flask.render_template('profile.html')
@@ -105,11 +112,10 @@ def searchcourse():
 @app.route("/request_posts", methods=["POST"])
 def request_posts():
     data = server.get_json()
-	
-	# need to change timestamp
-    result = request_posts(database, flask.session['id'], data['type'], 0, 5)
-		
-	return flask.jsonify(result)
+
+    result = server.request_posts(db, flask.session['id'], data['type'], 0, 5)
+
+    return flask.jsonify(result)
 
 
 @app.route("/get_comments", methods=["POST"])	
@@ -122,7 +128,7 @@ def get_comments():
 @app.route("/comment", methods=["POST"])
 def comment():
     data = server.get_json()
-    result = server.comment(db, flask.session["id"], data["parent_id"], data["time_stamp"], data["content"])
+    result = server.comment(db, flask.session["id"], data["parent_id"], data["time_stamp"], data["content"], data["visibility"])
     re = {
         "status": True,
         "id": result
@@ -133,7 +139,8 @@ def comment():
 @app.route("/post", methods=["POST"])
 def post():
     data = server.get_json()
-    return flask.jsonify({"status": True,"id": random.randint(1, 999999),})
+    result = {'id': server.post(db, flask.session["id"], data['content'], '1'), 'status': True}
+    return flask.jsonify(result)
 
 	
 @app.route("/personalinfo", methods=["GET"])
@@ -202,6 +209,31 @@ def send_static(path):
 @app.route('/javascript/<path:filename>')
 def serve_static(filename):
     return send_from_directory('javascript', filename)
+
+
+@app.route("/user=<int:user_id>", methods=["GET"])
+def user(user_id):
+    return flask.render_template("profile.html", id=user_id)
+
+
+@app.route("/user_info", methods=["POST"])
+def user_info():
+    data = server.get_json()
+    personal_info = server.personalinfo(db, data['id'])
+    result = {
+        "name": personal_info['id'],
+        "following": server.followings(db,  data['id']),
+        "followed": server.follows(db, data['id'], flask.session["id"]),
+        "followers": server.followers(db,  data['id']),
+        "followings": server.follows(db, flask.session["id"], data['id']),
+        "courses": server.courses(db,  data['id']),
+        "dscr": personal_info['dscr'],
+    }
+    return flask.jsonify(result)
+
+@app.route('/static/pictures/<path:filename>')
+def picture(filename):
+    return send_from_directory('static/pictures', 'example.png', mimetype='image/png')
 
 
 if __name__ == "__main__":

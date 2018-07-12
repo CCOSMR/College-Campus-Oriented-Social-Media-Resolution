@@ -1,13 +1,25 @@
 var time_stamp = Date.now();
 var earliest_post_time_stamp = -1;
 var subs = []
-// var self_id = {{self_id}};
-// var self_name = {{self_name}};
+var self_id, self_name;
 
 const monthNames = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
 ];
 
+$(function() {
+	var data = 0;
+	$.post("/self",
+			data,
+			function(response){
+				self_id = response['id'];
+				self_name = response['name'];
+				$('#self_name').text(self_name);
+				$('#self_id').text('@' + self_id);
+				$('#self_picture').html(`<img id='self_picture' style="border-radius: 50%; height:50px;"
+										src="/static/pictures/"` + self_id + '>');
+			});
+});
 
 $(function() {
 	$('.button-like').on('click', function () {
@@ -804,7 +816,7 @@ function submit_post() {
 		data,
 		function(response){
 			if (response['status']) {
-				prepend_post(response.id, 'self', 'Self', time, 
+				prepend_post(response.id, self_id, self_name, time, 
 					content, 0, 0, 0, false, false);
 				$('#rightbar #post_text').val("");
 			}

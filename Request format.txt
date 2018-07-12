@@ -168,6 +168,7 @@ respond:
 	"followers": 3, # user's followers
 	"followings": 1, # user's followings
 	"courses": 5, # user's courses
+	"dscr": "very good" # user description
 }
 
 /follow # follow a user
@@ -181,4 +182,13 @@ respond:
 
 	"status": true, # success
 }
-	
+
+
+/self # get self's info
+# No data
+
+respond:
+{
+	"id": "123",
+	"name": "John"
+}

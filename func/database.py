@@ -69,13 +69,13 @@ class Database:
         conn.commit()
         conn.close()
 
-    def comments(self, data):
+    def comment(self, data):
         conn = sqlite3.connect(self.name)
         c = conn.cursor()
         headers = "id, original_id, content, seen"
         quotation = lambda x: "\"" + x + "\""
-        values = ", ".join([data["id"], data["original_id"], quotation(data["content"])]) + ", " + data["seen"]
-        operation = "INSERT INTO Sub ({}) VALUES ({})".format(headers, values)
+        values = ", ".join([data["id"], data["parent_id"], quotation(data["content"])]) + ", " + '0'
+        operation = "INSERT INTO Comments ({}) VALUES ({})".format(headers, values)
         print(operation)
         c.execute(operation)
         conn.commit()
@@ -98,7 +98,7 @@ class Database:
     def post(self, data):
         conn = sqlite3.connect(self.name)
         c = conn.cursor()
-        headers = "id, content,"
+        headers = "id, content"
         quotation = lambda x: "\"" + x + "\""
         values = ", ".join([data["id"], quotation(data["content"])])
         operation = "INSERT INTO Post ({}) VALUES ({})".format(headers, values)

@@ -812,7 +812,7 @@ function follow(follow) {
 
 function get_user_info() {
 	var data = JSON.stringify({"id": id});
-	$.post("/get_user_info",
+	$.post("/user_info",
 		data,
 		function(response){
 			$('#user_name').text(response['name']);
