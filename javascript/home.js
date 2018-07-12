@@ -1,5 +1,5 @@
-var time_stamp = Date.now();
-var earliest_post_time_stamp = -1;
+var latest_post_time_stamp = Date.now();
+var earliest_post_time_stamp = Date.now();
 var subs = []
 var self_id, self_name;
 
@@ -45,8 +45,8 @@ jQuery(function($) {
 	 var ScrollTop = jQuery(window).scrollTop();
 	 var data;
 	 var data = JSON.stringify({
-		"earliest_post_time_stamp": time_stamp,
-		"latest_post_time_stamp": 0,
+		"earliest_post_time_stamp": earliest_post_time_stamp,
+		"latest_post_time_stamp": latest_post_time_stamp,
 		"type":"backward",
 		"user":"",
 	});
@@ -62,21 +62,20 @@ jQuery(function($) {
 							response[i].content, response[i].likes, response[i].dislikes, response[i].comments, response[i].liked, response[i].disliked);
 						
 					}
+					earliest_post_time_stamp = response['timestamp'];
 				});
 			});
 	 }
 	 });
 	 
-	 time_stamp = Date.now();
 });
 
 function check_post() {
-	var earliest_post_time_stamp = Date.now();
 	 var ScrollTop = jQuery(window).scrollTop();
 	 var data;
 	 var data = JSON.stringify({
-		"earliest_post_time_stamp": time_stamp,
-		"latest_post_time_stamp": 0,
+		"earliest_post_time_stamp": earliest_post_time_stamp,
+		"latest_post_time_stamp": latest_post_time_stamp,
 		"type":"backward",
 		"user":"",
 	});
@@ -91,6 +90,8 @@ function check_post() {
 						response[i].content, response[i].likes, response[i].dislikes, response[i].comments, response[i].liked, response[i].disliked);
 					
 				}
+				earliest_post_time_stamp = response['timestamp'];
+				latest_post_time_stamp = Date.now();
 			});
 	 }
 	 
@@ -99,8 +100,8 @@ function check_post() {
 }
 
 function load_recent_posts() {
-	var earliest_post_time_stamp = Date.now();
-	var latest_post_time_stamp = Date.now();
+	var earliest_post_time_stamp = earliest_post_time_stamp;
+	var latest_post_time_stamp = latest_post_time_stamp;
 	var data;
 	var data = JSON.stringify({
 		"earliest_post_time_stamp": time_stamp,
@@ -116,6 +117,7 @@ function load_recent_posts() {
 					response[i].content, response[i].likes, response[i].dislikes, response[i].comments, response[i].liked, response[i].disliked);
 				
 			}
+			latest_post_time_stamp = Date.now();
 		});
 	
 }

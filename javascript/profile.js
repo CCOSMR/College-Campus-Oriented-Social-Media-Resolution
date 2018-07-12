@@ -20,6 +20,7 @@ $(function() {
 				$('#self_id').text('@' + self_id);
 				$('#self_picture').html(`<img id='self_picture' style="border-radius: 50%; height:50px;" src="/static/pictures/` + self_id + '">');
 				get_user_info();
+				get_table_info(id);
 			});
 });
 
@@ -842,4 +843,35 @@ function get_user_info() {
 				}
 		});
 	}
+}
+
+function get_table_info(id) {
+	var data = JSON.stringify({"id": id});
+	$.post("/followers",
+		data,
+			function(response){
+				for (item in response) {
+					var selector = $('#follower_table')[0];
+					alert(item.id);
+					new_follower = `
+						<tr>
+							<td>` + item.name + `</td>
+							<td><a href="/user=` + item.id + `">` + item.id + `</a></td>
+						</tr>`;
+					selector.innerHTML += new_follower;
+				}
+			});
+	$.post("/followings",
+		data,
+			function(response){
+				for (item in response) {
+					var selector = $('#following_table')[0];
+					new_follower = `
+						<tr>
+							<td>` + item.name + `</td>
+							<td><a href="/user=` + item.id + `">` + item.id + `</a></td>
+						</tr>`;
+					selector.innerHTML += new_follower;
+				}
+			});
 }
