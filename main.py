@@ -243,8 +243,8 @@ def attend():
     return "123"
 
 
-@app.route('/attend', methods=["GET"])
-def attend():
+@app.route('/teacherinfo', methods=["GET"])
+def teacherinfo():
     id = flask.request.args.get('teacherid')
     result = server.teacher(db, id)
     return flask.render_template("teacherinformation", name=result["name"], desc=result["dscr"],
