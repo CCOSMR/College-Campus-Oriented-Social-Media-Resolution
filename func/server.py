@@ -348,7 +348,7 @@ def post(database, user_id, content, visibility):
 
 
 def review(database, user_id, course_id, content, rating):
-    id = len(database.simple_search("Sub", "id>=0"))
+    id = len(database.simple_search("Sub", "id>=0")) + 1
     data = {
         "id": str(id),
         "poster_id": str(user_id),
@@ -369,17 +369,17 @@ def review(database, user_id, course_id, content, rating):
         "quality": str(None)
     }
     database.review(data)
-    update_rating(course_id)
+    update_rating(database, course_id)
     return True
 
 
 def update_rating(database, id):
-    re = database.simple_search("Review", "id={}".format(id))
+    re = database.simple_search("Review", "course_id={}".format(id))
     sum = 0
     for i in re:
         sum += i[4]
     avg = round(sum / len(re), 1)
-    database.simple_set("Course", "id=".format(id), "ave_rating", avg)
+    database.simple_set("Course", "id={}".format(id), "ave_rating", avg)
 
 
 def followers(database, user_id):

@@ -18,7 +18,6 @@ class Database:
     def simple_delete(self, table_name, condition):
         conn = sqlite3.connect(self.name)
         c = conn.cursor()
-
         operation = "delete from {} where {}".format(table_name, condition)
         print(operation)
         data = c.execute(operation).fetchall()
@@ -98,7 +97,7 @@ class Database:
         quotation = lambda x: "\"" + x + "\""
         values = ", ".join(
             [data["id"], data["user_id"], data["course_id"], quotation(data["content"]), data["rating"]]) + ", 0, 1, 0"
-        operation = "INSERT INTO Comments ({}) VALUES ({})".format(headers, values)
+        operation = "INSERT INTO Review ({}) VALUES ({})".format(headers, values)
         print(operation)
         c.execute(operation)
         conn.commit()

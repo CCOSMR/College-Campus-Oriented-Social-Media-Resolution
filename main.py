@@ -214,7 +214,7 @@ def review():
         return flask.jsonify(re)
     elif flask.request.method == "POST":
         data = server.get_json()
-        status = server.review(db, flask.session["id"], data["course_id"], data["content"], data["rating"])
+        status = server.review(db, flask.session["id"], data["id"], data["review"], data["rating"])
         re = {
             "id": flask.session["id"],
             "name": server.personalinfo(db, flask.session["id"])["name"]
