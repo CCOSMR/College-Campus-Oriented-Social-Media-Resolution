@@ -383,11 +383,25 @@ def update_rating(database, id):
 
 
 def followers(database, user_id):
-    return 100
+    re = database.simple_search("Follow", "following_id={}".format(user_id))
+    id = [i[1] for i in re]
+    name = [personalinfo(database, i)["name"] for i in id]
+    re = {
+        "id": id,
+        "name": name
+    }
+    return re
 
 
 def followings(database, user_id):
-    return 100
+    re = database.simple_search("Follow", "follower_id={}".format(user_id))
+    id = [i[1] for i in re]
+    name = [personalinfo(database, i)["name"] for i in id]
+    re = {
+        "id": id,
+        "name": name
+    }
+    return re
 
 
 def courses(database, user_id):
