@@ -12,7 +12,7 @@
             var tid={{teacherid}};
 
             var tool=document.getElementById("teacher");
-            tool.href="/teacherinfo?teacherid="+tid+"";
+            tool.href="/teacherinfo?teacherid={{teacherid}}";
 
             function request_comment() {
                 var classid={{id}};
@@ -201,7 +201,7 @@
                                 </li>
 
                                 <li class="nav-item">
-                                        <a id="teacher" class="nav-link" href="#">Teacher:{{teachername}}</a>
+                                        <a id="teacher" class="nav-link" href="/teacherinfo?teacherid={{teacherid}}">Teacher:{{teachername}}</a>
                                 </li>
 
                                 <li class="nav-item">
