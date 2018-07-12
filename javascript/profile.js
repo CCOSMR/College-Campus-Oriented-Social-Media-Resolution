@@ -1,9 +1,8 @@
 var time_stamp = Date.now();
 var earliest_post_time_stamp = -1;
 var subs = []
-var string = window.location.href;
-var id = string.split('user=')[1];
 var self_id, self_name;
+var id = window.location.href.split('user=')[1].replace('#','');
 
 const monthNames = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
@@ -20,6 +19,7 @@ $(function() {
 				$('#self_name').text(self_name);
 				$('#self_id').text('@' + self_id);
 				$('#self_picture').html(`<img id='self_picture' style="border-radius: 50%; height:50px;" src="/static/pictures/` + self_id + '">');
+				get_user_info();
 			});
 });
 
@@ -28,11 +28,6 @@ $(function() {
 	$('.button-like').on('click', function () {
 		$(this).toggleClass("liked");
 	});
-});
-
-
-$(function() {
-	get_user_info();
 });
 
 
@@ -47,9 +42,6 @@ $(function() {
 $(function() {
 	// request messages
 	// insert 
-	for (var i = 0; i < 10; i++) {
-		document.getElementById('MenuDropdown').innerHTML += `<li class="nav-item"><a class="nav-link" style="background-color: #cbecf1;">`+ 'message' + `</a></li>`;
-	}
 });
 
 jQuery(function($) {
@@ -150,7 +142,7 @@ function insert_post(post_id, poster_id, poster_name, time, content, likes, disl
 					<li><h6 id="poster_name" class="heading">`+ poster_name + `</h6></li>
 					<ul class="nospace inline pushright font-xs"> 
 						<li><a id="poster_id" href="/user=` + poster_id + `">` + "@" + poster_id + `</a></li>
-						<li id="time" ><i class="fa fa-calendar-o"></i>` + time_string + `</li>
+						<li id="time" ><i class="fa fa-calendar"></i>` + time_string + `</li>
 					</ul>
 				</ul>
 			</ul>
@@ -169,7 +161,7 @@ function insert_post(post_id, poster_id, poster_name, time, content, likes, disl
 					<span id="comments" >` + comments + `</span>
 					</button> </li>
 			  <li><button class="button button-normal"  id="reply_button" onclick="click_reply(` + post_id + `);">
-					<i class="fa fa-pencil-square-o"></i>
+					<i class="fa fa-pen"></i>
 					<span>Reply</span>
 					</button> </li>
 			  <li><button class="button button-normal">
@@ -223,7 +215,7 @@ function prepend_post(post_id, poster_id, poster_name, time, content, likes, dis
 					<li><h6 id="poster_name" class="heading">`+ poster_name + `</h6></li>
 					<ul class="nospace inline pushright font-xs"> 
 						<li><a id="poster_id" href="/user=` + poster_id + `">` + "@" + poster_id + `</a></li>
-						<li id="time" ><i class="fa fa-calendar-o"></i>` + time_string + `</li>
+						<li id="time" ><i class="fa fa-calendar"></i>` + time_string + `</li>
 					</ul>
 				</ul>
 			</ul>
@@ -242,7 +234,7 @@ function prepend_post(post_id, poster_id, poster_name, time, content, likes, dis
 					<span id="comments" >` + comments + `</span>
 					</button> </li>
 			  <li><button class="button button-normal"  id="reply_button" onclick="click_reply(` + post_id + `);">
-					<i class="fa fa-pencil-square-o"></i>
+					<i class="fa fa-pen"></i>
 					<span>Reply</span>
 					</button> </li>
 			  <li><button class="button button-normal">
@@ -458,8 +450,6 @@ function submit_comment(post_id) {
 				if ($('#' + post_id + ' div#comments')[0].style.display === "none") {
 					click_comment(post_id);
 				}
-				// insert_comment(post_id, response.id, 'self', 'self', time, 
-					// content, 0, 0, 0, false, false);
 				
 				var comments = $('#' + post_id + ' #comments')[0];
 				comments.textContent = parseInt(comments.textContent) + 1;
@@ -487,8 +477,6 @@ function submit_subcomment(post_id) {
 				if ($('#' + post_id + ' div#subcomments')[0].style.display === "none") {
 					click_comment_small(post_id);
 				}
-				// insert_subcomment(post_id, response.id, 'self', 'self', time, 
-					// content, 0, 0, 0, false, false);
 					
 				var comments = $('#' + post_id + ' #comments')[0];
 				comments.textContent = parseInt(comments.textContent) + 1;
@@ -517,7 +505,7 @@ function insert_comment(post_id, comment_id, commenter_id, commenter_name, time,
 					<li><h6 class="font-xxs">`+ commenter_name + `</h6></li>
 					<ul class="nospace inline pushright"> 
 						<li></i> <a class="font-xxs" href="/user=` + commenter_id + `">` + "@" + commenter_id + `</a></li>
-						<li class="font-xxs"><i class="fa fa-calendar-o"></i>` + time_string + `</li>
+						<li class="font-xxs"><i class="fa fa-calendar"></i>` + time_string + `</li>
 					</ul>
 				</ul>
 			</li>
@@ -536,8 +524,8 @@ function insert_comment(post_id, comment_id, commenter_id, commenter_name, time,
 				<i class="fa fa-comment"></i>
 				<span id="comments">` + comments + `</span>
 				</button> </li>
-		  <li><button class="button button-normal-small" onclick="click_reply_small(` + comment_id + `);"
-				<i class="fa fa-pencil-square-o"></i>
+		  <li><button class="button button-normal-small" onclick="click_reply_small(` + comment_id + `);">
+				<i class="fa fa-pen"></i>
 				<span>Reply</span>
 				</button> </li>
 		  <li><button class="button button-normal-small">
@@ -729,7 +717,7 @@ function insert_subcomment(post_id, comment_id, commenter_id, commenter_name, ti
 					<li><h6 class="font-xxs">`+ commenter_name + `</h6></li>
 					<ul class="nospace inline pushright"> 
 						<li></i> <a class="font-xxs" href="/user=` + commenter_id + `">` + "@" + commenter_id + `</a></li>
-						<li class="font-xxs"><i class="fa fa-calendar-o"></i>` + time_string + `</li>
+						<li class="font-xxs"><i class="fa fa-calendar"></i>` + time_string + `</li>
 					</ul>
 				</ul>
 			</li>
@@ -749,7 +737,7 @@ function insert_subcomment(post_id, comment_id, commenter_id, commenter_name, ti
 				<span id="comments">` + comments + `</span>
 				</button> </li>
 		  <li><button class="button button-normal-small" onclick="click_reply_small(` + comment_id + `);">
-				<i class="fa fa-pencil-square-o"></i>
+				<i class="fa fa-pen"></i>
 				<span>Reply</span>
 				</button> </li>
 		  <li><button class="button button-normal-small">
@@ -827,23 +815,31 @@ function follow(follow) {
 
 function get_user_info() {
 	var data = JSON.stringify({"id": id});
-	$.post("/user_info",
-		data,
-		function(response){
-			$('#user_name').text(response['name']);
-			$('#user_id').text('@' + id);
-			if (response.following) {
-				$('#followed_badge')[0].style.display = "inline-block";
-				$('#unfollow_button')[0].style.display = "block";
-				$('#follow_button')[0].style.display = "none";
-			}
-			else {
-				$('#followed_badge')[0].style.display = "none";
-				$('#follow_button')[0].style.display = "block";
-				$('#unfollow_button')[0].style.display = "none";
-			}
-			if (response.followed) {
-				$('#following_me_badge')[0].style.display = "inline-block";
-			}
-	});
+	if (id == self_id) {
+		$('#user_name').text(self_name);
+		$('#user_id').text('@' + self_id);
+		$('#me_badge')[0].style.display = "inline-block";
+		$('#user_picture').html(`<img id='self_picture' style="border-radius: 50%; height:50px;" src="/static/pictures/` + self_id + '">');
+	}
+	else {
+		$.post("/user_info",
+			data,
+			function(response){
+				$('#user_name').text(response['name']);
+				$('#user_id').text('@' + id);
+				if (response.following) {
+					$('#followed_badge')[0].style.display = "inline-block";
+					$('#unfollow_button')[0].style.display = "block";
+					$('#follow_button')[0].style.display = "none";
+				}
+				else {
+					$('#followed_badge')[0].style.display = "none";
+					$('#follow_button')[0].style.display = "block";
+					$('#unfollow_button')[0].style.display = "none";
+				}
+				if (response.followed) {
+					$('#following_me_badge')[0].style.display = "inline-block";
+				}
+		});
+	}
 }
