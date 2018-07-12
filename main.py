@@ -247,7 +247,7 @@ def attend():
 def teacherinfo():
     id = flask.request.args.get('teacherid')
     result = server.teacher(db, id)
-    return flask.render_template("teacherinformation", name=result["name"], desc=result["dscr"],
+    return flask.render_template("teacherinformation.html", name=result["name"], desc=result["dscr"],
                                  college=result["college"])
 
 
