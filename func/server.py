@@ -64,9 +64,10 @@ def course_detail(database, id):
     if search_re:
         search_re = search_re[0]
         teacher = database.simple_search("Teacher", "id={}".format(search_re[1]))[0]
+        print(teacher)
         result = {
             "id": search_re[0],
-            "teacher": teacher[3],
+            "teacher": teacher[2],
             "teacher_id": teacher[0],
             "name": search_re[2],
             "dscr": search_re[3],
@@ -99,7 +100,7 @@ def friends_of(database, id):
     search_re = database.simple_search("Follow", "follower_id=\"{}\"".format(id))
     if search_re:
         for i in search_re:
-            friends_name.append(personalinfo(i[0])["name"])
+            friends_name.append(personalinfo(database, i[0])["name"])
     return friends_name
 
 
@@ -110,12 +111,12 @@ def courses_of(database, id):
             return search_re[0][3]
         return False
 
-    courses = []
+    courses = {}
     stu_id = idtostu(database, id)
     if stu_id:
         search_re = database.simple_search("Attend", "student_id={}".format(stu_id))
         for i in search_re:
-            courses.append(course_detail(i[1])["name"])
+            courses[i[1]] = course_detail(database, i[1])["name"]
     return courses
 
 
@@ -402,6 +403,20 @@ def followings(database, user_id):
         "name": name
     }
     return re
+
+
+def attend(database, id, usr_id):
+    def idtostu(database, id):
+        search_re = database.simple_search("Users_Student", "user_id=\"{}\"".format(id))
+        if search_re:
+            return search_re[0][3]
+        return False
+
+    data = {
+        "student_id": idtostu(database, usr_id),
+        "course_id": id
+    }
+    database.insert("Attend", data)
 
 
 def courses(database, user_id):
