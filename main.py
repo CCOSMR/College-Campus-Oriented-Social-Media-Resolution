@@ -68,6 +68,12 @@ def login():
             return flask.jsonify(result)
 
 
+@app.route("/logout", methods=["POST"])
+def logout():
+    flask.session.clear()
+    return flask.redirect("/login")
+
+
 @app.route("/home", methods=["GET", "POST"])
 def home():
     if flask.request.method == "GET":

@@ -63,6 +63,7 @@ jQuery(function($) {
 			function(response){
 				$(function() {
 					for (var i = 0; i < response.length; i++) {
+						alert(response[i].liked);
 						insert_post(response[i].post_id, response[i].poster_id, response[i].poster_name, response[i].time, 
 							response[i].content, response[i].likes, response[i].dislikes, response[i].comments, response[i].liked, response[i].disliked);
 						
@@ -850,13 +851,12 @@ function get_table_info(id) {
 	$.post("/followers",
 		data,
 			function(response){
-				for (item in response) {
+				for (var i = 0; i < response.length; i++) {
 					var selector = $('#follower_table')[0];
-					alert(item.id);
 					new_follower = `
 						<tr>
-							<td>` + item.name + `</td>
-							<td><a href="/user=` + item.id + `">` + item.id + `</a></td>
+							<td>` + response.name[i] + `</td>
+							<td><a href="/user=` + item.id + `">` + response.id[i] + `</a></td>
 						</tr>`;
 					selector.innerHTML += new_follower;
 				}
@@ -864,14 +864,25 @@ function get_table_info(id) {
 	$.post("/followings",
 		data,
 			function(response){
-				for (item in response) {
+				for (var i = 0; i < response.length; i++) {
 					var selector = $('#following_table')[0];
 					new_follower = `
 						<tr>
-							<td>` + item.name + `</td>
-							<td><a href="/user=` + item.id + `">` + item.id + `</a></td>
+							<td>` + response.name[i] + `</td>
+							<td><a href="/user=` + response.id[i] + `">` + response.id[i] + `</a></td>
 						</tr>`;
 					selector.innerHTML += new_follower;
 				}
 			});
 }
+
+function logout() {
+	var data;
+	$.post("/logout",
+		data,
+			function(response){
+			}
+	);
+	window.location.href = '/login';
+}
+				
