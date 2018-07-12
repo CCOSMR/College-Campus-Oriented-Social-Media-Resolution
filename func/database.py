@@ -18,12 +18,22 @@ class Database:
     def simple_delete(self, table_name, condition):
         conn = sqlite3.connect(self.name)
         c = conn.cursor()
+
         operation = "delete from {} where {}".format(table_name, condition)
         print(operation)
         data = c.execute(operation).fetchall()
         conn.commit()
         conn.close()
         return data
+
+    def simple_set(self, table_name, condition, col_name, value):
+        conn = sqlite3.connect(self.name)
+        c = conn.cursor()
+        operation = "UPDATE {} SET {} = {} WHERE {}".format(table_name, col_name, value, condition)
+        print(operation)
+        c.execute(operation)
+        conn.commit()
+        conn.close()
 
     def add_new_user(self, data):
         conn = sqlite3.connect(self.name)

@@ -182,6 +182,7 @@ def request_posts(db, id, dir, timestamp, num=5):
             "teacher_name": teacher_name,  # "" if is not a review
             "teacher_id": teacher_id,  # -1 if is not a review
         }
+        print(i)
         result.append(temp)
     return result
 
@@ -215,7 +216,7 @@ def dislike(database, user_id, sub_id, action):
 def follow(database, user_id, follow_id, follow):
     if user_id == follow_id:
         return False
-    
+
     if follow:
         search_re = database.simple_search("Follow", "following_id={} and follower_id={}".format(follow_id, user_id))
         if not search_re:
@@ -254,6 +255,7 @@ def comment(database, user_id, parent_id, timestamp, content, visibility):
         "content": content,
     }
     database.comment(data)
+    database.simple_set('Sub', 'id={}'.format(parent_id), 'comments', list(database.simple_search("Sub", "id={}".format(parent_id)))[0][6] + 1)
     return id
 
 
@@ -273,10 +275,11 @@ def get_comments(database, user_id, sub_id,):
 
     jj = []
     search_re = database.simple_search("Comments", "original_id={}".format(sub_id))
+    print(search_re)
     for comment in search_re:
         i = comment[0]
-        sub_info = database.simple_search("Sub", "id={}".format(i))
-        usr_info = database.simple_search("Users", "id={}".format(sub_info[1]))
+        sub_info = [list(x) for x in database.simple_search("Sub", "id={}".format(i))][0]
+        usr_info = [list(x) for x in database.simple_search("Users", "id={}".format(sub_info[1]))][0]
         re = {
             "comment_id": i,
             "commenter_id": sub_info[1],

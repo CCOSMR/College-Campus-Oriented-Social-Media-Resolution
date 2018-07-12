@@ -414,9 +414,11 @@ function click_comment(post_id) {
 	else {
 		$('#' + post_id + ' #comment_button').closest('div.post_div').find('div#comments')[0].style.display = "none";
 	}
-	if ($('#' + post_id + ' #comments fieldset blockquote div').length == 0) {
-		get_comments($('#' + post_id + ' #comment_button').closest('div.post_div').attr('id'));
-	}
+	$('#' + post_id + '.post_div #comments fieldset blockquote').empty();
+	get_comments(post_id);
+	// if (parseInt($('#' + post_id + ' #comments').text()) > $('#' + post_id + ' #comments .excerpttxt').length) {
+		// get_comments($('#' + post_id + ' #comment_button').closest('div.post_div').attr('id'));
+	// }
 }
 
 function click_reply(post_id) {
@@ -456,8 +458,8 @@ function submit_comment(post_id) {
 				if ($('#' + post_id + ' div#comments')[0].style.display === "none") {
 					click_comment(post_id);
 				}
-				insert_comment(post_id, response.id, 'self', 'self', time, 
-					content, 0, 0, 0, false, false);
+				// insert_comment(post_id, response.id, 'self', 'self', time, 
+					// content, 0, 0, 0, false, false);
 				
 				var comments = $('#' + post_id + ' #comments')[0];
 				comments.textContent = parseInt(comments.textContent) + 1;
@@ -488,8 +490,8 @@ function submit_subcomment(post_id) {
 				if ($('#' + post_id + ' div#subcomments')[0].style.display === "none") {
 					click_comment_small(post_id);
 				}
-				insert_subcomment(post_id, response.id, 'self', 'self', time, 
-					content, 0, 0, 0, false, false);
+				// insert_subcomment(post_id, response.id, 'self', 'self', time, 
+					// content, 0, 0, 0, false, false);
 					
 				var comments = $('#' + post_id + ' #comments')[0];
 				comments.textContent = parseInt(comments.textContent) + 1;
@@ -707,7 +709,7 @@ function click_comment_small(post_id) {
 	else {
 		$('#' + post_id + ' #subcomments')[0].style.display = "none";
 	}
-	if ($('#' + post_id + ' #subcomments blockquote .excerpttxt').length == 0) {
+	if (parseInt($('#' + post_id + ' #comments').text()) > $('#' + post_id + ' #subcomments blockquote .excerpttxt').length) {
 		get_subcomments(post_id);
 	}
 }
