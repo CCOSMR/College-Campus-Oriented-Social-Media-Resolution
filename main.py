@@ -243,6 +243,14 @@ def attend():
     return "123"
 
 
+@app.route('/attend', methods=["GET"])
+def attend():
+    id = flask.request.args.get('teacherid')
+    result = server.teacher(db, id)
+    return flask.render_template("teacherinformation", name=result["name"], desc=result["dscr"],
+                                 college=result["college"])
+
+
 @app.route('/<path:path>')
 def send_static(path):
     return app.send_static_file(path)
