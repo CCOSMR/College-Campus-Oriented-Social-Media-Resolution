@@ -7,7 +7,6 @@
 	<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script>
-            var t={{id}};
             var score;
             function request_comment() {
                 var c = document.getElementById("comment").value;
@@ -19,7 +18,79 @@
                             alert(n);
                         }
                     );
-            }                    
+            }
+            
+            function addcomment(){
+                var now = new Date();
+                var year = now.getFullYear(); //得到年份
+                var month = now.getMonth();//得到月份
+                var date = now.getDate();//得到日期
+                var day = now.getDay();//得到周几
+                var hour = now.getHours();//得到小时
+                var minu = now.getMinutes();//得到分钟
+                var sec = now.getSeconds();//得到秒
+                month = month + 1;
+                if (month < 10) month = "0" + month;
+                if (date < 10) date = "0" + date;
+                if (hour < 10) hour = "0" + hour;
+                if (minu < 10) minu = "0" + minu;
+                if (sec < 10) sec = "0" + sec;
+                var time = "";
+                //精确到天
+                time = year + "-" + month + "-" + date;
+                var e = document.getElementById("f");
+                var q = document.getElementById("comment").value;
+                e.innerHTML+=`
+                                <article class="excerpt">
+                                        <div class="excerpttxt">
+                                            <ul class="nospace inline pushright font-xs">
+                                                <li>
+                                                    <ul class="nospace inline pushright font-xs">
+                                                        <li><h6 class="heading">Course comment</h6></li>
+                                                        <ul class="nospace inline pushright font-xs">
+                                                            <li><i class="fa fa-comments"></i> <a href="#">@Ronald</a></li>
+                                                            <li><i class="fa fa-calendar-o"></i>`+time+`</li>
+                                                        </ul>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                            <p>`+q+`</p>
+                                        </div>
+                                </article>                  
+                `;
+            }
+
+            function submitscore(){
+                var c = document.getElementById("s").value;
+                var data = JSON.stringify({"score":c});
+                $.post("/score",
+                    data,
+                    function(n){
+                        }
+                    );                
+            }
+
+            function follow(){
+                var c = document.getElementById("s").value;
+                var data = JSON.stringify({"score":c});
+                $.post("/score",
+                    data,
+                    function(n){
+                        }
+                    );                
+            }
+
+            function unfollow(){
+                var c = document.getElementById("s").value;
+                var data = JSON.stringify({"score":c});
+                $.post("/score",
+                    data,
+                    function(n){
+                        }
+                    );                
+            }
+
+
     </script>
 </head>
 <body>
@@ -75,6 +146,8 @@
                         </div>   
                     </nav>
                 
+                    <p id="follow" onclick="follow();" type="button" class="btn btn-danger"> Follow </p>
+                    <p id="unfollow" onclick="unfollow();" type="button" class="btn btn-dark">UnFollow</p>
                     <!-- Social icons -->
                     <p class="sidebar-social-icons social-icons">
                         <a href="#"><i class="fa fa-facebook fa-2x"></i></a>
@@ -106,21 +179,81 @@
 
                         <!-- Main content -->
                         <div class="col">
-                        <article>
+                            <div id="f">
+                                <article class="excerpt">
+                                        <div class="excerpttxt">
+                                            <ul class="nospace inline pushright font-xs">
+                                                <li>
+                                                    <ul class="nospace inline pushright font-xs">
+                                                        <li><h6 class="heading">Course comment</h6></li>
+                                                        <ul class="nospace inline pushright font-xs">
+                                                            <li><i class="fa fa-comments"></i> <a href="#">@peter</a></li>
+                                                            <li><i class="fa fa-calendar-o"></i>2018-07-01</li>
+                                                        </ul>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                            <p>It's a good Course! Teacher is very considerate!</p>
+                                        </div>
+                                </article>            
+                                <article class="excerpt">
+                                        <div class="excerpttxt">
+                                            <ul class="nospace inline pushright font-xs">
+                                                <li>
+                                                    <ul class="nospace inline pushright font-xs">
+                                                        <li><h6 class="heading">Course comment</h6></li>
+                                                        <ul class="nospace inline pushright font-xs">
+                                                            <li><i class="fa fa-comments"></i> <a href="#">@Tom</a></li>
+                                                            <li><i class="fa fa-calendar-o"></i>2018-07-05</li>
+                                                        </ul>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                            <p>老师上课很负责，而且可以结合视频、最新资讯等多种形式上课，教授过程不会无聊，上课还会举很好的例题，帮同学加深印象是一门很好的课程</p>
+                                        </div>
+                                </article>
+                            </div>                             
                         <!-- submit comment -->    
+                        <article>
                         <fieldset>
                                 <legend>Submit Comment</legend>
                                 <div class="form-group">
                                     <label for="exampleInputMessage">Message</label>
                                     <textarea id="comment" class="form-control" id="exampleInputMessage" rows="3"></textarea>
                                 </div>
-                                <p onclick="request_comment()" type="submit" class="btn btn-primary">Submit</p>
+                                <button onclick="addcomment();" type="submit" class="btn btn-primary">Submit</button>
+                            </fieldset>  
+                        </article>     
+
+                        <!--submit score-->
+                        <article>
+                        <fieldset>
+                                <legend>Submit Score</legend>
+                                <div class="form-group">
+                                    <label for="exampleInputMessage">Score</label>
+                                    <select id="s">
+                                        <option value ="10">10</option>
+                                        <option value ="9">9</option>
+                                        <option value ="8">8</option>
+                                        <option value ="7">7</option>
+                                        <option value ="6">6</option>
+                                        <option value ="5">5</option>
+                                        <option value ="4">4</option>
+                                        <option value ="3">3</option>
+                                        <option value ="2">2</option>
+                                        <option value ="1">1</option>
+                                        <option value ="0">0</option>
+                                    </select>
+                                </div>
+                                <button onclick="submitscore();" type="submit" class="btn btn-primary">Submit</button>
                             </fieldset>  
                         </article>             
+
+
                         </div>
                     </div>
                 </main>        
-
+            
         </div>
     </div>    
 

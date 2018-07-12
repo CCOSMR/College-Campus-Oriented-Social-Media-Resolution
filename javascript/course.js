@@ -54,7 +54,7 @@
 
             function efg(){
                 var box = document.getElementById("resulttable");
-                var str="链接测试"
+                var str="链接测试";
                 var str1=`
                                             <tr>
                                                 <td>`+` <a href="course?courseid=1">`+str+`</a>`+`</td>
