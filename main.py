@@ -162,7 +162,7 @@ def followers():
 
 
 @app.route("/followings", methods=["POST"])
-def followers():
+def followings():
     data = server.get_json()
     result = server.followings(db, data["id"])
     return flask.jsonify(result)
