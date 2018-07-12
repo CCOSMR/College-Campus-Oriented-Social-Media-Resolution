@@ -91,6 +91,19 @@ class Database:
         conn.commit()
         conn.close()
 
+    def review(self, data):
+        conn = sqlite3.connect(self.name)
+        c = conn.cursor()
+        headers = "id, user_id, course_id, content, rating, anonymous, seen, quality"
+        quotation = lambda x: "\"" + x + "\""
+        values = ", ".join(
+            [data["id"], data["user_id"], data["course_id"], quotation(data["content"]), data["rating"]]) + ", 0, 1, 0"
+        operation = "INSERT INTO Comments ({}) VALUES ({})".format(headers, values)
+        print(operation)
+        c.execute(operation)
+        conn.commit()
+        conn.close()
+
     def insert(self, table_name: str, data: dict):
         conn = sqlite3.connect(self.name)
         c = conn.cursor()
