@@ -268,7 +268,7 @@ def follow(database, user_id, follow_id, follow):
 
 
 def comment(database, user_id, parent_id, timestamp, content, visibility):
-    id = len(database.simple_search("Sub", "id>=0"))
+    id = len(database.simple_search("Sub", "id>=0")) + 1
     data = {
         "id": str(id),
         "poster_id": str(user_id),
@@ -329,7 +329,7 @@ def get_comments(database, user_id, sub_id, ):
 
 # new functions
 def post(database, user_id, content, visibility):
-    id = len(database.simple_search("Sub", "id>=0"))
+    id = len(database.simple_search("Sub", "id>=0")) + 1
     data = {
         "id": str(id),
         "poster_id": str(user_id),
