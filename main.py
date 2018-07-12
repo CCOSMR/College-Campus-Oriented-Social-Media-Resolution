@@ -288,6 +288,20 @@ def picture(filename):
     return send_from_directory('static/pictures', 'example.png', mimetype='image/png')
 
 
+@app.route('/tool', methods=["GET", "POST"])
+def attend():
+    if flask.session["id"] == "admin":
+        if flask.request.method == "GET":
+            return flask.render_template("adtool.html")
+        elif flask.request.method == "POST":
+            if flask.session["id"] == "admin":
+                data = server.get_json()
+                server.tool(db, data["courseid"], flask.session["id"])
+                return "123"
+    else:
+        return "Invalid access"
+
+
 if __name__ == "__main__":
     # This is for test
     # app.run(host='0.0.0.0', port=80)

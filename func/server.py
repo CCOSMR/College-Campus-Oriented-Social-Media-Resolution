@@ -442,3 +442,8 @@ def teacher(database, id):
         "college": IDtoCOLLEGE(database, re[1])
     }
     return temp
+
+
+def tool(database, func, values):
+    database[func](*values)
+    return True
