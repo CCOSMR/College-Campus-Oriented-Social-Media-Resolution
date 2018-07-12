@@ -29,9 +29,12 @@
 					<div style="padding-bottom: 20px; width:100%;">
 						<div class="alert alert-primary" role="alert" style="padding-left:5%; padding-right:5%;">
 							<ul class="nospace inline pushright font-xs">
-								<li><h6 id="poster_name" class="heading">Self</h6></li>
+									<li id='self_picture'>
+										
+									</li>
+								<li><h6 id="self_name" class="heading"></h6></li>
 								<ul class="nospace inline pushright font-xs"> 
-									<li><a id="poster_id" href="#">@self </a></li>
+									<li><a id="self_id"></a></li>
 								</ul>
 							</ul>
 							<ul>
@@ -110,9 +113,9 @@
 							<span class="badge badge-light" id='following_me_badge' style='display: none;'>
 								<i class="fa fa-eye" id='following_me_badge'></i> Following you</span>
 						<div>
-							<button type="button" class="btn btn-info" id='follow_button' style='display: none;'>
+							<button type="button" class="btn btn-info" id='follow_button' style='display: none;' onclick='follow(true);'>
 								<i class="fa fa-plus"></i> Follow</button>	
-							<button type="button" class="btn btn-secondary" id='unfollow_button' style='display: none;'>
+							<button type="button" class="btn btn-secondary" id='unfollow_button' style='display: none;' onclick='follow(false);'>
 								<i class="fa fa-minus"></i> Unfollow</button>						
 						</div>
 					</div>

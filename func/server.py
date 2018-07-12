@@ -212,6 +212,30 @@ def dislike(database, user_id, sub_id, action):
         database.simple_delete("Dislikes", "user_id={} and sub_id={}".format(user_id, sub_id))
 
 
+def follow(database, user_id, follow_id, follow):
+    if user_id == follow_id:
+        return False
+    
+    if follow:
+        search_re = database.simple_search("Follow", "following_id={} and follower_id={}".format(follow_id, user_id))
+        if not search_re:
+            values = {
+                "following_id": follow_id,
+                "follower_id": user_id,
+                "time_followed": "DATETIME(\"now\")",
+                "seen": '0',
+            }
+            database.insert('Follow', values)
+            return True
+        return False
+    else:
+        search_re = database.simple_search("Follow", "following_id={} and follower_id={}".format(follow_id, user_id))
+        if search_re:
+            database.simple_delete("Follow", "following_id={} and follower_id={}".format(follow_id, user_id))
+            return True
+        return False
+
+
 def comment(database, user_id, parent_id, timestamp, content, visibility):
     id = len(database.simple_search("Sub", "id>=0"))
     data = {
@@ -302,4 +326,6 @@ def courses(database, user_id):
 
 
 def follows(database, follower_id, following_id):
-    return True
+    if database.simple_search("Follow", "following_id={} and follower_id={}".format(following_id, follower_id)):
+        return True
+    return False

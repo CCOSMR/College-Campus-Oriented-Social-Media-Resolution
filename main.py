@@ -142,6 +142,16 @@ def post():
     result = {'id': server.post(db, flask.session["id"], data['content'], '1'), 'status': True}
     return flask.jsonify(result)
 
+
+@app.route("/follow", methods=["POST"])
+def follow():
+    data = server.get_json()
+    result = server.follow(db, flask.session["id"], data["id"], data["follow"])
+    re = {
+        "status": result,
+    }
+    return flask.jsonify(re)
+
 	
 @app.route("/personalinfo", methods=["GET"])
 def personalinfo():
@@ -222,13 +232,14 @@ def user_info():
     personal_info = server.personalinfo(db, data['id'])
     result = {
         "name": personal_info['id'],
-        "following": server.followings(db,  data['id']),
+        "followings": server.followings(db,  data['id']),
         "followed": server.follows(db, data['id'], flask.session["id"]),
         "followers": server.followers(db,  data['id']),
-        "followings": server.follows(db, flask.session["id"], data['id']),
+        "following": server.follows(db, flask.session["id"], data['id']),
         "courses": server.courses(db,  data['id']),
         "dscr": personal_info['dscr'],
     }
+    print(server.follows(db, '123', '123'))
     return flask.jsonify(result)
 
 @app.route('/static/pictures/<path:filename>')

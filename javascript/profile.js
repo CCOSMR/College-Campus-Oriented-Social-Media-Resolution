@@ -3,13 +3,25 @@ var earliest_post_time_stamp = -1;
 var subs = []
 var string = window.location.href;
 var id = string.split('user=')[1];
-// var self_id = {{self_id}};
-// var self_name = {{self_name}};
-// var id={{id}};
+var self_id, self_name;
 
 const monthNames = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
 ];
+
+
+$(function() {
+	var data = 0;
+	$.post("/self",
+			data,
+			function(response){
+				self_id = response['id'];
+				self_name = response['name'];
+				$('#self_name').text(self_name);
+				$('#self_id').text('@' + self_id);
+				$('#self_picture').html(`<img id='self_picture' style="border-radius: 50%; height:50px;" src="/static/pictures/` + self_id + '">');
+			});
+});
 
 
 $(function() {
@@ -802,11 +814,16 @@ function select_tag(index) {
 }
 
 function follow(follow) {
-	var data = JSON.stringify({"id": id, "follow": follow});
+	var data = JSON.stringify({"id": self_id, "follow": follow});
 	$.post("/follow",
 		data,
 		function(response){
-			
+			if (response['ststus']) {
+				get_user_info();
+			}
+			else {
+				alert('Failed');
+			}
 	});
 }
 

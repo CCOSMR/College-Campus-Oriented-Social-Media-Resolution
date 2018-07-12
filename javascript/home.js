@@ -17,7 +17,7 @@ $(function() {
 				$('#self_name').text(self_name);
 				$('#self_id').text('@' + self_id);
 				$('#self_picture').html(`<img id='self_picture' style="border-radius: 50%; height:50px;"
-										src="/static/pictures/"` + self_id + '>');
+										src="/static/pictures/` + self_id + '">');
 			});
 });
 
