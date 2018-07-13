@@ -23,6 +23,7 @@ class Database:
         operation = "select * from {} where {}".format(table_name, condition)
         print(operation)
         data = c.execute(operation).fetchall()
+        print('search', data)
         conn.commit()
         conn.close()
         return data

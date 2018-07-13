@@ -198,6 +198,7 @@ def personaldetail():
 @app.route("/like", methods=["POST"])
 def like():
     data = server.get_json()
+    print(data)
     server.like(db, flask.session["id"], data["post_id"], data["like"])
     server.dislike(db, flask.session["id"], data["post_id"], data["dislike"])
     result = {

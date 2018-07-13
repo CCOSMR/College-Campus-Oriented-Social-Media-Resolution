@@ -129,7 +129,8 @@ def request_posts(db, id, dir, timestamp, num=5):
         return time_time
 
     def checkliked(table, sid):
-        if db.simple_search(table, "sub_id={} and user_id={}".format(sid, id)):
+        print(db.simple_search(table, "sub_id={} and user_id={}".format(str(sid), str(id))))
+        if db.simple_search(table, "sub_id={} and user_id={}".format(str(sid), str(id))):
             return True
         else:
             return False
@@ -146,9 +147,9 @@ def request_posts(db, id, dir, timestamp, num=5):
         teacher_id = None
         type = None
 
-        id = i[0]
-        post = db.simple_search("Post", "id={}".format(id))
-        rev = db.simple_search("Review", "id={}".format(id))
+        post_id = i[0]
+        post = db.simple_search("Post", "id={}".format(post_id))
+        rev = db.simple_search("Review", "id={}".format(post_id))
         if post:
             content = post[0][1]
             type = "post"
@@ -166,7 +167,7 @@ def request_posts(db, id, dir, timestamp, num=5):
             continue
         user = personalinfo(db, i[1])
         temp = {
-            "post_id": id,
+            "post_id": post_id,
             "type": type,  # post or review
             "poster_id": i[1],
             "poster_name": user["name"],
@@ -174,8 +175,8 @@ def request_posts(db, id, dir, timestamp, num=5):
             "content": content,
             "likes": i[4],
             "dislikes": i[5],
-            "liked": checkliked("Likes", id),  # whether the current user has liked this post
-            "disliked": checkliked("Dislikes", id),  # whether the current user has disliked this post
+            "liked": checkliked("Likes", post_id),  # whether the current user has liked this post
+            "disliked": checkliked("Dislikes", post_id),  # whether the current user has disliked this post
             "comments": i[6],
             "rating": rating,  # 0 if is not a review
             "course_id": course_id,  # -1 if is not a review
@@ -183,7 +184,7 @@ def request_posts(db, id, dir, timestamp, num=5):
             "teacher_name": teacher_name,  # "" if is not a review
             "teacher_id": teacher_id,  # -1 if is not a review
         }
-        print(i)
+        print(temp)
         result.append(temp)
     return result
 
@@ -212,6 +213,8 @@ def request_reviews(database, id):
 
 def like(database, user_id, sub_id, action):
     search_re = database.simple_search("Likes", "user_id={} and sub_id={}".format(user_id, sub_id))
+
+    print('count', database.simple_search("Likes", "sub_id={}".format(sub_id)))
     if action and not search_re:
         values = {
             "sub_id": sub_id,
@@ -219,29 +222,38 @@ def like(database, user_id, sub_id, action):
             "action": True
         }
         database.like("Likes", values)
+        count = len(database.simple_search("Likes", "sub_id={}".format(sub_id)))
         database.simple_set('Sub', 'id={}'.format(sub_id), 'likes',
-                            list(database.simple_search("Sub", "id={}".format(sub_id)))[0][6] + 1)
+                            count)
     elif search_re and not action:
+        print(sub_id)
         database.simple_delete("Likes", "user_id={} and sub_id={}".format(user_id, sub_id))
+        count = len(database.simple_search("Likes", "sub_id={}".format(sub_id)))
         database.simple_set('Sub', 'id={}'.format(sub_id), 'likes',
-                            list(database.simple_search("Sub", "id={}".format(sub_id)))[0][6] - 1)
+                            count)
 
 
 def dislike(database, user_id, sub_id, action):
     search_re = database.simple_search("Dislikes", "user_id={} and sub_id={}".format(user_id, sub_id))
+
+    print('count', database.simple_search("Dislikes", "sub_id={}".format(sub_id)))
     if action and not search_re:
         values = {
             "sub_id": sub_id,
             "user_id": user_id,
             "action": True
         }
-        database.like("Likes", values)
+        database.like("Dislikes", values)
+        print(sub_id)
+        count = len(database.simple_search("Dislikes", "sub_id={}".format(sub_id)))
+        print('Data', database.simple_search("Sub", "id={}".format(sub_id)))
         database.simple_set('Sub', 'id={}'.format(sub_id), 'dislikes',
-                            list(database.simple_search("Sub", "id={}".format(sub_id)))[0][6] + 1)
+                            count)
     elif search_re and not action:
         database.simple_delete("Dislikes", "user_id={} and sub_id={}".format(user_id, sub_id))
+        count = len(database.simple_search("Dislikes", "sub_id={}".format(sub_id)))
         database.simple_set('Sub', 'id={}'.format(sub_id), 'dislikes',
-                            list(database.simple_search("Sub", "id={}".format(sub_id)))[0][6] + 1)
+                            count)
 
 
 def follow(database, user_id, follow_id, follow):
